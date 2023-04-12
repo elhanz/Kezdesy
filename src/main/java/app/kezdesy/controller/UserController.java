@@ -1,6 +1,6 @@
-package app.kezdesy.controllers;
+package app.kezdesy.controller;
 
-import app.kezdesy.entities.User;
+import app.kezdesy.entity.User;
 import app.kezdesy.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -22,7 +22,7 @@ public class UserController {
     }
 
     @GetMapping("/user/user")
-    public ResponseEntity<List> getUser() {
+    public ResponseEntity<List<User>> getUser() {
         return ResponseEntity.ok(userRepository.findAll());
     }
 
