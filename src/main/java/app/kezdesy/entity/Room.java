@@ -1,16 +1,14 @@
 package app.kezdesy.entity;
 
 
-import lombok.Data;
 
-import javax.persistence.*;
-import java.security.Timestamp;
+import jakarta.persistence.*;
+
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
-@Entity
-@Data
+
 @Table(name = "room")
 public class Room {
     @Id

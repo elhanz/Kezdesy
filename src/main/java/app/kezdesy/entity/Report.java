@@ -2,7 +2,7 @@ package app.kezdesy.entity;
 
 import lombok.Data;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 
 @Entity
 @Data

@@ -4,7 +4,7 @@ import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 import java.sql.Timestamp;
 
 @Entity
@@ -15,12 +15,6 @@ public class Message {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String text;
-    @ManyToOne
-    @JoinColumn(name = "owner_id")
-    private User owner;
-    @ManyToOne
-    @JoinColumn(name = "room_id")
-    private Room room;
 
     @CreationTimestamp
     @Column(name = "created_at")

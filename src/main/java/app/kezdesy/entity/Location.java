@@ -1,6 +1,6 @@
 package app.kezdesy.entity;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,11 +20,8 @@ public class Location {
 
     @Column(name = "city")
     private String city;
-    @OneToMany(mappedBy = "location", fetch = FetchType.LAZY)
-    private List<User> users = new ArrayList<>();
 
-    @OneToMany(mappedBy = "location", fetch = FetchType.LAZY)
-    private List<Room> rooms = new ArrayList<>();
+
 
 
 }

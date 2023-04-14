@@ -1,22 +1,15 @@
 package app.kezdesy.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.Type;
 
-import javax.persistence.*;
+import org.hibernate.annotations.CreationTimestamp;
+
+
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Set;
+import jakarta.persistence.*;
 
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
-@Entity
 @Table(name = "usr")
 public class User {
 
@@ -32,18 +25,21 @@ public class User {
     @Column(name = "last_name")
     private String lastName;
 
+    @Column(name = "password")
+    private String password;
+
     @Column(name = "birth_Date")
     private Date birthDate;
 
     @Column(name = "email")
     private String email;
 
-    @Type(type = "text")
+    @Column(name = "picture" , columnDefinition ="text")
+
     private String picture;
 
     @Column(name = "gender")
     private boolean gender;
-
 
     @ManyToOne
     @JoinColumn(name = "subscription_id")
@@ -52,7 +48,6 @@ public class User {
     @ManyToOne
     @JoinColumn(name = "location_id")
     private Location location;
-
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "user_room",
@@ -65,6 +60,9 @@ public class User {
             joinColumns = {@JoinColumn(name = "user_id")},
             inverseJoinColumns = {@JoinColumn(name = "interest_id")})
     private List<Interest> interests = new ArrayList<>();
+
+    @Column(name = "Role")
+    private String Role;
 
 //    @ElementCollection(targetClass = Interests.class)
 //    @CollectionTable(name = "user_interests", joinColumns = @JoinColumn(name = "user_id"))
