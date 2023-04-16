@@ -10,11 +10,12 @@ import jakarta.persistence.*;
 public class Report {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue
     private Long id;
 
-    @Column(nullable = false)
+    @Column(name = "type")
     private String type;
+
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "message_id")

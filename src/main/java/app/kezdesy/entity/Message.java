@@ -12,8 +12,10 @@ import java.sql.Timestamp;
 @Table(name = "message")
 public class Message {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue
     private Long id;
+
+    @Column(name = "text")
     private String text;
 
     @CreationTimestamp

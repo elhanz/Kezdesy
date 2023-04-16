@@ -1,18 +1,21 @@
 package app.kezdesy.entity;
 
 
-
 import jakarta.persistence.*;
+import lombok.Data;
+
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
+@Data
 
+@Entity
 @Table(name = "room")
 public class Room {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue
     private Long id;
 
     @Column(name = "picture")
@@ -37,11 +40,15 @@ public class Room {
     @JoinColumn(name = "location_id")
     private Location location;
 
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "room_interest",
-            joinColumns = {@JoinColumn(name = "room_id")},
-            inverseJoinColumns = {@JoinColumn(name = "interest_id")})
-    private List<Interest> interests = new ArrayList<>();
+//    @ManyToMany(mappedBy = "room")
+//    private List<User> users = new ArrayList<>();
+
+//    @ManyToMany
+//    @JoinTable(
+//            name = "room_interest",
+//            joinColumns = @JoinColumn(name = "room_id"),
+//            inverseJoinColumns = @JoinColumn(name = "interest_id"))
+//    private List<Interest> roomInterests = new ArrayList<>();
 
 //    @ElementCollection(targetClass = Interests.class)
 //    @CollectionTable(name = "room_interests", joinColumns = @JoinColumn(name = "room_id"))

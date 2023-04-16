@@ -1,20 +1,20 @@
 package app.kezdesy.entity;
 
 
+import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
-
+import org.hibernate.annotations.UpdateTimestamp;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import jakarta.persistence.*;
-
+@Entity
 @Table(name = "usr")
 public class User {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue
     private Long id;
 
     @Column(name = "nickname")
@@ -34,7 +34,7 @@ public class User {
     @Column(name = "email")
     private String email;
 
-    @Column(name = "picture" , columnDefinition ="text")
+    @Column(name = "picture", columnDefinition = "text")
 
     private String picture;
 
@@ -49,20 +49,29 @@ public class User {
     @JoinColumn(name = "location_id")
     private Location location;
 
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "user_room",
-            joinColumns = {@JoinColumn(name = "user_id")},
-            inverseJoinColumns = {@JoinColumn(name = "room_id")})
-    private List<Room> rooms = new ArrayList<>();
+    @Column(name = "role")
+    private String role;
 
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "user_interest",
-            joinColumns = {@JoinColumn(name = "user_id")},
-            inverseJoinColumns = {@JoinColumn(name = "interest_id")})
-    private List<Interest> interests = new ArrayList<>();
+//    @ManyToMany(fetch = FetchType.LAZY)
+//    @JoinTable(name = "user_room",
+//            joinColumns = {@JoinColumn(name = "user_id")},
+//            inverseJoinColumns = {@JoinColumn(name = "room_id")})
+//    private List<Room> rooms = new ArrayList<>();
 
-    @Column(name = "Role")
-    private String Role;
+//    @ManyToMany(fetch = FetchType.LAZY)
+//    @JoinTable(name = "user_interest",
+//            joinColumns = {@JoinColumn(name = "user_id")},
+//            inverseJoinColumns = {@JoinColumn(name = "interest_id")})
+//    private List<Interest> userInterests = new ArrayList<>();
+
+    @CreationTimestamp
+    @Column(name = "created_at")
+    private Timestamp createdAt;
+
+    @UpdateTimestamp
+    @Column(name = "updated_at")
+    private Timestamp updatedAt;
+
 
 //    @ElementCollection(targetClass = Interests.class)
 //    @CollectionTable(name = "user_interests", joinColumns = @JoinColumn(name = "user_id"))
@@ -70,9 +79,7 @@ public class User {
 //    @Column(name = "interest")
 //    private Set<Interests> interests;
 
-    @CreationTimestamp
-    @Column(name = "created_at")
-    private Timestamp createdAt;
+
 }
 
 
