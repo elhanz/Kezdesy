@@ -4,7 +4,7 @@ package app.kezdesy.entity;
 import jakarta.persistence.*;
 import lombok.Data;
 
-import java.util.Set;
+import java.util.List;
 
 
 @Entity
@@ -22,7 +22,7 @@ public class Subscription {
     @Column(name = "is_active")
     private boolean isActive;
 
-    @OneToMany(mappedBy="subscription")
-    private Set<User> user;
+    @OneToMany(mappedBy = "subscription")
+    private List<User> user;
 
 }

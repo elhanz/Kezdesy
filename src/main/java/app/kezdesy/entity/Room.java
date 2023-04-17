@@ -2,16 +2,14 @@ package app.kezdesy.entity;
 
 
 import jakarta.persistence.*;
-import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.sql.Timestamp;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
-@Data
+
+
 @Entity
 @Table(name = "room")
 public class Room {
@@ -36,13 +34,13 @@ public class Room {
 
 
     @OneToMany(mappedBy = "room")
-    private Set<Message> messages;
+    private List<Message> messages;
     @ManyToOne
     @JoinColumn(name = "location_id")
     private Location location;
 
     @ManyToMany
-    private List<User> user = new ArrayList<>();
+    private List<User> user;
 
     @CreationTimestamp
     @Column(name = "created_at")
@@ -52,12 +50,12 @@ public class Room {
     @Column(name = "updated_at")
     private Timestamp updatedAt;
 
-//    @ManyToMany
-//    @JoinTable(
-//            name = "room_interest",
-//            joinColumns = @JoinColumn(name = "room_id"),
-//            inverseJoinColumns = @JoinColumn(name = "interest_id"))
-//    private List<Interest> roomInterests = new ArrayList<>();
+    @ManyToMany
+    @JoinTable(
+            name = "interest_room",
+            joinColumns = @JoinColumn(name = "room_id"),
+            inverseJoinColumns = @JoinColumn(name = "interest_id"))
+    private List<Interest> interest;
 
 //    @ElementCollection(targetClass = Interests.class)
 //    @CollectionTable(name = "room_interests", joinColumns = @JoinColumn(name = "room_id"))

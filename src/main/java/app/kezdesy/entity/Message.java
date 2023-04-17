@@ -6,10 +6,10 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import jakarta.persistence.*;
 import java.sql.Timestamp;
-import java.util.Set;
+import java.util.List;
+
 
 @Entity
-@Data
 @Table(name = "message")
 public class Message {
     @Id
@@ -28,7 +28,7 @@ public class Message {
     private Room room;
 
     @OneToMany(mappedBy = "message")
-    private Set<Report> reports;
+    private List<Report> reports;
 
     @CreationTimestamp
     @Column(name = "created_at")

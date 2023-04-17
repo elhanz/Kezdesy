@@ -1,11 +1,14 @@
 package app.kezdesy.entity;
 
+import app.kezdesy.constant.ReportType;
+import app.kezdesy.constant.Role;
 import lombok.Data;
 
 import jakarta.persistence.*;
+import lombok.NoArgsConstructor;
 
 @Entity
-@Data
+@NoArgsConstructor
 @Table(name = "report")
 public class Report {
 
@@ -13,8 +16,8 @@ public class Report {
     @GeneratedValue
     private Long id;
 
-    @Column(name = "type")
-    private String type;
+    @Enumerated(EnumType.STRING)
+    private ReportType type;
 
     @ManyToOne
     @JoinColumn(name = "message_id")
