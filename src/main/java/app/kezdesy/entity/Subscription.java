@@ -4,6 +4,8 @@ package app.kezdesy.entity;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.util.Set;
+
 
 @Entity
 @Data
@@ -14,11 +16,13 @@ public class Subscription {
     @GeneratedValue
     private Long id;
 
-    @Column(nullable = false)
+    @Column(name = "type")
     private String type;
 
     @Column(name = "is_active")
     private boolean isActive;
 
+    @OneToMany(mappedBy="subscription")
+    private Set<User> user;
 
 }

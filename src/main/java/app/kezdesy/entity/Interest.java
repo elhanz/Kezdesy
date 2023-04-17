@@ -1,12 +1,10 @@
 package app.kezdesy.entity;
 
-import lombok.Data;
 import jakarta.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
+
+import java.util.Set;
 
 @Entity
-@Data
 @Table(name = "interest")
 public class Interest {
     @Id
@@ -20,10 +18,7 @@ public class Interest {
     @Column(name = "name")
     private String name;
 
+    @ManyToMany
+    private Set<Room> room;
+    }
 
-//    @ManyToMany(mappedBy = "interests")
-//    private List<User> users;
-//
-//    @ManyToMany(mappedBy = "interest")
-//    private List<Room> rooms;
-}

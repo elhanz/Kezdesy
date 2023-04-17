@@ -3,14 +3,15 @@ package app.kezdesy.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
-
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @Data
-
 @Entity
 @Table(name = "room")
 public class Room {
@@ -33,15 +34,23 @@ public class Room {
     @Column(name = "description")
     private String description;
 
-    @Column(name = "created_at")
-    private Timestamp createdAt;
 
+    @OneToMany(mappedBy = "room")
+    private Set<Message> messages;
     @ManyToOne
     @JoinColumn(name = "location_id")
     private Location location;
 
-//    @ManyToMany(mappedBy = "room")
-//    private List<User> users = new ArrayList<>();
+    @ManyToMany
+    private List<User> user = new ArrayList<>();
+
+    @CreationTimestamp
+    @Column(name = "created_at")
+    private Timestamp createdAt;
+
+    @UpdateTimestamp
+    @Column(name = "updated_at")
+    private Timestamp updatedAt;
 
 //    @ManyToMany
 //    @JoinTable(

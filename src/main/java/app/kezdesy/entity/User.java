@@ -9,8 +9,10 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
+
 @Entity
-@Table(name = "usr")
+@Table(name = "_user")
 public class User {
 
     @Id
@@ -41,6 +43,16 @@ public class User {
     @Column(name = "gender")
     private boolean gender;
 
+
+    @Column(name = "interests")
+    private String interests ;
+
+    @Column(name = "role")
+    private String role;
+
+    @OneToMany(mappedBy = "user")
+    private Set<Message> messages;
+
     @ManyToOne
     @JoinColumn(name = "subscription_id")
     private Subscription subscription;
@@ -49,20 +61,12 @@ public class User {
     @JoinColumn(name = "location_id")
     private Location location;
 
-    @Column(name = "role")
-    private String role;
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "room_user",
+            joinColumns = {@JoinColumn(name = "user_id")},
+            inverseJoinColumns = {@JoinColumn(name = "room_id")})
+    private List<Room> rooms = new ArrayList<>();
 
-//    @ManyToMany(fetch = FetchType.LAZY)
-//    @JoinTable(name = "user_room",
-//            joinColumns = {@JoinColumn(name = "user_id")},
-//            inverseJoinColumns = {@JoinColumn(name = "room_id")})
-//    private List<Room> rooms = new ArrayList<>();
-
-//    @ManyToMany(fetch = FetchType.LAZY)
-//    @JoinTable(name = "user_interest",
-//            joinColumns = {@JoinColumn(name = "user_id")},
-//            inverseJoinColumns = {@JoinColumn(name = "interest_id")})
-//    private List<Interest> userInterests = new ArrayList<>();
 
     @CreationTimestamp
     @Column(name = "created_at")
@@ -71,6 +75,15 @@ public class User {
     @UpdateTimestamp
     @Column(name = "updated_at")
     private Timestamp updatedAt;
+
+
+//    @ManyToMany(fetch = FetchType.LAZY)
+//    @JoinTable(name = "user_interest",
+//            joinColumns = {@JoinColumn(name = "user_id")},
+//            inverseJoinColumns = {@JoinColumn(name = "interest_id")})
+//    private List<Interest> userInterests = new ArrayList<>();
+
+
 
 
 //    @ElementCollection(targetClass = Interests.class)

@@ -16,8 +16,7 @@ public class Report {
     @Column(name = "type")
     private String type;
 
-
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "message_id")
     private Message message;
 
