@@ -2,7 +2,7 @@ package app.kezdesy.entity;
 
 import lombok.Data;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 
 @Entity
 @Data
@@ -10,13 +10,13 @@ import javax.persistence.*;
 public class Report {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue
     private Long id;
 
-    @Column(nullable = false)
+    @Column(name = "type")
     private String type;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "message_id")
     private Message message;
 

@@ -1,17 +1,14 @@
 package app.kezdesy.entity;
 
+import jakarta.persistence.*;
 
-
-import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Set;
 
 @Entity
-
 @Table(name = "interest")
 public class Interest {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue
     @Column(name = "id")
     private Integer id;
 
@@ -21,7 +18,7 @@ public class Interest {
     @Column(name = "name")
     private String name;
 
+    @ManyToMany
+    private Set<Room> room;
+    }
 
-
-
-}

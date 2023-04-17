@@ -1,20 +1,22 @@
 package app.kezdesy.entity;
 
 
+import jakarta.persistence.*;
 import lombok.Data;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
-import javax.persistence.*;
-import java.security.Timestamp;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-@Entity
 @Data
+@Entity
 @Table(name = "room")
 public class Room {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue
     private Long id;
 
     @Column(name = "picture")
@@ -32,18 +34,30 @@ public class Room {
     @Column(name = "description")
     private String description;
 
-    @Column(name = "created_at")
-    private Timestamp createdAt;
 
+    @OneToMany(mappedBy = "room")
+    private Set<Message> messages;
     @ManyToOne
     @JoinColumn(name = "location_id")
     private Location location;
 
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "room_interest",
-            joinColumns = {@JoinColumn(name = "room_id")},
-            inverseJoinColumns = {@JoinColumn(name = "interest_id")})
-    private List<Interest> interests = new ArrayList<>();
+    @ManyToMany
+    private List<User> user = new ArrayList<>();
+
+    @CreationTimestamp
+    @Column(name = "created_at")
+    private Timestamp createdAt;
+
+    @UpdateTimestamp
+    @Column(name = "updated_at")
+    private Timestamp updatedAt;
+
+//    @ManyToMany
+//    @JoinTable(
+//            name = "room_interest",
+//            joinColumns = @JoinColumn(name = "room_id"),
+//            inverseJoinColumns = @JoinColumn(name = "interest_id"))
+//    private List<Interest> roomInterests = new ArrayList<>();
 
 //    @ElementCollection(targetClass = Interests.class)
 //    @CollectionTable(name = "room_interests", joinColumns = @JoinColumn(name = "room_id"))
