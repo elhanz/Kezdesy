@@ -51,7 +51,6 @@ public class User implements UserDetails {
     private String email;
 
     @Column(name = "picture", columnDefinition = "text")
-
     private String picture;
 
     @Column(name = "gender")

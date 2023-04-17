@@ -21,6 +21,9 @@ public class Interest {
     @Column(name = "name")
     private String name;
 
+    @Column(name = "icon", columnDefinition = "text")
+    private String icon;
+
     @ManyToMany(mappedBy = "interest")
     private List<Room> room;
     }
