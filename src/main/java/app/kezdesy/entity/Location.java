@@ -1,9 +1,10 @@
 package app.kezdesy.entity;
 
 import jakarta.persistence.*;
-import java.util.ArrayList;
+
 import java.util.List;
 import java.util.Set;
+
 
 @Entity
 @Table(name = "location")
@@ -22,8 +23,8 @@ public class Location {
     private String city;
 
     @OneToMany(mappedBy="location")
-    private Set<User> user;
+    private List<User> user;
 
     @OneToMany(mappedBy="location")
-    private Set<Room> rooms;
+    private List<Room> room;
 }

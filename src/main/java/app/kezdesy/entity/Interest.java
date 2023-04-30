@@ -2,7 +2,10 @@ package app.kezdesy.entity;
 
 import jakarta.persistence.*;
 
+import java.util.List;
 import java.util.Set;
+
+
 
 @Entity
 @Table(name = "interest")
@@ -18,7 +21,10 @@ public class Interest {
     @Column(name = "name")
     private String name;
 
-    @ManyToMany
-    private Set<Room> room;
+    @Column(name = "icon", columnDefinition = "text")
+    private String icon;
+
+    @ManyToMany(mappedBy = "interest")
+    private List<Room> room;
     }
 
