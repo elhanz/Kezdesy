@@ -1,8 +1,6 @@
 package app.kezdesy.entity;
 
 import app.kezdesy.constant.ReportType;
-import app.kezdesy.constant.Role;
-import lombok.Data;
 
 import jakarta.persistence.*;
 import lombok.NoArgsConstructor;

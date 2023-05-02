@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link th:href="@{/css/login.css}" rel="stylesheet"  type="text/css">
+    <title>Login</title>
+</head>
+<body>
+<div class="wrapper fadeInDown">
+    <div id="formContent">
+        <h2 class="active"> Sign In </h2>
+
+        <div class="fadeIn first">
+            <img src="img/logo2.png" id="icon" alt="User Icon" />
+        </div>
+
+        <div id="result_msg"></div>
+        <input type="email" id="email" class="fadeIn second" name="login" placeholder="email">
+        <input type="text" id="password" class="fadeIn third" name="login" placeholder="password">
+        <button type="submit" id="login" class="fadeIn fourth" value="Log In">Login</button>
+
+
+        <div id="formFooter">
+            <a id="toRegister" class="underlineHover" href="/auth">Don't have an account?</a>
+        </div>
+
+    </div>
+</div>
+
+</body>
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script type="text/javascript">
+    $( document ).ready(function() {
+        $('#login').on('click', function() {
+            $('#result_msg').html('');
+            var email1 = $('#email').val();
+            var password1 = $('#password').val();
+
+            var tokens;
+
+            var xhr = new XMLHttpRequest();
+            var body = 'email=' + encodeURIComponent(email1) + '&password=' + encodeURIComponent(password1);
+            xhr.open("POST", 'login', true);
+            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            xhr.onreadystatechange = function() {
+                if (this.readyState != 4 && xhr.status != 200) {
+                    $('#result_msg').html('Wrong username or password');
+                    return;
+                }
+                if(xhr.readyState === 4 && xhr.status === 200) {
+                    console.log(this.responseText);
+                    tokens = JSON.parse(this.responseText);
+                    console.log("access_token: ", tokens.access_token);
+                    console.log("email: ", tokens.email);
+                    document.cookie="Authorization=Bearer " + tokens.access_token;
+                    window.location.replace("/");
+                }
+            };
+            xhr.send(body);
+        });
+    });
+</script>
+
+</html>
