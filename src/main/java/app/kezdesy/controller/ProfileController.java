@@ -2,10 +2,9 @@ package app.kezdesy.controller;
 
 
 import app.kezdesy.entity.User;
-import app.kezdesy.model.DeleteProfileRequest;
 import app.kezdesy.model.ProfilePicEmailRequest;
 import app.kezdesy.repository.UserRepository;
-import app.kezdesy.service.UserService;
+import app.kezdesy.service.Implementation.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,11 +18,11 @@ public class ProfileController {
     @Autowired
     private UserRepository userRepository;
 
-    private final UserService userService;
+    private final UserServiceImpl userService;
 
     private PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
-    public ProfileController(UserService userService) {
+    public ProfileController(UserServiceImpl userService) {
         this.userService = userService;
     }
 
@@ -61,11 +60,14 @@ public class ProfileController {
         return ResponseEntity.badRequest().body("error");
     }
 
+
     @PostMapping("/deleteUser")
-    public ResponseEntity deleteProfile(@RequestBody DeleteProfileRequest deleteProfileRequest){
-        User user = userRepository.findByEmail(deleteProfileRequest.getEmail());
-        userRepository.deleteById(user.getId());
-        return ResponseEntity.ok().body("User was deleted.");
+    public ResponseEntity deleteUser(@RequestParam String email) {
+        if (userService.deleteUser(email)) {
+            return new ResponseEntity("User was deleted", HttpStatus.ACCEPTED);
+        }
+
+        return new ResponseEntity("Delete failed", HttpStatus.BAD_REQUEST);
     }
 }
 

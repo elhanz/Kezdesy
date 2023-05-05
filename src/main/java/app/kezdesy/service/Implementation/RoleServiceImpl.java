@@ -1,4 +1,4 @@
-package app.kezdesy.service;
+package app.kezdesy.service.Implementation;
 
 
 import app.kezdesy.entity.Role;
@@ -12,7 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 @Transactional
 @Slf4j
-public class RoleService {
+public class RoleServiceImpl {
 
     private final RoleRepository roleRepository;
 

@@ -1,7 +1,7 @@
 package app.kezdesy.entity;
 
 
-import jakarta.persistence.*;
+import javax.persistence.*;
 
 import java.util.List;
 
@@ -14,8 +14,6 @@ public class Role {
 
     private String name;
 
-    @ManyToMany(mappedBy = "roles")
-    private List<User> user;
 
     public Role() {
     }

@@ -2,11 +2,18 @@ package app.kezdesy.entity;
 
 import app.kezdesy.constant.ReportType;
 
-import jakarta.persistence.*;
+import javax.persistence.*;
+
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
+@AllArgsConstructor
 @NoArgsConstructor
+@Setter
+@Getter
 @Table(name = "report")
 public class Report {
 
@@ -18,7 +25,6 @@ public class Report {
     private ReportType type;
 
     @ManyToOne
-    @JoinColumn(name = "message_id")
     private Message message;
 
 

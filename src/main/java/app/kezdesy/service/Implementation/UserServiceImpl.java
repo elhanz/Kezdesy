@@ -1,17 +1,17 @@
-package app.kezdesy.service;
+package app.kezdesy.service.Implementation;
 
 
+import app.kezdesy.entity.Role;
 import app.kezdesy.entity.User;
 import app.kezdesy.repository.RoleRepository;
 import app.kezdesy.repository.UserRepository;
-import com.auth0.jwt.JWT;
+import app.kezdesy.service.Interface.IUserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -20,7 +20,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class UserService implements UserDetailsService {
+public class UserServiceImpl implements UserDetailsService, IUserService {
 
 
     private final UserRepository userRepository;
@@ -70,8 +70,8 @@ public class UserService implements UserDetailsService {
         return true;
     }
 
-    public boolean deleteUser(String token) {
-        String email = JWT.decode(token).getSubject();
+    public boolean deleteUser(String email) {
+
         User user = userRepository.findByEmail(email);
         if (user == null) return false;
         userRepository.delete(user);
@@ -88,6 +88,31 @@ public class UserService implements UserDetailsService {
             return null;
         }
         return user;
+    }
+
+    @Override
+    public User saveUser(User user) {
+        return null;
+    }
+
+    @Override
+    public Role saveRole(Role role) {
+        return null;
+    }
+
+    @Override
+    public void addRoleToUser(String email, String roleName) {
+
+    }
+
+    @Override
+    public User getUser(String email) {
+        return null;
+    }
+
+    @Override
+    public List<User> getAllUsers() {
+        return null;
     }
 
 //    public Set<SimpleGrantedAuthority> getAuthority(User user) {

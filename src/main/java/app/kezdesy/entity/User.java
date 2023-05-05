@@ -2,7 +2,6 @@ package app.kezdesy.entity;
 
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -10,9 +9,11 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
-
+import javax.persistence.*;
 import java.sql.Timestamp;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Date;
 
 @Data
 @Builder
@@ -20,7 +21,7 @@ import java.util.*;
 @AllArgsConstructor
 @Entity
 @Table(name = "_user")
-public class User{
+public class User {
 
     @Id
     @GeneratedValue
@@ -37,7 +38,7 @@ public class User{
     @Column(name = "password")
     private String password;
 
-    @JsonFormat(pattern="dd/MM/yyyy")
+    @JsonFormat(pattern = "dd/MM/yyyy")
     @Column(name = "birth_Date")
     private Date birthDate;
 
@@ -54,25 +55,15 @@ public class User{
     @Column(name = "interests")
     private String interests;
 
-    @OneToMany(mappedBy = "user")
-    private List<Message> messages;
-
 
     @ManyToOne
-    @JoinColumn(name = "location_id")
     private Location location;
 
     @ManyToMany
-    @JoinTable(name = "room_user",
-            joinColumns = {@JoinColumn(name = "user_id")},
-            inverseJoinColumns = {@JoinColumn(name = "room_id")})
-    private List<Room> room = new ArrayList<>();
+    private Collection<Room> rooms = new ArrayList<>();
 
-    @ManyToMany
-    @JoinTable(name = "user_role",
-            joinColumns = {@JoinColumn(name = "user_id")},
-            inverseJoinColumns = {@JoinColumn(name = "role_id")})
-    private List<Role> roles = new ArrayList<>();
+    @ManyToMany(fetch = FetchType.EAGER)
+    private Collection<Role> roles = new ArrayList<>();
 
     @CreationTimestamp
     @Column(name = "created_at")
@@ -81,7 +72,6 @@ public class User{
     @UpdateTimestamp
     @Column(name = "updated_at")
     private Timestamp updatedAt;
-
 
 
 //    @ManyToMany(fetch = FetchType.LAZY)

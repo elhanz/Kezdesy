@@ -1,7 +1,6 @@
 package app.kezdesy.entity;
 
-import jakarta.persistence.*;
-
+import javax.persistence.*;
 import java.util.List;
 import java.util.Set;
 
@@ -22,9 +21,5 @@ public class Location {
     @Column(name = "city")
     private String city;
 
-    @OneToMany(mappedBy="location")
-    private List<User> user;
 
-    @OneToMany(mappedBy="location")
-    private List<Room> room;
 }

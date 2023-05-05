@@ -4,23 +4,21 @@ import app.kezdesy.entity.Role;
 import app.kezdesy.entity.User;
 import app.kezdesy.repository.RoleRepository;
 import app.kezdesy.repository.UserRepository;
-import app.kezdesy.service.UserService;
+import app.kezdesy.service.Implementation.UserServiceImpl;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
-
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -38,7 +36,7 @@ public class UserController {
     private RoleRepository roleRepository;
 
     @Autowired
-    private UserService userService;
+    private UserServiceImpl userService;
 
     private PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
@@ -46,7 +44,7 @@ public class UserController {
 
 
     @PostMapping("/register")
-    public ResponseEntity register(@RequestBody User user){
+    public ResponseEntity register(@RequestBody User user) {
         if (userService.register(user)) {
             return new ResponseEntity("User was registered", HttpStatus.CREATED);
         }
@@ -55,7 +53,7 @@ public class UserController {
     }
 
     @GetMapping("/allUsers")
-    public List<User> getAllUsers(){
+    public List<User> getAllUsers() {
         return userRepository.findAll();
     }
 
@@ -77,7 +75,7 @@ public class UserController {
     @GetMapping("/token/refresh")
     public void refreshToken(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String authorizationHeader = request.getHeader(AUTHORIZATION);
-        if(authorizationHeader != null && authorizationHeader.startsWith("Bearer ")){
+        if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
             try {
                 String refresh_token = authorizationHeader.substring("Bearer ".length());
                 Algorithm algorithm = Algorithm.HMAC256("zxcxz".getBytes());
@@ -96,7 +94,7 @@ public class UserController {
                 tokens.put("refresh_token", refresh_token);
                 response.setContentType(APPLICATION_JSON_VALUE);
                 new ObjectMapper().writeValue(response.getOutputStream(), tokens);
-            } catch (Exception e){
+            } catch (Exception e) {
                 response.setHeader("error", e.getMessage());
                 response.setStatus(HttpServletResponse.SC_FORBIDDEN);
                 Map<String, String> error = new HashMap<>();
@@ -104,18 +102,11 @@ public class UserController {
                 response.setContentType(APPLICATION_JSON_VALUE);
                 new ObjectMapper().writeValue(response.getOutputStream(), error);
             }
-        }else {
+        } else {
             throw new RuntimeException("Refresh token is missing.");
         }
     }
 
 
-    @PostMapping("/deleteUser")
-    public ResponseEntity deleteUser(@RequestParam String email) {
-        if (userService.deleteUser(email)) {
-            return new ResponseEntity("user was deleted", HttpStatus.ACCEPTED);
-        }
 
-        return new ResponseEntity("error", HttpStatus.BAD_REQUEST);
-    }
 }

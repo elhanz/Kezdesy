@@ -1,7 +1,6 @@
 package app.kezdesy.entity;
 
-import jakarta.persistence.*;
-
+import javax.persistence.*;
 import java.util.List;
 import java.util.Set;
 
