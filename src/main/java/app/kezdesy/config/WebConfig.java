@@ -31,16 +31,20 @@ public class WebConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.csrf().disable();
-        http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-        http.authorizeRequests().antMatchers("/css/**", "/js/**", "/img/**", "**/favicon.ico", "/favicon.ico", "**/css/font-awesome.min.css").anonymous();
-        http.authorizeRequests().antMatchers("/public/**", "/resources/**","/resources/static/**", "/", "/createRoom", "/room/*", "/setPicture", "/ws/**", "/ws/info").permitAll();
-        http.authorizeRequests().antMatchers("/register", "/auth", "/login", "/token/refresh", "/loginUser", "/profile", "/updateUser", "/chats", "/chats/**", "/websocket", "/getChat", "/registerGoogle").permitAll();
-        http.authorizeRequests().antMatchers("/home").hasAnyAuthority("ROLE_USER");
-        http.authorizeRequests().antMatchers("/allUsers").hasAnyAuthority("ROLE_ADMIN");
-        http.authorizeRequests().anyRequest().authenticated();
-        http.addFilter(new AuthenticationFilter(authenticationManagerBean()));
-        http.addFilterBefore(new AuthorizationFilter(), UsernamePasswordAuthenticationFilter.class);
+        http
+                .csrf().disable()
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and()
+                .authorizeRequests()
+                .antMatchers("/css/**", "/js/**", "/img/**", "**/favicon.ico", "/favicon.ico", "**/css/font-awesome.min.css").anonymous()
+                .antMatchers("/public/**", "/resources/**", "/resources/static/**", "/", "/createRoom", "/room/*", "/setPicture", "/ws/**", "/ws/info").permitAll()
+                .antMatchers("/register", "/auth", "/login", "/token/refresh", "/loginUser", "/profile", "/updateUser", "/chats", "/chats/**", "/websocket", "/getChat", "/registerGoogle").permitAll()
+                .antMatchers("/home").hasAnyAuthority("ROLE_USER")
+                .antMatchers("/admin/**").hasAnyAuthority("ROLE_ADMIN")
+                .anyRequest().authenticated()
+                .and()
+                .addFilter(new AuthenticationFilter(authenticationManagerBean()))
+                .addFilterBefore(new AuthorizationFilter(), UsernamePasswordAuthenticationFilter.class);
     }
 
 }

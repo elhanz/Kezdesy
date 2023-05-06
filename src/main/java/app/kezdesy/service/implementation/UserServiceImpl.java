@@ -63,19 +63,7 @@ public class UserServiceImpl implements UserDetailsService, IUserService {
         return false;
     }
 
-    @Override
-    public Role saveRole(Role role) {
-        return roleRepo.save(role);
-    }
 
-    @Override
-    public boolean addRoleToUser(String email, String roleName) {
-        User user = userRepo.findByEmail(email);
-        if (user == null || roleRepo.findByName(roleName) == null ) return false;
-        user.getRoles().add(roleRepo.findByName(roleName));
-        userRepo.save(user);
-        return true;
-    }
 
     @Override
     public User getUserByEmail(String email) {
@@ -89,10 +77,7 @@ public class UserServiceImpl implements UserDetailsService, IUserService {
         return user;
     }
 
-    @Override
-    public List<User> getAllUsers() {
-       return userRepo.findAll();
-    }
+
 
 
 }
