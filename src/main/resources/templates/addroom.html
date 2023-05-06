@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org/">
+<head>
+    <meta charset="UTF-8">
+    <link th:href="@{/css/login.css}" rel="stylesheet"  type="text/css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+    <title>Create Room</title>
+</head>
+<body>
+<div class="wrapper fadeInDown">
+    <div id="formContent" style="max-width: 700px">
+        <h2 class="active"> Create Room </h2>
+
+        <div id="result_msg"></div>
+        <input type="text" id="header" class="fadeIn second" placeholder="header">
+        <input type="text" id="description" class="fadeIn second" placeholder="description">
+        <input type="number" id="minAgeLimit" class="fadeIn third" placeholder="minimum age limit" min="15">
+        <input type="number" id="maxAgeLimit" class="fadeIn third" placeholder="maximum age limit" min="16">
+        <input type="number" id="maxMembers" class="fadeIn third" placeholder="maximum members" min="2" max="20">
+        <select name="login" id="city" class="fadeIn third">
+            <option value="">- city -</option>
+            <option value="Nur-Sultan">Nur-Sultan</option>
+            <option value="Almaty">Almaty</option>
+            <option value="Shymkent">Shymkent</option>
+            <option value="Aktobe">Aktobe</option>
+            <option value="Karaganda">Karaganda</option>
+            <option value="Atyrau">Atyrau</option>
+            <option value="Taraz">Taraz</option>
+            <option value="Pavlodar">Pavlodar</option>
+            <option value="Semei">Semei</option>
+            <option value="Ust-Kamenogorsk">Ust-Kamenogorsk</option>
+            <option value="Kyzylorda">Kyzylorda</option>
+            <option value="Uralsk">Uralsk</option>
+            <option value="Kostanay">Kostanay</option>
+            <option value="Petropavlsk">Petropavlsk</option>
+            <option value="Taldykorgan">Taldykorgan</option>
+            <option value="Kokshetau">Kokshetau</option>
+        </select>
+        <div class="fadeIn third">
+            <h2 style="color: #0d0d0d"> Choose interests: </h2>
+            <ul class="ks-cboxtags">
+                <li><input type="checkbox" id="checkboxOne" value="Football"><label for="checkboxOne">Football</label></li>
+                <li><input type="checkbox" id="checkboxTwo" value="Sport"><label for="checkboxTwo">Sport</label></li>
+                <li><input type="checkbox" id="checkboxThree" value="Basketball"><label for="checkboxThree">Basketball</label></li>
+                <li><input type="checkbox" id="checkboxFour" value="Books"><label for="checkboxFour">Books</label></li>
+                <li><input type="checkbox" id="checkboxFive" value="Movies"><label for="checkboxFive">Movies</label></li>
+                <li><input type="checkbox" id="checkboxSix" value="Painting"><label for="checkboxSix">Painting</label></li>
+                <li><input type="checkbox" id="checkboxSeven" value="TableGames"><label for="checkboxSeven">Table Games</label></li>
+                <li><input type="checkbox" id="checkboxEight" value="Music"><label for="checkboxEight">Music</label></li>
+                <li><input type="checkbox" id="checkboxNine" value="Twitch"><label for="checkboxNine">Twitch</label></li>
+                <li><input type="checkbox" id="checkboxTen" value="Netflix"><label for="checkboxTen">Netflix</label></li>
+                <li><input type="checkbox" id="checkboxEleven" value="Politics"><label for="checkboxEleven">Politics</label></li>
+                <li><input type="checkbox" id="checkboxTwelve" value="Tea"><label for="checkboxTwelve">Tea</label></li>
+                <li><input type="checkbox" id="checkboxThirteen" value="Swimming"><label for="checkboxThirteen">Swimming</label></li>
+                <li><input type="checkbox" id="checkboxFourteen" value="Beer"><label for="checkboxFourteen">Beer</label></li>
+                <li><input type="checkbox" id="checkboxFifteen" value="Bicycling"><label for="checkboxFifteen">Bicycling</label></li>
+                <li><input type="checkbox" id="checkbox16" value="TikTok"><label for="checkbox16">TikTok</label></li>
+                <li><input type="checkbox" id="checkbox17" value="Museum"><label for="checkbox17">Museum</label></li>
+                <li><input type="checkbox" id="checkbox18" value="Dance"><label for="checkbox18">Dance</label></li>
+                <li><input type="checkbox" id="checkbox19" value="Cooking"><label for="checkbox19">Cooking</label></li>
+                <li><input type="checkbox" id="checkbox20" value="Hockey"><label for="checkbox20">Hockey</label></li>
+                <li><input type="checkbox" id="checkbox21" value="Manga"><label for="checkbox21">Manga</label></li>
+                <li><input type="checkbox" id="checkbox22" value="MartialArts"><label for="checkbox22">Martial Arts</label></li>
+                <li><input type="checkbox" id="checkbox23" value="Marvel"><label for="checkbox23">Marvel</label></li>
+                <li><input type="checkbox" id="checkbox24" value="Running"><label for="checkbox24">Running</label></li>
+                <li><input type="checkbox" id="checkbox25" value="Gym"><label for="checkbox25">Gym</label></li>
+                <li><input type="checkbox" id="checkbox26" value="Skateboarding"><label for="checkbox26">Skateboarding</label></li>
+                <li><input type="checkbox" id="checkbox27" value="Singing"><label for="checkbox27">Singing</label></li>
+                <li><input type="checkbox" id="checkbox28" value="Karaoke"><label for="checkbox28">Karaoke</label></li>
+                <li><input type="checkbox" id="checkbox29" value="Memes"><label for="checkbox29">Memes</label></li>
+                <li><input type="checkbox" id="checkbox30" value="NFT"><label for="checkbox30">NFT</label></li>
+                <li><input type="checkbox" id="checkbox31" value="Fishing"><label for="checkbox31">Fishing</label></li>
+                <li><input type="checkbox" id="checkbox32" value="Investing"><label for="checkbox32">Investing</label></li>
+                <li><input type="checkbox" id="checkbox33" value="Cosplay"><label for="checkbox33">Cosplay</label></li>
+                <li><input type="checkbox" id="checkbox34" value="Bowling"><label for="checkbox34">Bowling</label></li>
+            </ul>
+        </div>
+        <button type="submit" id="createButton" class="fadeIn fourth">Create</button>
+    </div>
+</div>
+</body>
+
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script type="text/javascript">
+
+    if (getCookie("Authorization") == null) {
+        window.location.replace("/loginUser");
+    }
+
+    function parseJwt(token) {
+        let base64Url = token.split('.')[1];
+        let base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+        let jsonPayload = decodeURIComponent(atob(base64).split('').map(function (c) {
+            return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+        }).join(''));
+
+        return JSON.parse(jsonPayload);
+    }
+
+    function getCookie(name) {
+        const value = `; ${document.cookie}`;
+        const parts = value.split(`; ${name}=`);
+        if (parts.length === 2) return parts.pop().split(';').shift();
+    }
+
+    function eraseCookie(name) {
+        document.cookie = name + '=; Max-Age=-99999999;';
+    }
+    $(document).ready(function () {
+        let myCookie = getCookie("Authorization");
+        let resultC = parseJwt(myCookie);
+        let email = resultC.sub;
+        var interests = [];
+
+        $("input:checkbox").change(function() {
+            if($(this).is(":checked")) {
+                interests.push(this.value);
+                console.log(this.value + " added");
+            } else {
+                let pos = interests.indexOf(this);
+                interests.splice(pos, 1);
+                console.log("not added");
+            }
+        });
+
+        $('#createButton').on('click', function () {
+            console.log(interests)
+            let email = resultC.sub;
+            let header = $('#header').val();
+            let description = $('#description').val();
+            let minAgeLimit = $('#minAgeLimit').val();
+            let maxAgeLimit = $('#maxAgeLimit').val();
+            let maxMembers = $('#maxMembers').val();
+            let city = $('#city').val();
+            let data = JSON.stringify({email:email, city: city, header:header, description: description, minAgeLimit: minAgeLimit,
+                maxAgeLimit: maxAgeLimit, maxMembers: maxMembers, interests: interests});
+                $.ajax({
+                    type: "POST",
+                    contentType: 'application/json',
+                    url: "room/create",
+                    data: data,
+                    dataType: 'json',
+                    complete: function (result) {
+                        console.log(result.responseText);
+                        if (result.responseText == "Room was created") {
+                            //console.log(123);
+                            window.location.replace("/");
+                        } else {
+                            $('#result_msg').css("border", "1px solid red")
+                            $('#result_msg').html(result.responseText);
+                        }
+                    }
+                })
+            })
+
+        }
+    );
+</script>
+</html>
