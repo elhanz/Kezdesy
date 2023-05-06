@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org/">
+<head>
+    <meta charset="UTF-8">
+    <link th:href="@{/css/login.css}" rel="stylesheet"  type="text/css">
+    <title>Register</title>
+</head>
+<body>
+    <div class="wrapper fadeInDown">
+        <div id="formContent">
+            <h2 class="active"> Sign Up </h2>
+
+            <div class="fadeIn first">
+                <img src="/img/logo2.png" id="icon" alt="User Icon" />
+            </div>
+
+            <div id="result_msg"></div>
+                <input type="email" id="email" class="fadeIn second" name="login" placeholder="email">
+                <input type="text" id="password" class="fadeIn third" name="login" placeholder="password">
+                <input type="text" id="fname" class="fadeIn third" name="login" placeholder="first name">
+                <input type="text" id="lname" class="fadeIn third" name="login" placeholder="last name">
+                <input type="number" id="age" class="fadeIn third" name="login" placeholder="age" min="12">
+                <select name="login" id="gender" class="fadeIn third">
+                    <option value="">- gender -</option>
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                </select>
+                <select name="login" id="city" class="fadeIn third">
+                    <option value="">- city -</option>
+                    <option value="Nur-Sultan">Nur-Sultan</option>
+                    <option value="Almaty">Almaty</option>
+                    <option value="Shymkent">Shymkent</option>
+                    <option value="Aktobe">Aktobe</option>
+                    <option value="Karaganda">Karaganda</option>
+                    <option value="Atyrau">Atyrau</option>
+                    <option value="Taraz">Taraz</option>
+                    <option value="Pavlodar">Pavlodar</option>
+                    <option value="Semei">Semei</option>
+                    <option value="Ust-Kamenogorsk">Ust-Kamenogorsk</option>
+                    <option value="Kyzylorda">Kyzylorda</option>
+                    <option value="Uralsk">Uralsk</option>
+                    <option value="Kostanay">Kostanay</option>
+                    <option value="Petropavlsk">Petropavlsk</option>
+                    <option value="Taldykorgan">Taldykorgan</option>
+                    <option value="Kokshetau">Kokshetau</option>
+                </select>
+            <button type="submit" id="registrationButton" class="fadeIn fourth">Registration</button>
+
+            <div id="formFooter">
+                <a class="underlineHover" href="/loginUser">Already has an account?</a>
+            </div>
+
+        </div>
+    </div>
+</body>
+
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+            $('#registrationButton').on('click', function () {
+                let email = $('#email').val();
+                let password = $('#password').val();
+                let fname = $('#fname').val();
+                let lname = $('#lname').val();
+                let age = $('#age').val();
+                let gender = $('#gender').val();
+                let city = $('#city').val();
+                $.ajax({
+                    type: "POST",
+                    contentType: 'application/json',
+                    url: "register",
+                    data: JSON.stringify({
+                        email: email, password: password, first_name: fname,
+                        last_name: lname, age: age, gender: gender, city: city
+                    }),
+                    dataType: 'json',
+                    complete: function (result) {
+                        console.log(result.responseText);
+                        if (result.responseText == "User was added") {
+                            //console.log(123);
+                            window.location.replace("/");
+                        } else {
+                            $('#result_msg').css("border", "1px solid red")
+                            $('#result_msg').html(result.responseText);
+                        }
+                    }
+                })
+            })
+
+        }
+    );
+</script>
+</html>

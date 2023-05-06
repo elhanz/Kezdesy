@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+    <title>Kezdesy Chat</title>
+    <link rel="stylesheet" th:href="@{/css/message.css}" type="text/css"/>
+</head>
+<body>
+
+<div id="username-page">
+    <div class="username-page-container">
+        <h1 class="title">Welcome!</h1>
+        <form id="usernameForm" name="usernameForm">
+            <div class="form-group">
+                <input type="hidden" id="name"/>
+                <input type="hidden" id="chatId"/>
+                <input type="hidden" id="userId"/>
+            </div>
+            <div class="form-group">
+                <button id="start" type="submit" class="accent username-submit">Start Chatting</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div id="chat-page" class="hidden">
+    <div class="chat-container">
+        <div class="chat-header">
+            <h2 id="chat__name"></h2>
+        </div>
+        <div class="connecting">
+            Connecting...
+        </div>
+        <ul id="messageArea">
+        </ul>
+        <form id="messageForm" name="messageForm" nameForm="messageForm">
+            <div class="form-group">
+                <div class="input-group clearfix">
+                    <input type="text" id="message" placeholder="Type a message..." autocomplete="off" class="form-control"/>
+                    <button type="submit" class="primary">Send</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.4/sockjs.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script type="text/javascript">
+
+    'use strict';
+
+    var usernamePage = document.querySelector('#username-page');
+    var chatPage = document.querySelector('#chat-page');
+    var usernameForm = document.querySelector('#usernameForm');
+    var messageForm = document.querySelector('#messageForm');
+    var messageInput = document.querySelector('#message');
+    var messageArea = document.querySelector('#messageArea');
+    var connectingElement = document.querySelector('.connecting');
+
+    var stompClient = null;
+    var username = null;
+    var chatId = null;
+    var profilePic = null;
+    var userId = null;
+
+    var colors = [
+        '#2196F3', '#32c787', '#00BCD4', '#ff5652',
+        '#ffc107', '#ff85af', '#FF9800', '#39bbb0'
+    ];
+
+    function connect(event) {
+        username = document.querySelector('#name').value.trim();
+
+        if(username) {
+            usernamePage.classList.add('hidden');
+            chatPage.classList.remove('hidden');
+
+            var socket = new SockJS('/ws');
+            stompClient = Stomp.over(socket);
+
+            stompClient.connect({}, onConnected, onError);
+        }
+        event.preventDefault();
+    }
+
+
+    function onConnected() {
+        chatId = document.querySelector('#chatId').value;
+        userId = document.querySelector('#userId').value;
+
+        // Subscribe to the Public Topic
+        stompClient.subscribe('/topic/' + chatId, onMessageReceived);
+
+        // Tell your username to the server
+        stompClient.send('/app/chat.addUser/' + chatId,
+            {},
+            JSON.stringify({sender: username, type: 'JOIN', userId: username})
+        )
+
+        connectingElement.classList.add('hidden');
+    }
+
+
+    function onError(error) {
+        connectingElement.textContent = error;
+        connectingElement.style.color = 'red';
+    }
+
+
+    function sendMessage(event) {
+        var messageContent = messageInput.value.trim();
+
+        if(messageContent && stompClient) {
+            var chatMessage = {
+                sender: username,
+                content: messageInput.value,
+                type: 'CHAT',
+                senderId: userId
+            };
+
+            stompClient.send('/app/chat.sendMessage/' + chatId,
+                {}, JSON.stringify(chatMessage));
+            messageInput.value = '';
+        }
+        event.preventDefault();
+    }
+
+
+    function onMessageReceived(payload) {
+        var message = JSON.parse(payload.body);
+
+        var messageElement = document.createElement('li');
+
+        if(message.type === 'JOIN') {
+            messageElement.classList.add('event-message');
+            message.content = message.sender + ' joined!';
+        } else if (message.type === 'LEAVE') {
+            messageElement.classList.add('event-message');
+            message.content = message.sender + ' left!';
+        } else {
+            messageElement.classList.add('chat-message');
+
+            $.ajax({
+                type: "GET",
+                headers: {'Authorization': getCookie("Authorization")},
+                contentType: 'application/json',
+                url: "getUserForChatById",
+                data: {userID: message.senderId},
+                dataType: 'json',
+                async: false,
+                success: function (result) {
+                    if (result.profilePic != null) {
+                        var avatarElement = document.createElement('img');
+                        avatarElement.src = result.profilePic;
+                    }
+                    else {
+                        var avatarElement = document.createElement('i');
+                        var avatarText = document.createTextNode(message.sender[0]);
+                        avatarElement.appendChild(avatarText);
+                        avatarElement.style['background-color'] = getAvatarColor(message.sender);
+                    }
+
+                    messageElement.appendChild(avatarElement);
+
+                    var usernameElement = document.createElement('span');
+                    var usernameText = document.createTextNode(message.sender);
+                    usernameElement.appendChild(usernameText);
+                    messageElement.appendChild(usernameElement);
+                }
+            });
+        }
+
+        var textElement = document.createElement('p');
+        var messageText = document.createTextNode(message.content);
+        textElement.appendChild(messageText);
+
+        messageElement.appendChild(textElement);
+
+        console.log(textElement);
+        console.log(messageElement);
+        messageArea.appendChild(messageElement);
+        messageArea.scrollTop = messageArea.scrollHeight;
+    }
+
+
+    function getAvatarColor(messageSender) {
+        var hash = 0;
+        for (var i = 0; i < messageSender.length; i++) {
+            hash = 31 * hash + messageSender.charCodeAt(i);
+        }
+
+        var index = Math.abs(hash % colors.length);
+        return colors[index];
+    }
+
+    usernameForm.addEventListener('submit', connect, true)
+    messageForm.addEventListener('submit', sendMessage, true)
+
+
+
+    if (getCookie("Authorization") == null) {
+        window.location.replace("/loginUser");
+    }
+
+    function parseJwt(token) {
+        let base64Url = token.split('.')[1];
+        let base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+        let jsonPayload = decodeURIComponent(atob(base64).split('').map(function (c) {
+            return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+        }).join(''));
+
+        return JSON.parse(jsonPayload);
+    }
+
+    function getCookie(name) {
+        const value = `; ${document.cookie}`;
+        const parts = value.split(`; ${name}=`);
+        if (parts.length === 2) return parts.pop().split(';').shift();
+    }
+
+    function eraseCookie(name) {
+        document.cookie = name + '=; Max-Age=-99999999;';
+    }
+
+    $(document).ready(function () {
+        //$('#user-chats').html('');
+        let myCookie = getCookie("Authorization");
+        let resultC = parseJwt(myCookie);
+        let email = resultC.sub;
+        let chatId = getCookie("ChatId");
+
+        if (getCookie("Authorization") != null) {
+            let resultC = parseJwt(myCookie);
+            let email = resultC.sub;
+
+            $.ajax({
+                type: "GET",
+                headers: {'Authorization': myCookie},
+                contentType: 'application/json',
+                url: "getUserForChat",
+                data: {email: email},
+                dataType: 'json',
+                success: function (result) {
+                    console.log(result);
+                    $('#chatId').val(chatId);
+                    $('#userId').val(result.id);
+                    $('#name').val(result.first_name + " " + result.last_name);
+                    profilePic = result.profilePic;
+
+                    $('#start').on('click', function () {
+                        $.ajax({
+                            type: "GET",
+                            headers: {'Authorization': myCookie},
+                            contentType: 'application/json',
+                            url: "getChat",
+                            data: {chatID : chatId},
+                            dataType: 'json',
+                            success: function (result) {
+                                console.log(result);
+                                $('#chat__name').html(result.name);
+                                console.log(result.messages);
+                                result.messages.forEach((item, i) => {
+                                    $.ajax({
+                                    type: "GET",
+                                    headers: {'Authorization': myCookie},
+                                    contentType: 'application/json',
+                                    url: "getUserForChatById",
+                                    data: {userID: item.senderId},
+                                    dataType: 'json',
+                                    async: false,
+                                    success: function (result) {
+                                        console.log(i);
+                                        var message = item;
+                                        var messageElement = document.createElement('li');
+                                        messageElement.classList.add('chat-message');
+
+                                        if (!(result.profilePic == null)) {
+                                            var avatarElement = document.createElement('img');
+                                            avatarElement.src = result.profilePic;
+                                        }
+                                        else {
+                                            var avatarElement = document.createElement('i');
+                                            var avatarText = document.createTextNode(result.first_name[0]);
+                                            avatarElement.appendChild(avatarText);
+                                            avatarElement.style['background-color'] = getAvatarColor(result.first_name + ' ' + result.last_name);
+                                        }
+
+                                        messageElement.appendChild(avatarElement);
+
+                                        var usernameElement = document.createElement('span');
+                                        var usernameText = document.createTextNode(result.first_name + ' ' + result.last_name);
+                                        usernameElement.appendChild(usernameText);
+                                        messageElement.appendChild(usernameElement);
+
+                                        var textElement = document.createElement('p');
+                                        var messageText = document.createTextNode(message.content);
+                                        textElement.appendChild(messageText);
+
+                                        messageElement.appendChild(textElement);
+
+                                        messageArea.appendChild(messageElement);
+                                        messageArea.scrollTop = messageArea.scrollHeight;
+                                    },
+                                    error : function (e) {
+                                        console.log("ERROR: ", e);
+                                    }
+                                });
+                                });
+                            }
+                        });
+                    });
+
+                },
+                error: function (e) {
+                    console.log("ERROR: ", e);
+                    window.location.replace("/loginUser");
+                }
+            });
+        } else {
+            window.location.replace("/loginUser");
+        }
+    });
+
+</script>
+</body>
+</html>
