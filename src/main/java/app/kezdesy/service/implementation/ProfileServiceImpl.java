@@ -17,7 +17,7 @@ public class ProfileServiceImpl implements IProfileService {
     UserRepo userRepo;
     public final PasswordEncoder passwordEncoder;
 
-    private final UserValidation userValidation = new UserValidation();
+    private final UserValidation userValidation = new UserValidation(userRepo);
 
     public boolean changePhoto(String email, String file) {
         String picture = file.replace("{\"file\":\"", "");
@@ -30,7 +30,7 @@ public class ProfileServiceImpl implements IProfileService {
     }
 
     public boolean updateUser(User user) {
-        if (userValidation.isUserValid(user)) {
+//        if (userValidation.isUserValid(user)) {
             User existUser = userRepo.findByEmail(user.getEmail());
             existUser.setFirst_name(user.getFirst_name());
             existUser.setLast_name(user.getLast_name());
@@ -40,9 +40,9 @@ public class ProfileServiceImpl implements IProfileService {
 
             userRepo.save(existUser);
             return true;
-        }
-
-        return false;
+//        }
+//
+//        return false;
     }
 
     @Override

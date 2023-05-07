@@ -8,7 +8,6 @@ import java.util.List;
 public interface IAdminService {
     boolean addRoleToUser (String email, String roleName);
     Role saveRole (Role role);
-
     List<User> getAllUsers();
 
 }
