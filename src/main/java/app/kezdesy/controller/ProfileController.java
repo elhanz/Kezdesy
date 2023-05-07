@@ -16,6 +16,11 @@ public class ProfileController {
     private ProfileServiceImpl profileService;
 
 
+    @GetMapping("/getUser")
+    public ResponseEntity<User>getUserByUsername(@RequestParam String email) {
+        return ResponseEntity.ok().body(profileService.getUserByEmail(email));
+    }
+
     @PostMapping("/updateProfile")
     public ResponseEntity updateProfile(@RequestBody User user){
 
@@ -45,7 +50,7 @@ public class ProfileController {
         return ResponseEntity.badRequest().body("Password wasn't changed");
     }
 
-    @PostMapping("/deleteUser")
+    @DeleteMapping("/deleteUser")
     public ResponseEntity deleteProfile(@RequestParam String email){ //Сменил бади на парам
         if (profileService.deleteUserByEmail(email)) {
             return new ResponseEntity("User was deleted", HttpStatus.OK);

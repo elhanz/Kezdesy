@@ -64,4 +64,10 @@ public class ProfileServiceImpl implements IProfileService {
         return true;
     }
 
+    @Override
+    public User getUserByEmail(String email) {
+        User user = userRepo.findByEmail(email);
+        if (user == null) return null;
+        return user;
+    }
 }

@@ -7,6 +7,8 @@ public interface IProfileService {
     boolean changePhoto (String email, String file);
     boolean updateUser (User user);
 
+    User getUserByEmail(String email);
+
     boolean updateUserPassword (String email, String password);
     boolean deleteUserByEmail (String email);
 

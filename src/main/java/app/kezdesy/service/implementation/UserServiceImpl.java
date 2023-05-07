@@ -52,7 +52,7 @@ public class UserServiceImpl implements UserDetailsService, IUserService {
 
     @Override
     public boolean saveUser(User user) {
-
+//
 //        if (userValidation.isUserValid(user)) {
             user.getRoles().add(roleRepo.findByName("ROLE_USER"));
             user.setPassword(passwordEncoder.encode(user.getPassword()));
