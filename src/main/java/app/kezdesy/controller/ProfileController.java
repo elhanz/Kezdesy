@@ -10,14 +10,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/profile")
 public class ProfileController {
 
    @Autowired
     private ProfileServiceImpl profileService;
 
 
-    @PostMapping("/update")
+    @PostMapping("/updateProfile")
     public ResponseEntity updateProfile(@RequestBody User user){
 
         if (profileService.updateUser(user)) {

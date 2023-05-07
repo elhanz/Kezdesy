@@ -24,7 +24,6 @@ import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 @RestController
-@RequestMapping("/user")
 public class UserController {
 
 
@@ -40,8 +39,6 @@ public class UserController {
 
         return new ResponseEntity("User wasn't registered", HttpStatus.BAD_REQUEST);
     }
-
-
 
     @GetMapping("/token/refresh")
     public void refreshToken(HttpServletRequest request, HttpServletResponse response) throws IOException {
