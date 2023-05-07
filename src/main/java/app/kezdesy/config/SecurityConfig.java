@@ -14,12 +14,12 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 @EnableWebSecurity
 @Configuration
-public class WebConfig extends WebSecurityConfigurerAdapter {
+public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final UserDetailsService userDetailsService;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
-    public WebConfig(UserDetailsService userDetailsService, BCryptPasswordEncoder bCryptPasswordEncoder) {
+    public SecurityConfig(UserDetailsService userDetailsService, BCryptPasswordEncoder bCryptPasswordEncoder) {
         this.userDetailsService = userDetailsService;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
@@ -37,8 +37,8 @@ public class WebConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .authorizeRequests()
                 .antMatchers("/css/**", "/js/**", "/img/**", "**/favicon.ico", "/favicon.ico", "**/css/font-awesome.min.css").anonymous()
-                .antMatchers("/public/**", "/resources/**", "/resources/static/**", "/", "/createRoom", "/room/*", "/setPicture", "/ws/**", "/ws/info").permitAll()
-                .antMatchers("/register", "/auth", "/login", "/token/refresh", "/loginUser", "/profile", "/updateUser", "/chats", "/chats/**", "/websocket", "/getChat", "/registerGoogle").permitAll()
+                .antMatchers("/public/**", "/resources/**", "/resources/static/**").permitAll()
+                .antMatchers("/user/**", "/room/**", "/login",  "/pages/**", "/profile/**", "/chats/**", "/websocket", "/ws/**").permitAll()
                 .antMatchers("/home").hasAnyAuthority("ROLE_USER")
                 .antMatchers("/admin/**").hasAnyAuthority("ROLE_ADMIN")
                 .anyRequest().authenticated()
