@@ -1,6 +1,7 @@
 package app.kezdesy.controller;
 
 import app.kezdesy.entity.User;
+import app.kezdesy.model.ChangeInterestsRequest;
 import app.kezdesy.model.ChangePictureRequest;
 import app.kezdesy.model.UpdatePasswordRequest;
 import app.kezdesy.service.implementation.ProfileServiceImpl;
@@ -41,6 +42,16 @@ public class ProfileController {
         return ResponseEntity.badRequest().body("error");
     }
 
+    @PostMapping("/setInterests")
+    public ResponseEntity changeInterests(@RequestBody ChangeInterestsRequest changeInterestsRequest) {
+
+        if (profileService.setInterests(changeInterestsRequest.getEmail(), changeInterestsRequest.getInterests())) {
+            return new ResponseEntity("Interests were set", HttpStatus.OK);
+        }
+        return ResponseEntity.badRequest().body("Error Interests ");
+    }
+
+
     @PostMapping("/setPassword")
     public ResponseEntity updatePassword(@RequestBody UpdatePasswordRequest updatePasswordRequest) {
 
@@ -50,7 +61,7 @@ public class ProfileController {
         return ResponseEntity.badRequest().body("Password wasn't changed");
     }
 
-    @DeleteMapping("/deleteUser")
+    @PostMapping("/deleteUser")
     public ResponseEntity deleteProfile(@RequestParam String email){ //Сменил бади на парам
         if (profileService.deleteUserByEmail(email)) {
             return new ResponseEntity("User was deleted", HttpStatus.OK);

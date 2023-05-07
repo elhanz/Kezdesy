@@ -44,14 +44,14 @@ public class Room {
     @Column(name = "interest")
     private Set<Interest> interests;
 
-    public Room(String city, String header, String description, int minAgeLimit, int maxAgeLimit, int maxMembers, Set<Interest> skillSet) {
+    public Room(String city, String header, String description, int minAgeLimit, int maxAgeLimit, int maxMembers, Set<Interest> interests) {
         this.city = city;
         this.header = header;
         this.description = description;
         this.minAgeLimit = minAgeLimit;
         this.maxAgeLimit = maxAgeLimit;
         this.maxMembers = maxMembers;
-        this.interests = skillSet;
+        this.interests = interests;
     }
 
 

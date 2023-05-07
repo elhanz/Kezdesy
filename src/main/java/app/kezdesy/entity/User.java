@@ -11,6 +11,7 @@ import org.hibernate.annotations.Type;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Set;
 
 @Data
 @NoArgsConstructor
@@ -53,7 +54,14 @@ public class User {
     @LazyCollection(LazyCollectionOption.FALSE)
     private Collection<Chat> chats = new ArrayList<>();
 
-    public User(String first_name, String last_name, int age, String city, String email, String password, String profilePic) {
+    @ElementCollection(targetClass = Interest.class)
+    @CollectionTable(name = "user_interests", joinColumns = @JoinColumn(name = "user_id"))
+    @Enumerated(EnumType.STRING)
+    @Column(name = "interest")
+    private Set<Interest> interests;
+
+
+    public User(String first_name, String last_name, int age, String city, String email, String password, String profilePic, Set<Interest> interests) {
         this.first_name = first_name;
         this.last_name = last_name;
         this.age = age;
@@ -61,6 +69,7 @@ public class User {
         this.email = email;
         this.password = password;
         this.profilePic = profilePic;
+        this.interests = interests;
     }
 
 

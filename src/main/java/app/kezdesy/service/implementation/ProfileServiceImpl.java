@@ -1,6 +1,8 @@
 package app.kezdesy.service.implementation;
 
+import app.kezdesy.entity.Interest;
 import app.kezdesy.entity.User;
+import app.kezdesy.model.ChangeInterestsRequest;
 import app.kezdesy.repository.UserRepo;
 import app.kezdesy.service.interfaces.IProfileService;
 import app.kezdesy.validation.UserValidation;
@@ -8,6 +10,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.Set;
 
 
 @Service
@@ -43,6 +47,15 @@ public class ProfileServiceImpl implements IProfileService {
 //        }
 //
 //        return false;
+    }
+    @Override
+    public boolean setInterests(String email, Set<Interest> interests) {
+
+        User existUser = userRepo.findByEmail(email);
+        existUser.setInterests(interests);
+        userRepo.save(existUser);
+
+        return true;
     }
 
     @Override
