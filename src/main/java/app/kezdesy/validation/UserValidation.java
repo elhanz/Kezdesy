@@ -36,7 +36,7 @@ public class UserValidation {
     }
 
     private boolean isAgeValid(int age) {
-        return age > 18 && age < 110;
+        return age >= 18 && age < 110;
     }
 
 
