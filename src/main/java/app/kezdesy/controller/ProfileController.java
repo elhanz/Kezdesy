@@ -3,6 +3,7 @@ package app.kezdesy.controller;
 import app.kezdesy.entity.User;
 import app.kezdesy.model.ChangeInterestsRequest;
 import app.kezdesy.model.ChangePictureRequest;
+import app.kezdesy.model.DeleteProfileRequest;
 import app.kezdesy.model.UpdatePasswordRequest;
 import app.kezdesy.service.implementation.ProfileServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -62,12 +63,24 @@ public class ProfileController {
     }
 
     @PostMapping("/deleteUser")
-    public ResponseEntity deleteProfile(@RequestParam String email){ //Сменил бади на парам
-        if (profileService.deleteUserByEmail(email)) {
+    public ResponseEntity deleteProfile(@RequestBody DeleteProfileRequest deleteProfileRequest){
+
+        if (profileService.deleteUserByEmail(deleteProfileRequest.getEmail())) {
             return new ResponseEntity("User was deleted", HttpStatus.OK);
         }
         else return  ResponseEntity.badRequest().body("User wasn't deleted");
 
-}
+
+    }
+//    @DeleteMapping("/deleteUser")
+//    public ResponseEntity deleteProfile(@RequestParam String email){ //Сменил бади на парам
+//        if (profileService.deleteUserByEmail(email)) {
+//            return new ResponseEntity("User was deleted", HttpStatus.OK);
+//        }
+//        else return  ResponseEntity.badRequest().body("User wasn't deleted");
+//
+//}
+
+
 
 }

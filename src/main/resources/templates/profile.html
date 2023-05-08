@@ -426,7 +426,7 @@
                 headers: {'Authorization': myCookie},
                 contentType: 'application/json',
                 url: "deleteUser",
-                data: {email: email},
+                data: JSON.stringify({"email" : email}),
                 dataType: 'json',
                 complete: function (result) {
                     console.log("email: " + email);
