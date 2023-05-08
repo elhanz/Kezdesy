@@ -9,11 +9,10 @@ import org.springframework.http.ResponseEntity;
 import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-@RequiredArgsConstructor
+
+
 public class UserValidation {
 
-    @Autowired
-    private final UserRepo userRepo;
 
 
 
@@ -21,11 +20,11 @@ public class UserValidation {
     public boolean isUserValid(User user) {
         return isEmailValid(user.getEmail())
                 && isAgeValid(user.getAge())
-//                && isNameValid(user.getFirst_name())
-//                && isNameValid(user.getLast_name())
+                && isNameValid(user.getFirst_name())
+                && isNameValid(user.getLast_name())
                 && isPasswordValid(user.getPassword())
-                && isGenderValid(user.getGender())
-                && !userRepo.existsByEmail(user.getEmail());
+                && isGenderValid(user.getGender());
+
 //                && isCityValid(user.getCity());
     }
 
@@ -39,17 +38,19 @@ public class UserValidation {
     private boolean isAgeValid(int age) {
         return age > 18 && age < 110;
     }
-//    private boolean isNameValid(String name) {
-//        name = name.toLowerCase();
-//        char[] charArray = name.toCharArray();
-//        for (int i = 0; i < charArray.length; i++) {
-//            char ch = charArray[i];
-//            if (!(ch >= 'a' && ch <= 'z')) {
-//                return false;
-//            }
-//        }
-//        return true;
-//    }
+
+
+    public static boolean isNameValid(String name) {
+        if (name == null || name.isEmpty()) {
+            return false;
+        }
+
+        String regex = "^[\\p{L}]{2,50}$";
+        Pattern pattern = Pattern.compile(regex, Pattern.UNICODE_CHARACTER_CLASS);
+        Matcher matcher = pattern.matcher(name);
+        return matcher.matches();
+    }
+
 
 
     private boolean isPasswordValid(String password) {
@@ -57,7 +58,7 @@ public class UserValidation {
     }
 
     private boolean isGenderValid(String gender) {
-        return gender != null && (gender.equals("Male") || gender.equals("Female") || gender.equals("Other"));
+        return gender != null && (gender.equals("Male") || gender.equals("Female") );
     }
 
 

@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface IUserService {
 
-    boolean saveUser (User user);
+    boolean createUser (User user);
 
     User getUserByEmail(String email);
     User findById(Long id);

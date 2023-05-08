@@ -33,7 +33,7 @@ public class UserController {
 
     @PostMapping("/register")
     public ResponseEntity register(@RequestBody User user) {
-        if (userService.saveUser(user)) {
+        if (userService.createUser(user)) {
             return new ResponseEntity("User was registered", HttpStatus.CREATED);
         }
 

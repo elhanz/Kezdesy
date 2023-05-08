@@ -55,7 +55,7 @@ public class ProfileController {
     @PostMapping("/setPassword")
     public ResponseEntity updatePassword(@RequestBody UpdatePasswordRequest updatePasswordRequest) {
 
-        if (profileService.updateUserPassword(updatePasswordRequest.getEmail(), updatePasswordRequest.getPassword())) {
+        if (profileService.updateUserPassword(updatePasswordRequest.getEmail(), updatePasswordRequest.getOldPassword(), updatePasswordRequest.getNewPassword())) {
             return new ResponseEntity("Password was changed", HttpStatus.OK);
         }
         return ResponseEntity.badRequest().body("Password wasn't changed");

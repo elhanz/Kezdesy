@@ -15,7 +15,7 @@ public interface IProfileService {
 
     boolean setInterests(String email, Set<Interest> interests);
 
-    boolean updateUserPassword (String email, String password);
+    boolean updateUserPassword (String email, String oldPassword, String newPassword);
     boolean deleteUserByEmail (String email);
 
 }

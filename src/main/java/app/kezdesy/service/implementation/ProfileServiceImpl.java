@@ -2,7 +2,6 @@ package app.kezdesy.service.implementation;
 
 import app.kezdesy.entity.Interest;
 import app.kezdesy.entity.User;
-import app.kezdesy.model.ChangeInterestsRequest;
 import app.kezdesy.repository.UserRepo;
 import app.kezdesy.service.interfaces.IProfileService;
 import app.kezdesy.validation.UserValidation;
@@ -21,7 +20,7 @@ public class ProfileServiceImpl implements IProfileService {
     UserRepo userRepo;
     public final PasswordEncoder passwordEncoder;
 
-    private final UserValidation userValidation = new UserValidation(userRepo);
+    private UserValidation userValidation = new UserValidation();
 
     public boolean changePhoto(String email, String file) {
         String picture = file.replace("{\"file\":\"", "");
@@ -34,8 +33,9 @@ public class ProfileServiceImpl implements IProfileService {
     }
 
     public boolean updateUser(User user) {
-//        if (userValidation.isUserValid(user)) {
-            User existUser = userRepo.findByEmail(user.getEmail());
+        User existUser = userRepo.findByEmail(user.getEmail());
+        if (userValidation.isUserValid(user) && existUser != null) {
+
             existUser.setFirst_name(user.getFirst_name());
             existUser.setLast_name(user.getLast_name());
             existUser.setAge(user.getAge());
@@ -44,10 +44,11 @@ public class ProfileServiceImpl implements IProfileService {
 
             userRepo.save(existUser);
             return true;
-//        }
-//
-//        return false;
+        }
+
+        return false;
     }
+
     @Override
     public boolean setInterests(String email, Set<Interest> interests) {
 
@@ -59,16 +60,19 @@ public class ProfileServiceImpl implements IProfileService {
     }
 
     @Override
-    public boolean updateUserPassword(String email, String password) { //TODO Нужно передавать пароль зашифрованный
-        User existUser = userRepo.findByEmail(email);
-        if (existUser == null) return false;
-        existUser.setPassword(passwordEncoder.encode(password));
+    public boolean updateUserPassword(String email, String oldPassword, String newPassword) { //TODO Нужно передавать пароль зашифрованный
 
-        userRepo.save(existUser);
+        User existUser = userRepo.findByEmail(email);
+
+        if (existUser != null && passwordEncoder.matches(oldPassword, existUser.getPassword())) {
+            existUser.setPassword(passwordEncoder.encode(newPassword));
+            userRepo.save(existUser);
             return true;
         }
+        return false;
+    }
 
-
+    @Override
     public boolean deleteUserByEmail(String email) {
         User user = userRepo.findByEmail(email);
         if (user == null) return false;
