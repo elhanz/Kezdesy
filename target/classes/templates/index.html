@@ -5,169 +5,207 @@
     <title>Home</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet"  type="text/css">
-    <link th:href="@{/css/filter.css}" rel="stylesheet"  type="text/css">
-    <link th:href="@{/css/templatemo-style.css}" rel="stylesheet"  type="text/css">
+    <link th:href="@{/css/main.css}" rel="stylesheet"  type="text/css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/kute.js@2.1.2/dist/kute.min.js"></script>
 </head>
-<body>
 
-<header class="site-header" id="top">
-    <nav class="navbar navbar-default navbar-fixed-top">
-        <div class="container">
-            <div class="row">
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
-                        <i class="fa fa-bars"></i>
-                    </button>
-                    <div class="logo-wrapper">
-                        <a class="navbar-brand" href="/">
-                            <img src="/img/logo2.png" alt="rainbow template" title="rainbow template">
-                        </a>
-                    </div>
-                </div>
-                <div class="collapse navbar-collapse" id="main-menu">
-                    <ul class="nav navbar-nav navbar-right">
-                        <li><a href="/" class="link-home">Home</a></li>
-                        <li><a href="/chats" class="link-about">Message</a></li>
-                        <li><a href="/profile" class="link-portfolio">Profile</a></li>
-                    </ul>
-                </div>
+<body class="body">
+<div class="page-header">
+    <div class="header-logo">
+        <div class="logo">
+            <a href="/"><img src="/img/logo2.png" class="logo_png" alt=""/></a>
+        </div>
+    </div>
+    <div class="header-menu">
+        <ul class="menu-list" id="menuList">
+            <li class="list-item"><a href="/rooms">Rooms</a></li>
+            <li class="list-item"><a href="/chats">Chats</a></li>
+            <li class="list-item"><a href="/profile">Profile</a></li>
+        </ul>
+    </div>
+    <div class="header-login">
+        <a class="header-login-link" href="/loginUser"><div class="header-login-button">LOGIN</div></a>
+    </div>
+    <div class="logo">
+        <button class="menu menu-icon" onclick="this.classList.toggle('opened');this.setAttribute('aria-expanded', this.classList.contains('opened')); togglemenu()" aria-label="Main Menu">
+            <svg width="50" height="60" viewBox="0 0 100 100">
+                <path class="line line1" d="M 20,29.000046 H 80.000231 C 80.000231,29.000046 94.498839,28.817352 94.532987,66.711331 94.543142,77.980673 90.966081,81.670246 85.259173,81.668997 79.552261,81.667751 75.000211,74.999942 75.000211,74.999942 L 25.000021,25.000058" />
+                <path class="line line2" d="M 20,50 H 80" />
+                <path class="line line3" d="M 20,70.999954 H 80.000231 C 80.000231,70.999954 94.498839,71.182648 94.532987,33.288669 94.543142,22.019327 90.966081,18.329754 85.259173,18.331003 79.552261,18.332249 75.000211,25.000058 75.000211,25.000058 L 25.000021,74.999942" />
+            </svg>
+        </button>
+    </div>
+</div>
+
+<!-- The Modal -->
+<div id="myModal" class="modal">
+
+    <!-- Modal content -->
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <div class="slider">
+            <div class="slide">
+                <img src="/img/Frame%2016.png" style="width: 50vw; height: auto" alt="Slider Image 1">
+                <h2>Title 1</h2>
+            </div>
+            <div class="slide">
+                <img src="/img/Frame%2017.png" style="width: 50vw; height: auto" alt="Slider Image 2">
+                <h2>Title 2</h2>
+            </div>
+            <div class="slide">
+                <img src="/img/Frame%2018.png" style="width: 50vw; height: auto" alt="Slider Image 3">
+                <h2>Title 3</h2>
             </div>
         </div>
-    </nav>
-</header>
+        <button class="next">Next</button>
+    </div>
 
-<div class="s007" >
-    <div class="form" style="max-width: 1170px;">
-        <div class="inner-form">
-            <div class="basic-search">
-                <div class="input-field">
-                    <div class="icon-wrap">
-                        <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="20" height="20" viewBox="0 0 20 20">
-                            <path d="M18.869 19.162l-5.943-6.484c1.339-1.401 2.075-3.233 2.075-5.178 0-2.003-0.78-3.887-2.197-5.303s-3.3-2.197-5.303-2.197-3.887 0.78-5.303 2.197-2.197 3.3-2.197 5.303 0.78 3.887 2.197 5.303 3.3 2.197 5.303 2.197c1.726 0 3.362-0.579 4.688-1.645l5.943 6.483c0.099 0.108 0.233 0.162 0.369 0.162 0.121 0 0.242-0.043 0.338-0.131 0.204-0.187 0.217-0.503 0.031-0.706zM1 7.5c0-3.584 2.916-6.5 6.5-6.5s6.5 2.916 6.5 6.5-2.916 6.5-6.5 6.5-6.5-2.916-6.5-6.5z"></path>
-                        </svg>
-                    </div>
-                    <input id="header" type="text" placeholder="Search..." />
-                    <div class="result-count">
-                        <button class="btn-delete" id="filter">Filter</button>
-                    </div>
-                </div>
+</div>
+<div class="page_content">
+    <div class="container-first">
+        <div class="content1">
+            <div class="container-first-left">
+                <h2>Welcome to the web-site Kezdesy</h2>
+                <p>
+                    Lorem ipsum, dolor sit amet consectetur adipisicing elit. Suscipit nemo hic quos, ab, dolor aperiam nobis cum
+                    est eos error ipsum, voluptate culpa nesciunt delectus iste?
+                </p>
+                <a href="/auth"><div class="header-login-button">Sign Up</div></a>
             </div>
-            <div id="advance" class="advance-search">
-                <span class="desc">Advanced Search</span>
-                <div class="row">
-                    <input type="number" id="minAgeLimit" class="fadeIn third" placeholder="minimum age limit">
-                    <input type="number" id="maxAgeLimit" class="fadeIn third" placeholder="maximum age limit">
-                    <input type="number" id="maxMembers" class="fadeIn third" placeholder="maximum members">
-                    <select id="city" class="fadeIn third">
-                        <option value="">- city -</option>
-                        <option value="Nur-Sultan">Nur-Sultan</option>
-                        <option value="Almaty">Almaty</option>
-                        <option value="Shymkent">Shymkent</option>
-                        <option value="Aktobe">Aktobe</option>
-                        <option value="Karaganda">Karaganda</option>
-                        <option value="Atyrau">Atyrau</option>
-                        <option value="Taraz">Taraz</option>
-                        <option value="Pavlodar">Pavlodar</option>
-                        <option value="Semei">Semei</option>
-                        <option value="Ust-Kamenogorsk">Ust-Kamenogorsk</option>
-                        <option value="Kyzylorda">Kyzylorda</option>
-                        <option value="Uralsk">Uralsk</option>
-                        <option value="Kostanay">Kostanay</option>
-                        <option value="Petropavlsk">Petropavlsk</option>
-                        <option value="Taldykorgan">Taldykorgan</option>
-                        <option value="Kokshetau">Kokshetau</option>
-                    </select></div>
 
-                <div class="fadeIn third">
-                    <span class="desc"> Choose interests: </span>
-                    <ul class="ks-cboxtags">
-                        <li><input type="checkbox" id="checkboxOne" value="Football"><label for="checkboxOne">Football</label></li>
-                        <li><input type="checkbox" id="checkboxTwo" value="Sport"><label for="checkboxTwo">Sport</label></li>
-                        <li><input type="checkbox" id="checkboxThree" value="Basketball"><label for="checkboxThree">Basketball</label></li>
-                        <li><input type="checkbox" id="checkboxFour" value="Books"><label for="checkboxFour">Books</label></li>
-                        <li><input type="checkbox" id="checkboxFive" value="Movies"><label for="checkboxFive">Movies</label></li>
-                        <li><input type="checkbox" id="checkboxSix" value="Painting"><label for="checkboxSix">Painting</label></li>
-                        <li><input type="checkbox" id="checkboxSeven" value="TableGames"><label for="checkboxSeven">Table Games</label></li>
-                        <li><input type="checkbox" id="checkboxEight" value="Music"><label for="checkboxEight">Music</label></li>
-                        <li><input type="checkbox" id="checkboxNine" value="Twitch"><label for="checkboxNine">Twitch</label></li>
-                        <li><input type="checkbox" id="checkboxTen" value="Netflix"><label for="checkboxTen">Netflix</label></li>
-                        <li><input type="checkbox" id="checkboxEleven" value="Politics"><label for="checkboxEleven">Politics</label></li>
-                        <li><input type="checkbox" id="checkboxTwelve" value="Tea"><label for="checkboxTwelve">Tea</label></li>
-                        <li><input type="checkbox" id="checkboxThirteen" value="Swimming"><label for="checkboxThirteen">Swimming</label></li>
-                        <li><input type="checkbox" id="checkboxFourteen" value="Beer"><label for="checkboxFourteen">Beer</label></li>
-                        <li><input type="checkbox" id="checkboxFifteen" value="Bicycling"><label for="checkboxFifteen">Bicycling</label></li>
-                        <li><input type="checkbox" id="checkbox16" value="TikTok"><label for="checkbox16">TikTok</label></li>
-                        <li><input type="checkbox" id="checkbox17" value="Museum"><label for="checkbox17">Museum</label></li>
-                        <li><input type="checkbox" id="checkbox18" value="Dance"><label for="checkbox18">Dance</label></li>
-                        <li><input type="checkbox" id="checkbox19" value="Cooking"><label for="checkbox19">Cooking</label></li>
-                        <li><input type="checkbox" id="checkbox20" value="Hockey"><label for="checkbox20">Hockey</label></li>
-                        <li><input type="checkbox" id="checkbox21" value="Manga"><label for="checkbox21">Manga</label></li>
-                        <li><input type="checkbox" id="checkbox22" value="MartialArts"><label for="checkbox22">Martial Arts</label></li>
-                        <li><input type="checkbox" id="checkbox23" value="Marvel"><label for="checkbox23">Marvel</label></li>
-                        <li><input type="checkbox" id="checkbox24" value="Running"><label for="checkbox24">Running</label></li>
-                        <li><input type="checkbox" id="checkbox25" value="Gym"><label for="checkbox25">Gym</label></li>
-                        <li><input type="checkbox" id="checkbox26" value="Skateboarding"><label for="checkbox26">Skateboarding</label></li>
-                        <li><input type="checkbox" id="checkbox27" value="Singing"><label for="checkbox27">Singing</label></li>
-                        <li><input type="checkbox" id="checkbox28" value="Karaoke"><label for="checkbox28">Karaoke</label></li>
-                        <li><input type="checkbox" id="checkbox29" value="Memes"><label for="checkbox29">Memes</label></li>
-                        <li><input type="checkbox" id="checkbox30" value="NFT"><label for="checkbox30">NFT</label></li>
-                        <li><input type="checkbox" id="checkbox31" value="Fishing"><label for="checkbox31">Fishing</label></li>
-                        <li><input type="checkbox" id="checkbox32" value="Investing"><label for="checkbox32">Investing</label></li>
-                        <li><input type="checkbox" id="checkbox33" value="Cosplay"><label for="checkbox33">Cosplay</label></li>
-                        <li><input type="checkbox" id="checkbox34" value="Bowling"><label for="checkbox34">Bowling</label></li>
-                    </ul>
-                </div>
-
-                <div class="row third">
-                    <div class="input-field">
-                        <button id="search" class="btn-search">Search</button>
-                    </div>
-                    <a href="/createRoom" class="link-portfolio">Create Room</a>
-                </div>
+            <div class="container-first-right">
+                <svg
+                        class="blob-motion"
+                        id="visual"
+                        width="560"
+                        height="540"
+                        xmlns="http://www.w3.org/2000/svg"
+                        style="position: absolute"
+                        version="1.1">
+                    <g transform="translate(300.7013053714876 339.5940679849689)">
+                        <path
+                                id="blob1"
+                                d="M170.2 -166.2C220.2 -120.2 260.1 -60.1 257.9 -2.2C255.6 55.6 211.3 111.3 161.3 138.3C111.3 165.3 55.6 163.6 0.5 163.2C-54.7 162.7 -109.4 163.4 -134.4 136.4C-159.4 109.4 -154.7 54.7 -155.8 -1.1C-156.8 -56.8 -163.6 -113.6 -138.6 -159.6C-113.6 -205.6 -56.8 -240.8 1.6 -242.5C60.1 -244.1 120.2 -212.2 170.2 -166.2"
+                                fill="#BFEBD5">
+                        </path>
+                    </g>
+                    <g transform="translate(300.242077129147 303.6478896629431)">
+                        <path
+                                id="blob2"
+                                d="M183.1 -175.8C224.8 -141.4 237.4 -70.7 236.2 -1.2C235 68.4 220 136.7 178.4 169C136.7 201.4 68.4 197.7 6.6 191.1C-55.2 184.5 -110.3 175 -158.8 142.6C-207.3 110.3 -249.2 55.2 -239.3 9.9C-229.4 -35.4 -167.7 -70.7 -119.2 -105C-70.7 -139.4 -35.4 -172.7 17.7 -190.4C70.7 -208 141.4 -210.1 183.1 -175.8"
+                                fill="#BFEBD5">
+                        </path>
+                    </g>
+                </svg>
+                <img src="/img/home-pic1.png" alt="">
+            </div>
+        </div>
+    </div>
+    <div class="container-second">
+        <div class="content2">
+            <div class="container-second-left">
+                <img src="/img/home-pic2.png" alt="">
+            </div>
+            <div class="container-second-right">
+                <h2>How to use?</h2>
+                <p>1) Sign in or Sign up</p>
+                <p>2) Select your interests</p>
+                <p>3) Go to "Rooms" and join to one</p>
+                <p>If you can not find matching room, you can create own!</p>
+                <a href="/createRoom"><div class="header-login-button">Create Room</div></a>
             </div>
         </div>
     </div>
 </div>
 
-<div id="about">
-</div>
 
-
-<footer>
-    <div class="container">
-        <div class="footer-content">
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="col-md-4">
-                        <div class="copyright-text">
-                            <p>Copyright &copy; 2022 <a href="#">Kezdesu</a>
-                                <!-- | <em>Design: <a href="http://www.templatemo.com">templatemo</a></em> -->
-                            </p>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                    </div>
-                    <div class="col-md-4">
-                        <div class="social-icons">
-                            <ul>
-                                <li><a href="#" class="fb-link"><i class="fa fa-facebook"></i></a></li>
-                                <li><a href="#" class="twiter-link"><i class="fa fa-twitter"></i></a></li>
-                                <li><a href="#" class="linkedin-link"><i class="fa fa-linkedin"></i></a></li>
-                                <li><a href="#" class="rss-link"><i class="fa fa-rss"></i></a></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
+<div class="page_footer">
+    <div class="footer-box">
+        <div class="footer-col1">
+            &#169; 2023 All rights reserved
+        </div>
+        <div class="footer-col3" >
+            <a href="#" >KEZDESY</a>
         </div>
     </div>
-</footer>
-
+</div>
 
 <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script type="text/javascript">
+
+    const tween = KUTE.fromTo(
+        '#blob1',
+        { path: '#blob1' },
+        { path: '#blob2' },
+        { repeat: 999, duration: 3000, yoyo: true }
+    ).start();
+
+    var menu_list = document.getElementById('menuList');
+    menu_list.style.maxHeight = "0px";
+
+    function togglemenu() {
+        menu_list.style.color = "white";
+        if (menu_list.style.maxHeight === "0px") {
+            menu_list.style.maxHeight = "300px"
+        }
+        else {
+            menu_list.style.maxHeight = "0px"
+        }
+    }
+
+    // Get the modal
+    var modal = document.getElementById("myModal");
+
+    // Get the <span> element that closes the modal
+    var span = document.getElementsByClassName("close")[0];
+
+    // Get the slider
+    var slides = document.querySelectorAll(".slide");
+
+    // Get the previous and next buttons
+    var nextBtn = document.querySelector(".next");
+
+    // Set the initial slide index to 1
+    var slideIndex = 1;
+
+
+    // Next button click event
+    nextBtn.addEventListener("click", function() {
+        showSlide(slideIndex += 1);
+    });
+
+    // Function to show the current slide
+    function showSlide(n) {
+        // Wrap around if at end of slides
+        if (n > slides.length) {
+            slideIndex = 1;
+        } else if (n < 1) {
+            slideIndex = slides.length;
+        }
+
+        // Hide all slides
+        for (var i = 0; i < slides.length; i++) {
+            slides[i].style.display = "none";
+        }
+
+        // Show the current slide
+        slides[slideIndex - 1].style.display = "block";
+    }
+
+    // When the user clicks on <span> (x), close the modal
+    span.addEventListener("click", function() {
+        modal.style.display = "none";
+    });
+
+    // When the user clicks anywhere outside of the modal, close it
+    window.addEventListener("click", function(event) {
+        if (event.target === modal) {
+            modal.style.display = "none";
+        }
+    });
 
     let user_info;
 
@@ -188,144 +226,21 @@
     }
 
     $(document).ready(function () {
-        $('#about').hide();
-        $('#advance').hide();
-        $('#user__name').html('');
-        let myCookie = getCookie("Authorization");
-        var interests = [];
-
-        $("input:checkbox").change(function() {
-            if($(this).is(":checked")) {
-                interests.push(this.value);
-                console.log(this.value + " added");
-            } else {
-                let pos = interests.indexOf(this);
-                interests.splice(pos, 1);
-                console.log(this.value + " removed");
-            }
-        });
-
-        $('#filter').click( function () {
-            console.log("opened");
-            if (!$('#advance').is(":visible")) {
-                $('#advance').show();
-                console.log("showing")
-            }
-            else {
-                $('#advance').hide();
-            }
-        });
-
         if (getCookie("Authorization") != null) {
-            $('#search').on('click', function () {
-                $('#about').hide();
-                $('#about').html('');
-                let resultC = parseJwt(myCookie);
-                let email = resultC.sub;
-                let header = $('#header').val();
-                let minAgeLimit = $('#minAgeLimit').val();
-                let maxAgeLimit = $('#maxAgeLimit').val();
-                console.log($('#maxAgeLimit').val());
-                if ($('#maxAgeLimit').val().length < 1) {
-                    maxAgeLimit = 120;
-                }
-                let maxMembers = $('#maxMembers').val();
-                if ($('#maxMembers').val().length < 1) {
-                    maxMembers = 20;
-                }
-                let city = $('#city').val();
-
-                $.ajax({
-                    type: "POST",
-                    headers: {'Authorization': myCookie},
-                    contentType: 'application/json',
-                    url: "room/find/findRoom",
-                    data: JSON.stringify({
-                        email: email, city: city, header: header, minAgeLimit: minAgeLimit,
-                        maxAgeLimit: maxAgeLimit, maxMembers: maxMembers, interests: interests
-                    }),
-                    dataType: 'json',
-                    success: function (result) {
-                        console.log(result);
-                        result.forEach((item, i) => {
-                            let count = item.members.length;
-                            console.log(count);
-                            if (count < item.maxMembers) {
-                                $('#about').show();
-                                $('#about').append("<div class=\"container\"><div class=\"about-content\"><div class=\"row\">" +
-                                    "<div class=\"col-md-12\">" +
-                                    "<div class=\"heading\">" +
-                                    "<h2>" + item.header + "</h2>" + "</div>\n" +
-                                    "</div>\n" +
-                                    "</div>\n" +
-                                    "<div class=\"row\">\n" +
-                                    "<div class=\"col-md-12\">\n" +
-                                    "<div class=\"description\">\n" +
-                                    "<div class=\"col-sm-3 col-xs-12\"><h4>" + "Description</h4></div>" +
-                                    "<div class=\"col-sm-9 col-xs-12\"><p>" + item.description + "</p></div>" + "<div class=\"col-sm-3 col-xs-12\"><h4>Age range: " +
-                                    item.minAgeLimit + "-" + item.maxAgeLimit + "</h4></div>" + "<div class=\"col-sm-9 col-xs-12\"><h4>City: " +
-                                    item.city + "</h4></div>" + "<div class=\"col-sm-3 col-xs-12\"><h4>Interests:</h4></div>\n" +
-                                    "<div class=\"col-sm-9 col-xs-12\"><h4>" + item.interests + "</h4></div>\n" +
-                                    "                    </div>\n" +
-                                    "                </div>\n" +
-                                    "            </div>\n" +
-                                    "            <div class=\"row\">\n" +
-                                    "                <div class=\"col-sm-3 col-xs-12\">\n" +
-                                    "                    <div class=\"second-btn\">\n" +
-                                    "                    </div>\n" +
-                                    "                </div>\n" +
-                                    "                <div class=\"col-sm-3 col-xs-12\">\n" +
-                                    "                    <div class=\"second-btn\">\n" +
-                                    "                    </div>\n" +
-                                    "                </div>\n" +
-                                    "                <div class=\"col-sm-3 col-xs-12\">\n" +
-                                    "                    <div class=\"first-btn\">\n" +
-                                    "                        <a>" + count + '/' + item.maxMembers + "</a>\n" +
-                                    "                    </div>\n" +
-                                    "                </div>\n" +
-                                    "                <div class=\"col-sm-3 col-xs-12\">\n" +
-                                    "                    <div class=\"first-btn\">\n" +
-                                    "                        <a id=\"join"+item.id+"\" >Join us</a>\n" +
-                                    "                    </div>\n" +
-                                    "                </div>\n" +
-                                    "            </div>\n" +
-                                    "            <div class=\"row\">\n" +
-                                    "                <div class=\"col-sm-3 col-xs-12\">\n" +
-                                    "                    <div id=\"messages"+item.id+"\" class=\"second-btn\">\n" +
-                                    "                    </div>\n" +
-                                    "                </div>\n" +
-                                    "            </div></div></div>");
-
-                                $('#join' + item.id).on('click', function () {
-                                    let resultC = parseJwt(myCookie);
-                                    let email = resultC.sub;
-                                    $.ajax({
-                                        type: "POST",
-                                        headers: {'Authorization': myCookie},
-                                        contentType: 'application/json',
-                                        url: "room/join",
-                                        data: JSON.stringify({"email" : email, "roomId" : item.id}),
-                                        dataType: 'json',
-                                        complete: function (result) {
-                                            console.log(item.id);
-                                            console.log(result.responseText);
-                                            if (result.responseText === "User was added to room. Chat was created.") {
-                                                window.location.replace("/chats");
-                                            }
-                                            else {
-                                                $('#messages' + item.id).html(result.responseText);
-                                            }
-                                        }
-                                    });
-                                });
-                            }
-                        })
-                    },
-                    error: function (e) {
-                        console.log("ERROR: ", e);
-                    }
-                });
-            });
+            let myCookie = getCookie("Authorization");
+            let resultC = parseJwt(myCookie);
+            let email = resultC.sub;
+            $('.header-login').html("<a class=\"header-login-link\" href=\"#\">\n" +
+                "            <div class=\"header-login-button\">\n" +
+                "                <i class=\"svg-icon fas fa-user-circle\" style=\"margin-right: 5px\"></i>" +
+                email + "\n" +
+                "            </div>\n" +
+                "        </a>");
+        }
+        else {
+            modal.style.display = "block";
+            slideIndex = 1;
+            showSlide(slideIndex);
         }
 
     });

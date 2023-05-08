@@ -38,7 +38,7 @@
             <option value="Taldykorgan">Taldykorgan</option>
             <option value="Kokshetau">Kokshetau</option>
         </select>
-        <button type="submit" id="editButton" class="fadeIn fourth">Update</button>
+        <button type="submit" id="editButton" class="fadeIn fourth button">Update</button>
 
     </div>
 </div>
@@ -75,8 +75,6 @@
 
     $(document).ready(function () {
         let myCookie = getCookie("Authorization");
-        let resultC = parseJwt(myCookie)
-        let email = resultC.sub
 
         if (getCookie("Authorization") != null) {
             let resultC = parseJwt(myCookie);
@@ -120,7 +118,7 @@
                 type: "POST",
                 headers: {'Authorization': myCookie},
                 contentType: 'application/json',
-                url: "update",
+                url: "updateProfile",
                 data: JSON.stringify({
                     email: email, first_name: fname,
                     last_name: lname, age: age, gender: gender, city: city
@@ -128,7 +126,7 @@
                 dataType: 'json',
                 complete: function (result) {
                     console.log(result.responseText);
-                    if (result.responseText == "User updated") {
+                    if (result.responseText == "User successfully updated") {
                         //console.log(123);
                         window.location.replace("/profile");
                     } else {

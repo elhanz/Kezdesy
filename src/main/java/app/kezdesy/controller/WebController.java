@@ -50,4 +50,14 @@ public class WebController {
     public String getCreateRoomPage() {
         return "addroom";
     }
+
+    @GetMapping("/setInterests")
+    public String setInterests() {
+        return "interests";
+    }
+
+    @GetMapping("/rooms")
+    public String getRoomsPage() {
+        return "rooms";
+    }
 }

@@ -71,7 +71,4 @@ public class User {
         this.profilePic = profilePic;
         this.interests = interests;
     }
-
-
-
 }
