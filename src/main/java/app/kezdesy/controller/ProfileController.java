@@ -87,5 +87,4 @@ public class ProfileController {
         List<Room> rooms = roomRepo.myRooms(user.getId());
         return new ResponseEntity<List<Room>>(rooms, HttpStatus.CREATED);
     }
-
-}
+    }
