@@ -77,7 +77,7 @@
                             <div class="profile-info-button">Edit</div>
                         </a>
                         <a href="" id="delete" style="color: white; text-decoration: none;">
-                            <div class="profile-info-button" style="background-color: #984040">Delete Account</div>
+                            <div class="profile-info-button" style="background-color: #b65555">Delete Account</div>
                         </a>
                     </div>
                 </div>
@@ -118,53 +118,14 @@
             </div>
         </div>
     </div>
-    <div class="container-second" style="display: flex; flex-direction: column">
+    <div class="container-second" style="display: flex; flex-direction: column; min-height: 40vh">
         <div class="profile-rooms-block">
-            <h2 style="margin-left: 3vw"> Rooms </h2>
-            <div class="profile-rooms">
-
-                <div class="profile-room">
-                    <div class="profile-room-head">
-                        <h3 class="profile-room-title">Find people for camp</h3>
-                        <div class="profile-room-info">
-                            <p>Age range: 14-16</p>
-                            <p>City: Astana</p>
-                        </div>
-                        <div class="profile-room-interests">
-                            Interests:&nbsp;
-                            <div class="profile-room-interest">Travel</div>
-                            <div class="profile-room-interest matched-interest">Music</div>
-                            <div class="profile-room-interest">Camp</div>
-                            <div class="profile-room-interest matched-interest">Books</div>
-                            <div class="profile-room-interest">Vampire</div>
-                            <div class="profile-room-interest matched-interest">Tiktok</div>
-                            <div class="profile-room-interest">Monster High</div>
-                            <div class="profile-room-interest">Sport</div>
-                            <div class="profile-room-interest">School</div>
-                        </div>
-                    </div>
-                    <div class="profile-room-buttons">
-                        <div class="profile-room-count">
-                            <i class="svg-icon fas fa-user-circle" style="margin-right: 5px"></i> 4/6
-                        </div>
-                        <div class="profile-room-button">Edit</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="profile-rooms-block">
-            <h2 style="margin-left: 3vw"> Created Rooms </h2>
-            <div class="profile-rooms">
-
-            </div>
-        </div>
-
-        <div class="profile-rooms-block">
-            <h2 style="margin-left: 3vw"> Created Rooms </h2>
+            <h2 style="margin-left: 3vw"> My Rooms </h2>
             <div class="profile-no-rooms">
                 <h2 style="color: #74C69D"> There are no rooms </h2>
-                <div class="profile-no-rooms-button">+ Create Room</div>
+                <a href="/createRoom" style="text-decoration: none"><div class="profile-no-rooms-button">+ Create Room</div></a>
+            </div>
+            <div class="profile-rooms" id="myRoomsList">
             </div>
         </div>
     </div>
@@ -267,7 +228,7 @@
             case 'Twitch':
                 return 'fab fa-twitch';
             case 'Netflix':
-                return 'fab fa-netflix';
+                return 'fas fa-film';
             case 'Politics':
                 return 'fas fa-landmark';
             case 'Tea':
@@ -293,7 +254,7 @@
             case 'MartialArts':
                 return 'fas fa-fist-raised';
             case 'Marvel':
-                return 'fas fa-superhero';
+                return 'fas fa-mask';
             case 'Running':
                 return 'fas fa-running';
             case 'Gym':
@@ -408,6 +369,50 @@
                     window.location.replace("/loginUser");
                 }
             });
+
+            $.ajax({
+                type: "GET",
+                headers: {'Authorization': myCookie},
+                contentType: 'application/json',
+                url: "myRooms",
+                data: {email: email},
+                dataType: 'json',
+                success: function (result) {
+                    if (result.length > 0) {
+                        $('.profile-no-rooms').hide();
+                        result.forEach((item, i) => {
+                            let count = item.members.length;
+                            $('#myRoomsList').append("<div class=\"profile-room\">\n" +
+                                "                    <div class=\"profile-room-head\">\n" +
+                                "                        <h3 class=\"profile-room-title\">" + item.header + "</h3>\n" +
+                                "                        <div class=\"profile-room-info\">\n" +
+                                "                            <p>Age range: " + item.minAgeLimit + "-" + item.maxAgeLimit + "</p>\n" +
+                                "                            <p>City: " + item.city + "</p>\n" +
+                                "                        </div>\n" +
+                                "                        <div class=\"room-interests\" id=\"roomInterests" + item.id + "\">\n" +
+                                "                        </div>\n" +
+                                "                    </div>\n" +
+                                "                    <div class=\"profile-room-buttons\">\n" +
+                                "                        <div class=\"profile-room-count\">\n" +
+                                "                            <i class=\"svg-icon fas fa-user-circle\" style=\"margin-right: 5px\"></i>" + count + '/' + item.maxMembers + "\n" +
+                                "                        </div>\n" +
+                                "                        <a href='/chats' style='text-decoration: none'><div class=\"profile-room-button\">Open</div></a>\n" +
+                                "                    </div>\n" +
+                                "                </div>");
+                            var userInterests = user_info.interests;
+                            var roomInterests = item.interests;
+                            $('#roomInterests' + item.id).append("Interests:&nbsp;");
+                            for (var i = 0; i < roomInterests.length; i++) {
+                                var roomInterest = roomInterests[i];
+                                var matched = userInterests.includes(roomInterest);
+                                var interestClass = matched ? 'matched-interest' : '';
+                                var interestHtml = '<div class="profile-room-interest ' + interestClass + '">' + roomInterest + '</div>';
+                                $('#roomInterests' + item.id).append(interestHtml);
+                            }
+                        });
+                    }
+                }
+            });
         } else {
             window.location.replace("/loginUser");
         }
@@ -432,7 +437,7 @@
                     console.log("email: " + email);
                     console.log(result.responseText);
                     console.log(myCookie);
-                    if (result.responseText === "User was deleted.") {
+                    if (result.responseText === "User was deleted") {
                         eraseCookie("Authorization");
                         window.location.replace("/");
                     }

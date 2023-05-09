@@ -97,4 +97,4 @@ public class ProfileController {
     public ResponseEntity<List<Room>> myRooms(@RequestParam String email) {
         return ResponseEntity.ok().body(profileService.getUserRooms(email));
     }
-    }
+}
