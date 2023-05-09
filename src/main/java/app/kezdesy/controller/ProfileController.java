@@ -1,21 +1,28 @@
 package app.kezdesy.controller;
 
+import app.kezdesy.entity.Room;
 import app.kezdesy.entity.User;
-import app.kezdesy.model.ChangeInterestsRequest;
-import app.kezdesy.model.ChangePictureRequest;
-import app.kezdesy.model.DeleteProfileRequest;
-import app.kezdesy.model.UpdatePasswordRequest;
+import app.kezdesy.model.*;
+import app.kezdesy.repository.RoomRepo;
 import app.kezdesy.service.implementation.ProfileServiceImpl;
+
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+import java.util.Objects;
+
 @RestController
+@Slf4j
 public class ProfileController {
 
    @Autowired
     private ProfileServiceImpl profileService;
+    @Autowired
+    private RoomRepo roomRepo;
 
 
     @GetMapping("/getUser")
@@ -70,17 +77,15 @@ public class ProfileController {
         }
         else return  ResponseEntity.badRequest().body("User wasn't deleted");
 
-
     }
-//    @DeleteMapping("/deleteUser")
-//    public ResponseEntity deleteProfile(@RequestParam String email){ //Сменил бади на парам
-//        if (profileService.deleteUserByEmail(email)) {
-//            return new ResponseEntity("User was deleted", HttpStatus.OK);
-//        }
-//        else return  ResponseEntity.badRequest().body("User wasn't deleted");
-//
-//}
 
 
+    @PostMapping("/myRooms")
+    public ResponseEntity<List<Room>> myRooms(@RequestParam String email){
+
+        User user = profileService.getUserByEmail(email);
+        List<Room> rooms = roomRepo.myRooms(user.getId());
+        return new ResponseEntity<List<Room>>(rooms, HttpStatus.CREATED);
+    }
 
 }

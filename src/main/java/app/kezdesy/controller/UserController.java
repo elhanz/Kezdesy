@@ -1,25 +1,30 @@
 package app.kezdesy.controller;
 
+import app.kezdesy.entity.Role;
+import app.kezdesy.entity.User;
+import app.kezdesy.service.implementation.UserServiceImpl;
+import app.kezdesy.validation.UserValidation;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
-import app.kezdesy.entity.Role;
-import app.kezdesy.entity.User;
-import app.kezdesy.service.implementation.UserServiceImpl;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.*;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.stream.Collectors;
 
-import static java.util.Arrays.stream;
 import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
@@ -30,23 +35,43 @@ public class UserController {
     @Autowired
     private UserServiceImpl userService;
 
+    private UserValidation userValidation = new UserValidation();
 
     @PostMapping("/register")
     public ResponseEntity register(@RequestBody User user) {
+
+        if (!userValidation.isEmailValid(user.getEmail())) {
+            return ResponseEntity.badRequest().body("Invalid email.");
+        }
+        if (!userValidation.isNameValid(user.getFirst_name())) {
+            return ResponseEntity.badRequest().body("Invalid name.");
+        }
+        if (!userValidation.isNameValid(user.getLast_name())) {
+            return ResponseEntity.badRequest().body("Invalid surname.");
+        }
+        if (!userValidation.isAgeValid(user.getAge())) {
+            return ResponseEntity.badRequest().body("Invalid age.");
+        }
+        if (!userValidation.isGenderValid(user.getGender())) {
+            return ResponseEntity.badRequest().body("Invalid gender.");
+        }
+        if (!userValidation.isPasswordValid(user.getPassword())) {
+            return ResponseEntity.badRequest().body("Password must contain 8 or more symbols.");
+        }
         if (userService.createUser(user)) {
             return new ResponseEntity("User was registered", HttpStatus.CREATED);
         }
 
-        return new ResponseEntity("User wasn't registered", HttpStatus.BAD_REQUEST);
+        return new ResponseEntity("Email is already occupied ", HttpStatus.BAD_REQUEST);
     }
 
     @GetMapping("/token/refresh")
     public void refreshToken(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String authorizationHeader = request.getHeader(AUTHORIZATION);
-        if(authorizationHeader != null && authorizationHeader.startsWith("Bearer ")){
+        if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
             try {
-                String refresh_token = authorizationHeader.substring("Bearer ".length());
-                Algorithm algorithm = Algorithm.HMAC256("Sho5o4o1ic".getBytes());
+                String refresh_token = authorizationHeader.substring("Bearer " .length());
+                Algorithm algorithm = Algorithm.HMAC256("Sho5o4o1ic" .getBytes());
                 JWTVerifier verifier = JWT.require(algorithm).build();
                 DecodedJWT decodedJWT = verifier.verify(refresh_token);
                 String email = decodedJWT.getSubject();
@@ -62,7 +87,7 @@ public class UserController {
                 tokens.put("refresh_token", refresh_token);
                 response.setContentType(APPLICATION_JSON_VALUE);
                 new ObjectMapper().writeValue(response.getOutputStream(), tokens);
-            } catch (Exception e){
+            } catch (Exception e) {
                 response.setHeader("error", e.getMessage());
                 response.setStatus(HttpServletResponse.SC_FORBIDDEN);
                 Map<String, String> error = new HashMap<>();
@@ -70,7 +95,7 @@ public class UserController {
                 response.setContentType(APPLICATION_JSON_VALUE);
                 new ObjectMapper().writeValue(response.getOutputStream(), error);
             }
-        }else {
+        } else {
             throw new RuntimeException("Refresh token is missing.");
         }
     }

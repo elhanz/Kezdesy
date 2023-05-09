@@ -13,29 +13,21 @@ import java.util.regex.Pattern;
 
 public class UserValidation {
 
+    private Pattern pattern;
+    private Matcher matcher;
+    private static final String EMAIL_PATTERN =
+            "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
+                    + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
 
 
-
-
-    public boolean isUserValid(User user) {
-        return isEmailValid(user.getEmail())
-                && isAgeValid(user.getAge())
-                && isNameValid(user.getFirst_name())
-                && isNameValid(user.getLast_name())
-                && isPasswordValid(user.getPassword())
-                && isGenderValid(user.getGender());
-
-//                && isCityValid(user.getCity());
-    }
-
-    private boolean isEmailValid(String email) {
-        String regex = "^(.+)@(.+)$";
-        Pattern pattern = Pattern.compile(regex);
-        Matcher matcher = pattern.matcher(email);
+    public boolean isEmailValid(String email) {
+        pattern = Pattern.compile(EMAIL_PATTERN);
+        matcher = pattern.matcher(email);
         return matcher.matches();
     }
 
-    private boolean isAgeValid(int age) {
+
+    public boolean isAgeValid(int age) {
         return age >= 18 && age < 110;
     }
 
@@ -51,25 +43,12 @@ public class UserValidation {
         return matcher.matches();
     }
 
-
-
-    private boolean isPasswordValid(String password) {
+    public boolean isPasswordValid(String password) {
         return password != null && password.length() >= 8;
     }
 
-    private boolean isGenderValid(String gender) {
+    public boolean isGenderValid(String gender) {
         return gender != null && (gender.equals("Male") || gender.equals("Female") );
     }
 
-
-//    public boolean isCityValid(String city){
-//        ArrayList<String> cities = new ArrayList<>();
-//
-//        for(String str: cities){
-//            if(city.equals(str)){
-//                return true;
-//            }
-//        }
-//        return false;
-//    }
 }

@@ -34,7 +34,7 @@ public class UserServiceImpl implements UserDetailsService, IUserService {
     @Autowired
     private final RoleRepo roleRepo;
 
-    private  UserValidation userValidation = new UserValidation();
+
     public final PasswordEncoder passwordEncoder;
 
     @Override
@@ -53,7 +53,7 @@ public class UserServiceImpl implements UserDetailsService, IUserService {
     @Override
     public boolean createUser(User user) {
 
-        if (userValidation.isUserValid(user) && !userRepo.existsByEmail(user.getEmail())) {
+        if (!userRepo.existsByEmail(user.getEmail())) {
             user.getRoles().add(roleRepo.findByName("ROLE_USER"));
             user.setPassword(passwordEncoder.encode(user.getPassword()));
             userRepo.save(user);
