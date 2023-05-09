@@ -77,7 +77,7 @@
                             <div class="profile-info-button">Edit</div>
                         </a>
                         <a href="" id="delete" style="color: white; text-decoration: none;">
-                            <div class="profile-info-button" style="background-color: #984040">Delete Account</div>
+                            <div class="profile-info-button" style="background-color: #b65555">Delete Account</div>
                         </a>
                     </div>
                 </div>
@@ -267,7 +267,7 @@
             case 'Twitch':
                 return 'fab fa-twitch';
             case 'Netflix':
-                return 'fab fa-netflix';
+                return 'fas fa-film';
             case 'Politics':
                 return 'fas fa-landmark';
             case 'Tea':
@@ -293,7 +293,7 @@
             case 'MartialArts':
                 return 'fas fa-fist-raised';
             case 'Marvel':
-                return 'fas fa-superhero';
+                return 'fas fa-mask';
             case 'Running':
                 return 'fas fa-running';
             case 'Gym':
@@ -432,7 +432,7 @@
                     console.log("email: " + email);
                     console.log(result.responseText);
                     console.log(myCookie);
-                    if (result.responseText === "User was deleted.") {
+                    if (result.responseText === "User was deleted") {
                         eraseCookie("Authorization");
                         window.location.replace("/");
                     }
