@@ -2,6 +2,7 @@ package app.kezdesy.validation;
 
 import app.kezdesy.entity.User;
 import app.kezdesy.repository.UserRepo;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 
@@ -9,64 +10,45 @@ import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+
 public class UserValidation {
-    @Autowired
-    private UserRepo userRepo;
+
+    private Pattern pattern;
+    private Matcher matcher;
+    private static final String EMAIL_PATTERN =
+            "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
+                    + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
 
 
-
-
-    public boolean isUserValid(User user) {
-        return isEmailValid(user.getEmail())
-                && isAgeValid(user.getAge())
-                && isNameValid(user.getFirst_name())
-                && isNameValid(user.getLast_name())
-                && isPasswordValid(user.getPassword())
-                && isGenderValid(user.getGender())
-                && !userRepo.existsByEmail(user.getEmail());
-//                && isCityValid(user.getCity());
-    }
-
-    private boolean isEmailValid(String email) {
-        String regex = "^(.+)@(.+)$";
-        Pattern pattern = Pattern.compile(regex);
-        Matcher matcher = pattern.matcher(email);
+    public boolean isEmailValid(String email) {
+        pattern = Pattern.compile(EMAIL_PATTERN);
+        matcher = pattern.matcher(email);
         return matcher.matches();
     }
 
-    private boolean isAgeValid(int age) {
-        return age > 18 && age < 110;
+
+    public boolean isAgeValid(int age) {
+        return age >= 18 && age < 110;
     }
-    private boolean isNameValid(String name) {
-        name = name.toLowerCase();
-        char[] charArray = name.toCharArray();
-        for (int i = 0; i < charArray.length; i++) {
-            char ch = charArray[i];
-            if (!(ch >= 'a' && ch <= 'z')) {
-                return false;
-            }
+
+
+    public static boolean isNameValid(String name) {
+        if (name == null || name.isEmpty()) {
+            return false;
         }
-        return true;
+
+        String regex = "^[\\p{L}]{2,50}$";
+        Pattern pattern = Pattern.compile(regex, Pattern.UNICODE_CHARACTER_CLASS);
+        Matcher matcher = pattern.matcher(name);
+        return matcher.matches();
     }
 
-
-    private boolean isPasswordValid(String password) {
+    public boolean isPasswordValid(String password) {
         return password != null && password.length() >= 8;
     }
 
-    private boolean isGenderValid(String gender) {
-        return gender != null && (gender.equals("Male") || gender.equals("Female") || gender.equals("Other"));
+    public boolean isGenderValid(String gender) {
+        return gender != null && (gender.equals("Male") || gender.equals("Female") );
     }
 
-
-//    public boolean isCityValid(String city){
-//        ArrayList<String> cities = new ArrayList<>();
-//
-//        for(String str: cities){
-//            if(city.equals(str)){
-//                return true;
-//            }
-//        }
-//        return false;
-//    }
 }

@@ -46,5 +46,15 @@ public interface RoomRepo extends JpaRepository<Room, Long> {
                                  @Param("city") String city, @Param("header") String header, @Param("minLimit") int min,
                                  @Param("maxLimit") int max, @Param("members") int members);
 
+    @Query(
+            value = "select * from room " +
+                    "join room_members on room.id = room_members.room_id "+
+                    "where members_id = :id",
+            nativeQuery = true)
+    List<Room> myRooms(@Param("id") Long id);
+
+
+
+
 }
 

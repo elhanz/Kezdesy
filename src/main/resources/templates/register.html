@@ -2,6 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org/">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link th:href="@{/css/login.css}" rel="stylesheet"  type="text/css">
     <title>Register</title>
 </head>
@@ -16,10 +17,20 @@
 
             <div id="result_msg"></div>
                 <input type="email" id="email" class="fadeIn second" name="login" placeholder="email">
-                <input type="text" id="password" class="fadeIn third" name="login" placeholder="password">
+                <div class="password-block-auth">
+                    <input type="password" id="password-field" class="fadeIn third" name="login" placeholder="password">
+                    <button class="button-password-auth" type="button" id="toggle-password-visibility">
+                        <svg id="hide-icon" fill="#424B5A" width="16" height="16" viewBox="0 0 512 512">
+                            <path d="M409.84,132.33l95.91-95.91A21.33,21.33,0,1,0,475.58,6.25L6.25,475.58a21.33,21.33,0,1,0,30.17,30.17L140.77,401.4A275.84,275.84,0,0,0,256,426.67c107.6,0,204.85-61.78,253.81-161.25a21.33,21.33,0,0,0,0-18.83A291,291,0,0,0,409.84,132.33ZM256,362.67a105.78,105.78,0,0,1-58.7-17.8l31.21-31.21A63.29,63.29,0,0,0,256,320a64.07,64.07,0,0,0,64-64,63.28,63.28,0,0,0-6.34-27.49l31.21-31.21A106.45,106.45,0,0,1,256,362.67ZM2.19,265.42a21.33,21.33,0,0,1,0-18.83C51.15,147.11,148.4,85.33,256,85.33a277,277,0,0,1,70.4,9.22l-55.88,55.88A105.9,105.9,0,0,0,150.44,270.52L67.88,353.08A295.2,295.2,0,0,1,2.19,265.42Z"/>
+                        </svg>
+                        <svg id="show-icon" fill="#424B5A" width="16" height="16" viewBox="0 0 512 512">
+                            <path d="M320,256a64,64,0,1,1-64-64A64.07,64.07,0,0,1,320,256Zm189.81,9.42C460.86,364.89,363.6,426.67,256,426.67S51.14,364.89,2.19,265.42a21.33,21.33,0,0,1,0-18.83C51.14,147.11,148.4,85.33,256,85.33s204.86,61.78,253.81,161.25A21.33,21.33,0,0,1,509.81,265.42ZM362.67,256A106.67,106.67,0,1,0,256,362.67,106.79,106.79,0,0,0,362.67,256Z"/>
+                        </svg>
+                    </button>
+                </div>
                 <input type="text" id="fname" class="fadeIn third" name="login" placeholder="first name">
                 <input type="text" id="lname" class="fadeIn third" name="login" placeholder="last name">
-                <input type="number" id="age" class="fadeIn third" name="login" placeholder="age" min="12">
+                <input type="number" id="age" class="fadeIn third" name="login" placeholder="age" min="18">
                 <select name="login" id="gender" class="fadeIn third">
                     <option value="">- gender -</option>
                     <option value="Male">Male</option>
@@ -27,7 +38,7 @@
                 </select>
                 <select name="login" id="city" class="fadeIn third">
                     <option value="">- city -</option>
-                    <option value="Nur-Sultan">Nur-Sultan</option>
+                    <option value="Astana">Astana</option>
                     <option value="Almaty">Almaty</option>
                     <option value="Shymkent">Shymkent</option>
                     <option value="Aktobe">Aktobe</option>
@@ -44,7 +55,7 @@
                     <option value="Taldykorgan">Taldykorgan</option>
                     <option value="Kokshetau">Kokshetau</option>
                 </select>
-            <button type="submit" id="registrationButton" class="fadeIn fourth">Registration</button>
+            <button type="submit" id="registrationButton" class="button fadeIn fourth">Registration</button>
 
             <div id="formFooter">
                 <a class="underlineHover" href="/loginUser">Already has an account?</a>
@@ -57,10 +68,30 @@
 <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script type="text/javascript">
+    const passwordField = document.getElementById("password-field");
+    const toggleButton = document.getElementById("toggle-password-visibility");
+    const hideIcon = document.getElementById("hide-icon");
+    const showIcon = document.getElementById("show-icon");
+    hideIcon.style.display = "block";
+    showIcon.style.display = "none";
+
+    toggleButton.addEventListener("click", function () {
+        if (passwordField.type === "password") {
+            passwordField.type = "text";
+            hideIcon.style.display = "none";
+            showIcon.style.display = "block";
+        } else {
+            passwordField.type = "password";
+            hideIcon.style.display = "block";
+            showIcon.style.display = "none";
+        }
+    });
+
+
     $(document).ready(function () {
             $('#registrationButton').on('click', function () {
                 let email = $('#email').val();
-                let password = $('#password').val();
+                let password = $('#password-field').val();
                 let fname = $('#fname').val();
                 let lname = $('#lname').val();
                 let age = $('#age').val();
@@ -77,9 +108,29 @@
                     dataType: 'json',
                     complete: function (result) {
                         console.log(result.responseText);
-                        if (result.responseText == "User was added") {
+                        if (result.responseText == "User was registered") {
                             //console.log(123);
-                            window.location.replace("/");
+                            var tokens;
+
+                            var xhr = new XMLHttpRequest();
+                            var body = 'email=' + encodeURIComponent(email) + '&password=' + encodeURIComponent(password);
+                            xhr.open("POST", 'login', true);
+                            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+                            xhr.onreadystatechange = function() {
+                                if (this.readyState != 4 && xhr.status != 200) {
+                                    $('#result_msg').html('Wrong username or password');
+                                    return;
+                                }
+                                if(xhr.readyState === 4 && xhr.status === 200) {
+                                    console.log(this.responseText);
+                                    tokens = JSON.parse(this.responseText);
+                                    console.log("access_token: ", tokens.access_token);
+                                    console.log("email: ", tokens.email);
+                                    document.cookie="Authorization=Bearer " + tokens.access_token;
+                                    window.location.replace("/setInterests");
+                                }
+                            };
+                            xhr.send(body);
                         } else {
                             $('#result_msg').css("border", "1px solid red")
                             $('#result_msg').html(result.responseText);

@@ -5,10 +5,9 @@ import app.kezdesy.repository.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+
 
 @Controller
-@RequestMapping("/pages")
 public class WebController {
 
     @Autowired
@@ -50,5 +49,15 @@ public class WebController {
     @GetMapping("/createRoom")
     public String getCreateRoomPage() {
         return "addroom";
+    }
+
+    @GetMapping("/setInterests")
+    public String setInterests() {
+        return "interests";
+    }
+
+    @GetMapping("/rooms")
+    public String getRoomsPage() {
+        return "rooms";
     }
 }

@@ -9,136 +9,197 @@
     <link href="http://fonts.googleapis.com/css?family=Raleway:400,300,500,600,700,800,900" rel="stylesheet" type="text/css" />
     <link href="http://fonts.googleapis.com/css?family=Roboto+Slab:400,700,300,100" rel="stylesheet" type="text/css" />
     <link href="http://fonts.googleapis.com/css?family=Dosis:200,300,400,500,600,700,800" rel="stylesheet" type="text/css" />
-    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet"  type="text/css">
-    <link th:href="@{/css/templatemo-style.css}" rel="stylesheet"  type="text/css">
-    <link th:href="@{/css/profile.css}" rel="stylesheet"  type="text/css">
-
-
-
+    <link th:href="@{/css/main.css}" rel="stylesheet"  type="text/css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/3.2.1/css/font-awesome-ie7.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,700,900|Ubuntu:400,500,700" rel="stylesheet">
 </head>
-<body>
 
-<header class="site-header" id="top">
-    <nav class="navbar navbar-default navbar-fixed-top">
-        <div class="container">
-            <div class="row">
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
-                        <i class="fa fa-bars"></i>
-                    </button>
-                    <div class="logo-wrapper">
-                        <a class="navbar-brand" href="/">
-                            <img src="/img/logo2.png" alt="rainbow template" title="rainbow template">
+<body class="body">
+<div class="page-header">
+    <div class="header-logo">
+        <div class="logo">
+            <a href="/"><img src="/img/logo2.png" class="logo_png" alt=""/></a>
+        </div>
+    </div>
+    <div class="header-menu">
+        <ul class="menu-list" id="menuList">
+            <li class="list-item"><a href="/rooms">Rooms</a></li>
+            <li class="list-item"><a href="/chats">Chats</a></li>
+            <li class="list-item selected-link"><a href="/profile">Profile</a></li>
+        </ul>
+    </div>
+    <div class="header-login">
+        <a class="header-login-link" href="/loginUser"><div class="header-login-button">LOGIN</div></a>
+    </div>
+    <div class="logo">
+        <button class="menu menu-icon" onclick="this.classList.toggle('opened');this.setAttribute('aria-expanded', this.classList.contains('opened')); togglemenu()" aria-label="Main Menu">
+            <svg width="50" height="60" viewBox="0 0 100 100">
+                <path class="line line1" d="M 20,29.000046 H 80.000231 C 80.000231,29.000046 94.498839,28.817352 94.532987,66.711331 94.543142,77.980673 90.966081,81.670246 85.259173,81.668997 79.552261,81.667751 75.000211,74.999942 75.000211,74.999942 L 25.000021,25.000058" />
+                <path class="line line2" d="M 20,50 H 80" />
+                <path class="line line3" d="M 20,70.999954 H 80.000231 C 80.000231,70.999954 94.498839,71.182648 94.532987,33.288669 94.543142,22.019327 90.966081,18.329754 85.259173,18.331003 79.552261,18.332249 75.000211,25.000058 75.000211,25.000058 L 25.000021,74.999942" />
+            </svg>
+        </button>
+    </div>
+</div>
+
+<div class="page_content">
+    <div class="profile-container">
+        <div class="content1" style="height: fit-content;">
+            <div class="profile-container-first-left">
+                <div class="profile-left-block">
+                    <div class="profile-picture-block">
+                        <div id="image">
+                            <i class="svg-icon fas fa-user-circle" style="font-size: 30vh; color: #292D32"></i>
+                        </div>
+                        <h2 style="margin-block-end: 0" id="user__name">James Gordon</h2>
+                        <div style="font-size: 18px" id="user__email">jamesgg228@gmail.com</div>
+                    </div>
+                    <a href="" id="logout" style="text-decoration: none">
+                        <div class="profile-left-button">Log Out</div>
+                    </a>
+                </div>
+            </div>
+
+            <div class="profile-container-first-right">
+                <div class="profile-info">
+                    <table class="profile-info-table">
+                        <tr><td><strong>Age: </strong></td><td id="user__age"></td></tr>
+                        <tr><td><strong>Gender: </strong></td><td id="user__gender"></td></tr>
+                        <tr><td><strong>City: </strong></td><td id="user__city"></td></tr>
+                        <tr><td><strong>Role: </strong></td><td id="role">Regular</td></tr>
+                    </table>
+                    <div class="profile-info-buttons">
+                        <a href="/updateUser" style="color: white; text-decoration: none;">
+                            <div class="profile-info-button">Edit</div>
+                        </a>
+                        <a href="" id="delete" style="color: white; text-decoration: none;">
+                            <div class="profile-info-button" style="background-color: #b65555">Delete Account</div>
                         </a>
                     </div>
                 </div>
-                <div class="collapse navbar-collapse" id="main-menu">
-                    <ul class="nav navbar-nav navbar-right">
-                        <li><a href="/" class="link-home">Home</a></li>
-                        <li><a href="/chats" class="link-about">Message</a></li>
-                        <li><a href="/profile" class="link-portfolio">Profile</a></li>
-                    </ul>
+                <div class="profile-interests">
+                    <h2 style="color: #6e6e6e"> My Interests </h2>
+                    <div class="profile-interests-blocks">
+                        <div class="profile-interests-block">
+                            <i class="fa fa-book"></i>
+                            <p style="margin-block-end: 0">Books</p>
+                        </div>
+                        <div class="profile-interests-block">
+                            <i class="fas fa-lightbulb"></i>
+                            <p>TikTok</p>
+                        </div>
+                        <div class="profile-interests-block">
+                            <i class="fa fa-music"></i>
+                            <p>Music</p>
+                        </div>
+                        <div class="profile-interests-block">
+                            <i class="fa fa-futbol-o"></i>
+                            <p>Football</p>
+                        </div>
+                        <div class="profile-interests-block">
+                            <i class="fa-brands fa-youtube"></i>
+                            <p>Youtube</p>
+                        </div>
+                        <div class="profile-interests-block">
+                            <i class="fa-brands fa-youtube"></i>
+                            <p>Youtube</p>
+                        </div>
+                    </div>
+                    <div class="profile-interests-button-block">
+                        <a href="/setInterests" style="color: white; text-decoration: none;">
+                            <div class="profile-info-button" >Edit</div>
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
-    </nav>
-</header>
+    </div>
+    <div class="container-second" style="display: flex; flex-direction: column">
+        <div class="profile-rooms-block">
+            <h2 style="margin-left: 3vw"> Rooms </h2>
+            <div class="profile-rooms">
 
-<div id="first-section">
-    <div class="container">
-        <div class="box">
-            <div id="overlay">
-                <div id="image" class="image">
-                    <div class="trick">
-                    <label form="custom File" class="text1" id="custom File Label"> Change Avatar
-                        <input type="file" accept="image/png, image/gif, image/jpeg" formenctype="multipart/form-data" name="file" id="customFile" onchange="changeAvatars()" >
-                    </label>
-                </div>
-                </div>
-
-                <ul class="text" id="user__name"></ul>
-                <div class="text1" id="user__email"></div>
-
-                <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-                    <div class="panel panel-default">
-
-                        <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
-                            <div class="panel-body">
-                                <label class="label_for">Age:</label>
-                                <label id="user__age" class="label_for"></label>
-                            </div>
-                            <div class="panel-body">
-                                <label class="label_for">Gender:</label>
-                                <label id="user__gender" class="label_for"></label>
-                            </div>
-                            <div class="panel-body">
-                                <label class="label_for">City:</label>
-                                <label id="user__city" class="label_for"></label>
-                            </div>
+                <div class="profile-room">
+                    <div class="profile-room-head">
+                        <h3 class="profile-room-title">Find people for camp</h3>
+                        <div class="profile-room-info">
+                            <p>Age range: 14-16</p>
+                            <p>City: Astana</p>
                         </div>
-
-                        <div class="panel-heading" role="tab" id="headingTwo">
-                            <h4 class="panel-title">
-                                <a class="collapsed" role="button" href="/updateUser" >
-                                    <div class="title btn btn-danger btn-outline btn-lg">UPDATE</div>
-                                </a>
-                            </h4>
+                        <div class="profile-room-interests">
+                            Interests:&nbsp;
+                            <div class="profile-room-interest">Travel</div>
+                            <div class="profile-room-interest matched-interest">Music</div>
+                            <div class="profile-room-interest">Camp</div>
+                            <div class="profile-room-interest matched-interest">Books</div>
+                            <div class="profile-room-interest">Vampire</div>
+                            <div class="profile-room-interest matched-interest">Tiktok</div>
+                            <div class="profile-room-interest">Monster High</div>
+                            <div class="profile-room-interest">Sport</div>
+                            <div class="profile-room-interest">School</div>
                         </div>
-
-                        <div class="panel-heading" role="tab">
-                            <h4 class="panel-title">
-                                <a id="logout" class="collapsed" role="button">
-                                    <div class="title btn btn-danger btn-outline btn-lg">LOG OUT</div>
-                                </a>
-                            </h4>
+                    </div>
+                    <div class="profile-room-buttons">
+                        <div class="profile-room-count">
+                            <i class="svg-icon fas fa-user-circle" style="margin-right: 5px"></i> 4/6
                         </div>
-
-                        <div class="panel-heading" role="tab">
-                            <h4 class="panel-title">
-                                <a id="delete" class="collapsed delete" role="button" >
-                                    <div class="title btn btn-danger btn-outline btn-lg">DELETE</div>
-                                </a>
-                            </h4>
-                        </div>
-
-
-
+                        <div class="profile-room-button">Edit</div>
                     </div>
                 </div>
+            </div>
+        </div>
 
+        <div class="profile-rooms-block">
+            <h2 style="margin-left: 3vw"> Created Rooms </h2>
+            <div class="profile-rooms">
+
+            </div>
+        </div>
+
+        <div class="profile-rooms-block">
+            <h2 style="margin-left: 3vw"> Created Rooms </h2>
+            <div class="profile-no-rooms">
+                <h2 style="color: #74C69D"> There are no rooms </h2>
+                <div class="profile-no-rooms-button">+ Create Room</div>
             </div>
         </div>
     </div>
 </div>
 
 
-
-<footer>
-    <div class="container">
-        <div class="footer-content">
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="col-md-4">
-                        <div class="copyright-text">
-                            <p>Copyright &copy; 2022 <a href="#">Kezdesu</a>
-                            </p>
-                        </div>
-                    </div>
-                    <div class="col-md-4"></div>
-
-                    <div class="col-md-4">
-                    </div>
-                </div>
-            </div>
+<div class="page_footer">
+    <div class="footer-box">
+        <div class="footer-col1">
+            &#169; 2023 All rights reserved
+        </div>
+        <div class="footer-col3" >
+            <a href="#" >KEZDESY</a>
         </div>
     </div>
-</footer>
+</div>
 
 </body>
 
 <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script type="text/javascript">
+
+    var menu_list = document.getElementById('menuList');
+    menu_list.style.maxHeight = "0px";
+
+    function togglemenu() {
+        menu_list.style.color = "white";
+        if (menu_list.style.maxHeight === "0px") {
+            menu_list.style.maxHeight = "300px"
+        }
+        else {
+            menu_list.style.maxHeight = "0px"
+        }
+    }
 
     if (getCookie("Authorization") == null) {
         window.location.replace("/loginUser");
@@ -174,7 +235,7 @@
                     console.log("email: " + email);
                     console.log(result.responseText);
                     console.log(myCookie);
-                    if (result.responseText === "photo changed") {
+                    if (result.responseText === "Photo was changed") {
                         document.location.reload();
                     }
                 }
@@ -182,6 +243,81 @@
         };
         reader.onerror = function (error) {
             console.log("Error: " + error);
+        }
+    }
+
+    function getIconClass(interest) {
+        switch (interest) {
+            case 'Football':
+                return 'fas fa-futbol';
+            case 'Sport':
+                return 'fas fa-futbol';
+            case 'Basketball':
+                return 'fas fa-basketball-ball';
+            case 'Books':
+                return 'fas fa-book';
+            case 'Movies':
+                return 'fas fa-film';
+            case 'Painting':
+                return 'fas fa-paint-brush';
+            case 'TableGames':
+                return 'fas fa-dice';
+            case 'Music':
+                return 'fas fa-music';
+            case 'Twitch':
+                return 'fab fa-twitch';
+            case 'Netflix':
+                return 'fas fa-film';
+            case 'Politics':
+                return 'fas fa-landmark';
+            case 'Tea':
+                return 'fas fa-mug-hot';
+            case 'Swimming':
+                return 'fas fa-swimmer';
+            case 'Beer':
+                return 'fas fa-beer';
+            case 'Bicycling':
+                return 'fas fa-bicycle';
+            case 'TikTok':
+                return 'fab fa-tiktok';
+            case 'Museum':
+                return 'fas fa-university';
+            case 'Dance':
+                return 'fas fa-running';
+            case 'Cooking':
+                return 'fas fa-utensils';
+            case 'Hockey':
+                return 'fas fa-hockey-puck';
+            case 'Manga':
+                return 'fas fa-book-open';
+            case 'MartialArts':
+                return 'fas fa-fist-raised';
+            case 'Marvel':
+                return 'fas fa-mask';
+            case 'Running':
+                return 'fas fa-running';
+            case 'Gym':
+                return 'fas fa-dumbbell';
+            case 'Skateboarding':
+                return 'fas fa-skating';
+            case 'Singing':
+                return 'fas fa-microphone';
+            case 'Karaoke':
+                return 'fas fa-microphone-alt';
+            case 'Memes':
+                return 'fas fa-grin-squint-tears';
+            case 'NFT':
+                return 'fas fa-coins';
+            case 'Fishing':
+                return 'fas fa-fish';
+            case 'Investing':
+                return 'fas fa-chart-line';
+            case 'Cosplay':
+                return 'fas fa-hat-wizard';
+            case 'Bowling':
+                return 'fas fa-bowling-ball'
+            default:
+                return 'fas fa-lightbulb';
         }
     }
 
@@ -210,13 +346,16 @@
         $('#user__gender').html('');
         $('#user__role').html('');
         let myCookie = getCookie("Authorization");
-        let resultC = parseJwt(myCookie)
-        let email = resultC.sub
 
         if (getCookie("Authorization") != null) {
             let resultC = parseJwt(myCookie);
             let email = resultC.sub;
-            let counter = 0;
+            $('.header-login').html("<a class=\"header-login-link\" href=\"#\">\n" +
+                "            <div class=\"header-login-button\">\n" +
+                "                <i class=\"svg-icon fas fa-user-circle\" style=\"margin-right: 5px\"></i>" +
+                email + "\n" +
+                "            </div>\n" +
+                "        </a>");
 
             $.ajax({
                 type: "GET",
@@ -233,38 +372,36 @@
                     $('#user__age').html(result.age);
                     $('#user__city').html(result.city);
                     $('#user__gender').html(result.gender);
+                    $('#user__role').html(result.role);
                     $('#image').html('');
                     if (result.profilePic == null) {
-                        $('#image').append("<img src=\"/img/profile2.png\"> <div class=\"trick\">\n" +
-                            "                    <label form=\"custom File\" class=\"text1\" id=\"custom File Label\"> change avatar\n" +
+                        $('#image').append("<div class=\"trick\">\n" +
+                            "                    <label form=\"custom File\" class=\"text1\" id=\"custom File Label\">\n" +
+                            "<i class=\"svg-icon fas fa-user-circle\" style=\"font-size: 30vh; color: #292D32\"></i>\n" +
                             "                        <input type=\"file\" accept=\"image/png, image/gif, image/jpeg\" formenctype=\"multipart/form-data\" name=\"file\" id=\"customFile\" onchange=\"changeAvatars()\" >\n" +
-                            "                    </label>");
+                            "                    </label>\n" +
+                            "</div>");
                         console.log("work");
                     }
                     else {
-                        $('#image').append("<img src=" + result.profilePic + "><div class=\"trick\">\n" +
-                            "                    <label form=\"custom File\" class=\"text1\" id=\"custom File Label\"> change avatar\n" +
+                        $('#image').append("<div class=\"trick\">\n" +
+                            "                    <label form=\"custom File\" class=\"text1\" id=\"custom File Label\">\n" +
+                            "<img src=" + result.profilePic + " >" +
                             "                        <input type=\"file\" accept=\"image/png, image/gif, image/jpeg\" formenctype=\"multipart/form-data\" name=\"file\" id=\"customFile\" onchange=\"changeAvatars()\" >\n" +
-                            "                    </label>");
+                            "                    </label>\n" +
+                            "</div>");
                     }
+                    var interests = result.interests;
+                    var html = '';
+                    for (var i = 0; i < interests.length; i++) {
+                        html += '<div class="profile-interests-block">';
+                        html += '<i class="' + getIconClass(interests[i]) + '"></i>';
+                        html += '<p>' + interests[i] + '</p>';
+                        html += '</div>';
+                    }
+                    $('.profile-interests-blocks').html(html);
 
-                    result.roles.forEach((item, i) => {
-                        if (user_info.roles[i].name === "ROLE_ADMIN") {
-                            $('#admin').show();
-                        }
-
-                        if (user_info.roles[i].name === "ROLE_USER") {
-                            counter += 1;
-                        }
-
-                        if (i === 0) {
-                            roles = user_info.roles[i].name;
-                        } else {
-                            roles = roles + ", " + item.name;
-                        }
-                    });
                     //if (counter === 0) window.location.replace("/loginUser");
-                    $('#user__role').html(roles);
                 },
                 error: function (e) {
                     console.log("ERROR: ", e);
@@ -295,7 +432,7 @@
                     console.log("email: " + email);
                     console.log(result.responseText);
                     console.log(myCookie);
-                    if (result.responseText === "User was deleted.") {
+                    if (result.responseText === "User was deleted") {
                         eraseCookie("Authorization");
                         window.location.replace("/");
                     }

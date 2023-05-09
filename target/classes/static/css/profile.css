@@ -18,7 +18,7 @@
 }
 
 .label_for {
-    font-family: raleway;
+  font-family: raleway;
   font-size: 21px;
   margin-top: -20px;
   color: #000;
@@ -104,8 +104,6 @@
   font-size:15px;
   max-width:100%;
 }
-
-
 
 
 #accordion{
