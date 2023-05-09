@@ -45,9 +45,7 @@ public class ProfileController {
         if (!userValidation.isGenderValid(user.getGender())) {
             return ResponseEntity.badRequest().body("Invalid gender.");
         }
-        if (!userValidation.isPasswordValid(user.getPassword())) {
-            return ResponseEntity.badRequest().body("Password must contain 8 or more symbols.");
-        }
+
         if (profileService.updateUser(user)) {
             return new ResponseEntity("User successfully updated", HttpStatus.OK);
         }
@@ -77,6 +75,9 @@ public class ProfileController {
     @PostMapping("/setPassword")
     public ResponseEntity updatePassword(@RequestBody UpdatePasswordRequest updatePasswordRequest) {
 
+        if (!userValidation.isPasswordValid(updatePasswordRequest.getNewPassword())) {
+            return ResponseEntity.badRequest().body("Password must contain 8 or more symbols.");
+        }
         if (profileService.updateUserPassword(updatePasswordRequest.getEmail(), updatePasswordRequest.getOldPassword(), updatePasswordRequest.getNewPassword())) {
             return new ResponseEntity("Password was changed", HttpStatus.OK);
         }
