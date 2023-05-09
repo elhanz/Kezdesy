@@ -1,7 +1,9 @@
 package app.kezdesy.service.implementation;
 
 import app.kezdesy.entity.Interest;
+import app.kezdesy.entity.Room;
 import app.kezdesy.entity.User;
+import app.kezdesy.repository.RoomRepo;
 import app.kezdesy.repository.UserRepo;
 import app.kezdesy.service.interfaces.IProfileService;
 import app.kezdesy.validation.UserValidation;
@@ -10,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Set;
 
 
@@ -18,6 +21,8 @@ import java.util.Set;
 public class ProfileServiceImpl implements IProfileService {
     @Autowired
     UserRepo userRepo;
+    @Autowired
+    private RoomRepo roomRepo;
     public final PasswordEncoder passwordEncoder;
 
     private UserValidation userValidation = new UserValidation();
@@ -36,15 +41,15 @@ public class ProfileServiceImpl implements IProfileService {
         User existUser = userRepo.findByEmail(user.getEmail());
 //        if (userValidation.isUserValid(user) && existUser != null) {
 
-            existUser.setFirst_name(user.getFirst_name());
-            existUser.setLast_name(user.getLast_name());
-            existUser.setAge(user.getAge());
-            existUser.setGender(user.getGender());
-            existUser.setCity(user.getCity());
+        existUser.setFirst_name(user.getFirst_name());
+        existUser.setLast_name(user.getLast_name());
+        existUser.setAge(user.getAge());
+        existUser.setGender(user.getGender());
+        existUser.setCity(user.getCity());
 
-            userRepo.save(existUser);
-            return true;
-        }
+        userRepo.save(existUser);
+        return true;
+    }
 
 //        return false;
 //    }
@@ -84,5 +89,15 @@ public class ProfileServiceImpl implements IProfileService {
         User user = userRepo.findByEmail(email);
         if (user == null) return null;
         return user;
+    }
+
+    @Override
+    public List<Room> getUserRooms(String email) {
+        User user = userRepo.findByEmail(email);
+        List<Room> rooms = roomRepo.myRooms(user.getId());
+        if (rooms == null) {
+            return null;
+        }
+        return rooms;
     }
 }
