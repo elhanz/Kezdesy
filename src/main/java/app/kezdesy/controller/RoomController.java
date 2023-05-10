@@ -32,8 +32,9 @@ public class RoomController {
     @PostMapping("/create")
     public ResponseEntity createRoom(@RequestBody RoomEmailRequest roomEmailRequest){
         User curr_user = userRepo.findByEmail(roomEmailRequest.getEmail());
+
         Room room = new Room(roomEmailRequest.getCity(),roomEmailRequest.getHeader(),roomEmailRequest.getDescription(), roomEmailRequest.getMinAgeLimit(),
-                roomEmailRequest.getMaxAgeLimit(),roomEmailRequest.getMaxMembers(),roomEmailRequest.getInterests(), roomEmailRequest.getOwner());
+                roomEmailRequest.getMaxAgeLimit(),roomEmailRequest.getMaxMembers(),roomEmailRequest.getInterests(), roomEmailRequest.getEmail());
         if(isAgeLimitCorrect(room.getMinAgeLimit(), room.getMaxAgeLimit())){
             if(room.getHeader().length() < 200 && room.getHeader() != null){
                 if(room.getDescription().length() < 600 && room.getDescription() != null){

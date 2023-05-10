@@ -15,5 +15,4 @@ public class RoomEmailRequest {
     private int maxAgeLimit;
     private int maxMembers;
     private Set<Interest> interests;
-    private String owner;
 }
