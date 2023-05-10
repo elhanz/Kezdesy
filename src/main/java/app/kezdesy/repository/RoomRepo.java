@@ -48,8 +48,8 @@ public interface RoomRepo extends JpaRepository<Room, Long> {
 
     @Query(
             value = "select * from room " +
-                    "join room_members on room.id = room_members.room_id "+
-                    "where members_id = :id",
+                    "join room_users on room.id = room_users.rooms_id "+
+                    "where users_id = :id",
             nativeQuery = true)
     List<Room> myRooms(@Param("id") Long id);
 

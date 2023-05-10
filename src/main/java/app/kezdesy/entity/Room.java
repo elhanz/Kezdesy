@@ -38,7 +38,7 @@ public class Room {
     @Column(name = "owner")
     private String owner;
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany
     private Collection<User> users = new ArrayList<>();
 
     @ElementCollection(targetClass = Interest.class)

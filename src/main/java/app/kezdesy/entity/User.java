@@ -1,5 +1,6 @@
 package app.kezdesy.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -50,6 +51,8 @@ public class User {
     @ManyToMany(fetch = FetchType.EAGER)
     private Collection<Role> roles = new ArrayList<>();
 
+
+    @JsonIgnore
     @ManyToMany(mappedBy = "users")
     private Collection<Room> rooms = new ArrayList<>();
 
