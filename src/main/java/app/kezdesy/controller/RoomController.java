@@ -1,19 +1,16 @@
 package app.kezdesy.controller;
 
-import app.kezdesy.entity.Message;
 import app.kezdesy.entity.Room;
 import app.kezdesy.entity.User;
 import app.kezdesy.model.EmailRoomId;
 import app.kezdesy.model.RoomEmailRequest;
-import app.kezdesy.repository.RoomRepo;
-import app.kezdesy.repository.UserRepo;
+import app.kezdesy.repository.RoomRepository;
+import app.kezdesy.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
@@ -23,15 +20,15 @@ import java.util.Objects;
 public class RoomController {
 
     @Autowired
-    private RoomRepo roomRepo;
+    private RoomRepository roomRepository;
 
     @Autowired
-    private UserRepo userRepo;
+    private UserRepository userRepository;
 
 
     @PostMapping("/create")
     public ResponseEntity createRoom(@RequestBody RoomEmailRequest roomEmailRequest){
-        User curr_user = userRepo.findByEmail(roomEmailRequest.getEmail());
+        User curr_user = userRepository.findByEmail(roomEmailRequest.getEmail());
 
         Room room = new Room(roomEmailRequest.getCity(),roomEmailRequest.getHeader(),roomEmailRequest.getDescription(), roomEmailRequest.getMinAgeLimit(),
                 roomEmailRequest.getMaxAgeLimit(),roomEmailRequest.getMaxMembers(),roomEmailRequest.getInterests(), roomEmailRequest.getEmail());
@@ -41,7 +38,7 @@ public class RoomController {
                     if(room.getMaxMembers() > 1 && room.getMaxMembers() < 21){
                         if(!room.getInterests().isEmpty()){
                             room.getUsers().add(curr_user);
-                            roomRepo.save(room);
+                            roomRepository.save(room);
                             return new ResponseEntity("Room was created", HttpStatus.CREATED);
                         }else{
                             return ResponseEntity.badRequest().body("Room must contain at least 1 interest.");
@@ -62,7 +59,7 @@ public class RoomController {
 
     @GetMapping("/find")
     public ResponseEntity<List<Room>> findRoom(){
-        return new ResponseEntity<List<Room>>(roomRepo.findAll(), HttpStatus.CREATED);
+        return new ResponseEntity<List<Room>>(roomRepository.findAll(), HttpStatus.CREATED);
     }
 
     public boolean isAgeLimitCorrect(int lower, int higher){
@@ -92,13 +89,13 @@ public class RoomController {
 
     @PostMapping("/join")
     public ResponseEntity joinRoom(@RequestBody EmailRoomId emailRoomId){
-        Room room = roomRepo.findById(emailRoomId.getRoomId()).orElse(null);
+        Room room = roomRepository.findById(emailRoomId.getRoomId()).orElse(null);
 
         if (!isUserInRoom(emailRoomId.getEmail(), room.getUsers())){
 
-            room.getUsers().add(userRepo.findByEmail(emailRoomId.getEmail()));
+            room.getUsers().add(userRepository.findByEmail(emailRoomId.getEmail()));
 
-            roomRepo.save(room);
+            roomRepository.save(room);
 
             return new ResponseEntity("User was added to room.", HttpStatus.CREATED);
         }

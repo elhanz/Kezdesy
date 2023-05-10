@@ -3,9 +3,9 @@ package app.kezdesy.controller;
 import app.kezdesy.entity.Message;
 import app.kezdesy.entity.Room;
 import app.kezdesy.entity.User;
-import app.kezdesy.repository.ChatMessageRepo;
-import app.kezdesy.repository.RoomRepo;
-import app.kezdesy.repository.UserRepo;
+import app.kezdesy.repository.ChatMessageRepository;
+import app.kezdesy.repository.RoomRepository;
+import app.kezdesy.repository.UserRepository;
 import app.kezdesy.service.implementation.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -24,15 +24,15 @@ import java.util.Collection;
 public class ChatController {
 
     @Autowired
-    private UserRepo userRepo;
+    private UserRepository userRepository;
 
     private final UserServiceImpl userService;
 
     @Autowired
-    private RoomRepo roomRepo;
+    private RoomRepository roomRepository;
 
     @Autowired
-    private ChatMessageRepo chatMessageRepo;
+    private ChatMessageRepository chatMessageRepo;
 
     public ChatController(UserServiceImpl userService) {
         this.userService = userService;
@@ -40,12 +40,12 @@ public class ChatController {
 
     @GetMapping("/my")
     public ResponseEntity<Collection<Room>> getMyChats(String userEmail){
-        return new ResponseEntity<>(userRepo.findByEmail(userEmail).getRooms(), HttpStatus.CREATED);
+        return new ResponseEntity<>(userRepository.findByEmail(userEmail).getRooms(), HttpStatus.CREATED);
     }
 
     @GetMapping("/getUserForChat")
     public ResponseEntity<User> getUserByUsernameForChat(@RequestParam String email) {
-        return ResponseEntity.ok().body(userRepo.findByEmail(email));
+        return ResponseEntity.ok().body(userRepository.findByEmail(email));
     }
 
     @GetMapping("/getRepo")
@@ -55,21 +55,21 @@ public class ChatController {
 
     @GetMapping("/getChat")
     public ResponseEntity<Room> getChatById(@RequestParam Long chatID) {
-        return ResponseEntity.ok().body(roomRepo.findById(chatID).orElse(null));
+        return ResponseEntity.ok().body(roomRepository.findById(chatID).orElse(null));
     }
 
     @GetMapping("/getUserForChatById")
     public ResponseEntity<User> getUserById(@RequestParam Long userID) {
-        return ResponseEntity.ok().body(userRepo.findById(userID).orElse(null));
+        return ResponseEntity.ok().body(userRepository.findById(userID).orElse(null));
     }
 
     @MessageMapping("/chat.sendMessage/{chatId}")
     @SendTo("/topic/{chatId}")
     public Message sendMessage(@Payload Message message, @DestinationVariable Long chatId) {
-        Room room = roomRepo.findById(chatId).orElse(null);
+        Room room = roomRepository.findById(chatId).orElse(null);
         room.getMessages().add(message);
         chatMessageRepo.save(message);
-        roomRepo.save(room);
+        roomRepository.save(room);
         return message;
     }
 

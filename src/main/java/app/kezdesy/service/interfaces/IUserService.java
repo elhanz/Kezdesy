@@ -7,9 +7,12 @@ import java.util.List;
 
 public interface IUserService {
 
-    boolean createUser (User user);
+    User createUser (User user);
 
     User getUserByEmail(String email);
     User findById(Long id);
 
+    void saveUserVerificationToken(User theUser, String verificationToken);
+
+    String validateToken(String theToken);
 }

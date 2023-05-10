@@ -48,6 +48,8 @@ public class User {
     @Column(name = "gender")
     private String gender;
 
+    private boolean isEnabled = false;
+
     @ManyToMany(fetch = FetchType.EAGER)
     private Collection<Role> roles = new ArrayList<>();
 
@@ -69,6 +71,7 @@ public class User {
         this.age = age;
         this.city = city;
         this.email = email;
+        this.isEnabled = false;
         this.password = password;
         this.profilePic = profilePic;
         this.interests = interests;

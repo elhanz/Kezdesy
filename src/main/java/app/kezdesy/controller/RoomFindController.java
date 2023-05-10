@@ -4,12 +4,11 @@ import app.kezdesy.entity.Interest;
 import app.kezdesy.entity.Room;
 import app.kezdesy.entity.User;
 import app.kezdesy.model.RoomEmailRequest;
-import app.kezdesy.repository.RoomRepo;
-import app.kezdesy.repository.UserRepo;
+import app.kezdesy.repository.RoomRepository;
+import app.kezdesy.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashSet;
@@ -22,25 +21,25 @@ import java.util.Set;
 public class RoomFindController {
 
     @Autowired
-    private UserRepo userRepo;
+    private UserRepository userRepository;
 
     @Autowired
-    private RoomRepo roomRepo;
+    private RoomRepository roomRepository;
 
     @GetMapping("/getAllRooms")
     public ResponseEntity<List<Room>> getAllRooms(){
-        return new ResponseEntity<List<Room>>(roomRepo.findAll(), HttpStatus.CREATED);
+        return new ResponseEntity<List<Room>>(roomRepository.findAll(), HttpStatus.CREATED);
     }
 
     @PostMapping("/findRoom")
     public ResponseEntity<List<Room>> findRoom(@RequestBody RoomEmailRequest roomEmailRequest){
-        User user = userRepo.findByEmail(roomEmailRequest.getEmail());
+        User user = userRepository.findByEmail(roomEmailRequest.getEmail());
         if (Objects.equals(roomEmailRequest.getCity(), "")) {
             roomEmailRequest.setCity(user.getCity());
         }
 
         if(roomEmailRequest.getInterests().size() == 0){
-            List<Room> rooms = roomRepo.findByCityContainsAndHeaderContainsAndMinAgeLimitGreaterThanEqualAndMaxAgeLimitLessThanEqualAndMaxMembersLessThanEqual(
+            List<Room> rooms = roomRepository.findByCityContainsAndHeaderContainsAndMinAgeLimitGreaterThanEqualAndMaxAgeLimitLessThanEqualAndMaxMembersLessThanEqual(
                     roomEmailRequest.getCity(), roomEmailRequest.getHeader(), roomEmailRequest.getMinAgeLimit(), roomEmailRequest.getMaxAgeLimit(),
                     roomEmailRequest.getMaxMembers());
             if (roomEmailRequest.getMinAgeLimit() == 0) {
@@ -51,7 +50,7 @@ public class RoomFindController {
             }
             return new ResponseEntity<List<Room>>(rooms, HttpStatus.CREATED);
         }
-        List<Room> rooms2 = roomRepo.findByInterestsMy(
+        List<Room> rooms2 = roomRepository.findByInterestsMy(
                         setToStringConverter(roomEmailRequest.getInterests()), roomEmailRequest.getInterests().size(),
                         roomEmailRequest.getCity(), roomEmailRequest.getHeader(), roomEmailRequest.getMinAgeLimit(), roomEmailRequest.getMaxAgeLimit(),
                         roomEmailRequest.getMaxMembers()

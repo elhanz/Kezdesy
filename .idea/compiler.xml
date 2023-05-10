@@ -9,12 +9,14 @@
         <outputRelativeToContentRoot value="true" />
         <module name="Kezdesy" />
         <module name="kkkezdesy" />
+        <module name="demo" />
       </profile>
     </annotationProcessing>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="Kezdesy" options="-parameters" />
+      <module name="demo" options="-parameters" />
       <module name="kkkezdesy" options="-parameters" />
     </option>
   </component>

@@ -3,8 +3,8 @@ package app.kezdesy.service.implementation;
 import app.kezdesy.entity.Interest;
 import app.kezdesy.entity.Room;
 import app.kezdesy.entity.User;
-import app.kezdesy.repository.RoomRepo;
-import app.kezdesy.repository.UserRepo;
+import app.kezdesy.repository.RoomRepository;
+import app.kezdesy.repository.UserRepository;
 import app.kezdesy.service.interfaces.IProfileService;
 import app.kezdesy.validation.UserValidation;
 import lombok.RequiredArgsConstructor;
@@ -20,9 +20,9 @@ import java.util.Set;
 @RequiredArgsConstructor
 public class ProfileServiceImpl implements IProfileService {
     @Autowired
-    UserRepo userRepo;
+    UserRepository userRepository;
     @Autowired
-    private RoomRepo roomRepo;
+    private RoomRepository roomRepository;
     public final PasswordEncoder passwordEncoder;
 
     private UserValidation userValidation = new UserValidation();
@@ -30,22 +30,22 @@ public class ProfileServiceImpl implements IProfileService {
     public boolean changePhoto(String email, String file) {
         String picture = file.replace("{\"file\":\"", "");
         picture = picture.replace("\"}", "");
-        User user = userRepo.findByEmail(email);
+        User user = userRepository.findByEmail(email);
         user.setProfilePic(picture);
 
-        userRepo.save(user);
+        userRepository.save(user);
         return true;
     }
 
     public boolean updateUser(User user) {
-        User existUser = userRepo.findByEmail(user.getEmail());
+        User existUser = userRepository.findByEmail(user.getEmail());
         existUser.setFirst_name(user.getFirst_name());
         existUser.setLast_name(user.getLast_name());
         existUser.setAge(user.getAge());
         existUser.setGender(user.getGender());
         existUser.setCity(user.getCity());
 
-        userRepo.save(existUser);
+        userRepository.save(existUser);
         return true;
     }
 
@@ -53,9 +53,9 @@ public class ProfileServiceImpl implements IProfileService {
     @Override
     public boolean setInterests(String email, Set<Interest> interests) {
 
-        User existUser = userRepo.findByEmail(email);
+        User existUser = userRepository.findByEmail(email);
         existUser.setInterests(interests);
-        userRepo.save(existUser);
+        userRepository.save(existUser);
 
         return true;
     }
@@ -63,11 +63,11 @@ public class ProfileServiceImpl implements IProfileService {
     @Override
     public boolean updateUserPassword(String email, String oldPassword, String newPassword) { //TODO Нужно передавать пароль зашифрованный
 
-        User existUser = userRepo.findByEmail(email);
+        User existUser = userRepository.findByEmail(email);
 
         if (existUser != null && passwordEncoder.matches(oldPassword, existUser.getPassword())) {
             existUser.setPassword(passwordEncoder.encode(newPassword));
-            userRepo.save(existUser);
+            userRepository.save(existUser);
             return true;
         }
         return false;
@@ -75,22 +75,22 @@ public class ProfileServiceImpl implements IProfileService {
 
     @Override
     public boolean deleteUserByEmail(String email) {
-        User user = userRepo.findByEmail(email);
-        userRepo.deleteById(user.getId());
+        User user = userRepository.findByEmail(email);
+        userRepository.deleteById(user.getId());
         return true;
     }
 
     @Override
     public User getUserByEmail(String email) {
-        User user = userRepo.findByEmail(email);
+        User user = userRepository.findByEmail(email);
         if (user == null) return null;
         return user;
     }
 
     @Override
     public List<Room> getUserRooms(String email) {
-        User user = userRepo.findByEmail(email);
-        List<Room> rooms = roomRepo.myRooms(user.getId());
+        User user = userRepository.findByEmail(email);
+        List<Room> rooms = roomRepository.myRooms(user.getId());
         if (rooms == null) {
             return null;
         }
