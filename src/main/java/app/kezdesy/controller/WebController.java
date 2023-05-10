@@ -56,6 +56,11 @@ public class WebController {
         return "interests";
     }
 
+    @GetMapping("/chats/chatpage")
+    public String getChat(){
+        return "websocket";
+    }
+
     @GetMapping("/rooms")
     public String getRoomsPage() {
         return "rooms";

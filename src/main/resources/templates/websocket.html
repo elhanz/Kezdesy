@@ -228,8 +228,6 @@
     $(document).ready(function () {
         //$('#user-chats').html('');
         let myCookie = getCookie("Authorization");
-        let resultC = parseJwt(myCookie);
-        let email = resultC.sub;
         let chatId = getCookie("ChatId");
 
         if (getCookie("Authorization") != null) {

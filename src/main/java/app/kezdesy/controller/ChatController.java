@@ -63,11 +63,6 @@ public class ChatController {
         return ResponseEntity.ok().body(userRepo.findById(userID).orElse(null));
     }
 
-    @GetMapping("/chatpage")
-    public String getChat(){
-        return "websocket";
-    }
-
     @MessageMapping("/chat.sendMessage/{chatId}")
     @SendTo("/topic/{chatId}")
     public ChatMessage sendMessage(@Payload ChatMessage chatMessage, @DestinationVariable Long chatId) {
