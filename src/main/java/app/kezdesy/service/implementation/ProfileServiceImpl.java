@@ -39,8 +39,6 @@ public class ProfileServiceImpl implements IProfileService {
 
     public boolean updateUser(User user) {
         User existUser = userRepo.findByEmail(user.getEmail());
-//        if (userValidation.isUserValid(user) && existUser != null) {
-
         existUser.setFirst_name(user.getFirst_name());
         existUser.setLast_name(user.getLast_name());
         existUser.setAge(user.getAge());
@@ -51,8 +49,6 @@ public class ProfileServiceImpl implements IProfileService {
         return true;
     }
 
-//        return false;
-//    }
 
     @Override
     public boolean setInterests(String email, Set<Interest> interests) {

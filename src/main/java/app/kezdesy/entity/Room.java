@@ -35,8 +35,11 @@ public class Room {
     @Column(name = "maxMembers")
     private int maxMembers;
 
+    @Column(name = "owner")
+    private String owner;
+
     @ManyToMany(fetch = FetchType.EAGER)
-    private Collection<User> members = new ArrayList<>();
+    private Collection<User> users = new ArrayList<>();
 
     @ElementCollection(targetClass = Interest.class)
     @CollectionTable(name = "room_interests", joinColumns = @JoinColumn(name = "room_id"))
@@ -44,7 +47,11 @@ public class Room {
     @Column(name = "interest")
     private Set<Interest> interests;
 
-    public Room(String city, String header, String description, int minAgeLimit, int maxAgeLimit, int maxMembers, Set<Interest> interests) {
+
+    @OneToMany
+    private Collection<Message> messages = new ArrayList<>();
+
+    public Room(String city, String header, String description, int minAgeLimit, int maxAgeLimit, int maxMembers, Set<Interest> interests, String owner) {
         this.city = city;
         this.header = header;
         this.description = description;
@@ -52,6 +59,7 @@ public class Room {
         this.maxAgeLimit = maxAgeLimit;
         this.maxMembers = maxMembers;
         this.interests = interests;
+        this.owner = owner;
     }
 
 

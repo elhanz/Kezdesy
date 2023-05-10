@@ -38,7 +38,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers("/css/**", "/", "/js/**", "/img/**", "**/favicon.ico", "/favicon.ico", "**/css/font-awesome.min.css", "/static/**").anonymous()
                 .antMatchers("/public/**", "/resources/**", "/resources/static/**").permitAll()
-                .antMatchers("/auth", "/", "/interests", "/loginUser","/profile","/chats", "/rooms","/updateUser","/createRoom").permitAll()
+                .antMatchers("/auth", "/", "/interests", "/loginUser","/profile","/chats","/chatpage", "/rooms","/updateUser","/createRoom").permitAll()
                 .antMatchers("/register","/token/refresh").permitAll()
                 .antMatchers("/updateProfile","/setPicture","/myRooms","/setPassword","/setInterests","/deleteUser").permitAll()
                 .antMatchers( "/room/**", "/login", "/chats/**", "/websocket", "/ws/**").permitAll()

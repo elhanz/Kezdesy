@@ -1,12 +1,5 @@
 package app.kezdesy.validation;
 
-import app.kezdesy.entity.User;
-import app.kezdesy.repository.UserRepo;
-import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-
-import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 

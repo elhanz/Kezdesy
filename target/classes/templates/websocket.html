@@ -114,7 +114,7 @@
         var messageContent = messageInput.value.trim();
 
         if(messageContent && stompClient) {
-            var chatMessage = {
+            var message = {
                 sender: username,
                 content: messageInput.value,
                 type: 'CHAT',
@@ -122,7 +122,7 @@
             };
 
             stompClient.send('/app/chat.sendMessage/' + chatId,
-                {}, JSON.stringify(chatMessage));
+                {}, JSON.stringify(message));
             messageInput.value = '';
         }
         event.preventDefault();
@@ -228,8 +228,6 @@
     $(document).ready(function () {
         //$('#user-chats').html('');
         let myCookie = getCookie("Authorization");
-        let resultC = parseJwt(myCookie);
-        let email = resultC.sub;
         let chatId = getCookie("ChatId");
 
         if (getCookie("Authorization") != null) {

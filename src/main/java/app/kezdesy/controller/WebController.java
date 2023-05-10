@@ -1,6 +1,6 @@
 package app.kezdesy.controller;
 
-import app.kezdesy.repository.ChatRepo;
+
 import app.kezdesy.repository.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,8 +13,6 @@ public class WebController {
     @Autowired
     private UserRepo userRepo;
 
-    @Autowired
-    private ChatRepo chatRepo;
 
     @GetMapping("/auth")
     public String getPage() {

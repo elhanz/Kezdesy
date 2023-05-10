@@ -50,9 +50,8 @@ public class User {
     @ManyToMany(fetch = FetchType.EAGER)
     private Collection<Role> roles = new ArrayList<>();
 
-    @ManyToMany
-    @LazyCollection(LazyCollectionOption.FALSE)
-    private Collection<Chat> chats = new ArrayList<>();
+    @ManyToMany(mappedBy = "users")
+    private Collection<Room> rooms = new ArrayList<>();
 
     @ElementCollection(targetClass = Interest.class)
     @CollectionTable(name = "user_interests", joinColumns = @JoinColumn(name = "user_id"))
