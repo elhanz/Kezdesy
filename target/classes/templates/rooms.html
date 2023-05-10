@@ -337,7 +337,8 @@
                         $('#about').show();
                         $('#about').append("<legend>Search result:</legend>");
                         result.forEach((item, i) => {
-                            let count = item.members.length;
+                            console.log(item.users);
+                            let count = item.users.length;
                             console.log(count);
 
                             if (count < item.maxMembers) {
