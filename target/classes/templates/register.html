@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link th:href="@{/css/login.css}" rel="stylesheet"  type="text/css">
+    <link rel="shortcut icon" href="/img/mini_logo.png" type="image/x-icon">
+
     <title>Register</title>
 </head>
 <body>
@@ -55,6 +57,11 @@
                     <option value="Taldykorgan">Taldykorgan</option>
                     <option value="Kokshetau">Kokshetau</option>
                 </select>
+            <div style="display: flex; align-items: center; justify-content: center; margin-bottom: 30px; margin-top: 10px; padding: 0 10px; flex-wrap: wrap;">
+                <input id="terms" type="checkbox" />
+                <label for="terms">I have read and agreed to the </label>
+                <a href="/termsPolicy">Terms and Conditions</a>
+            </div>
             <button type="submit" id="registrationButton" class="button fadeIn fourth">Registration</button>
 
             <div id="formFooter">
@@ -97,46 +104,63 @@
                 let age = $('#age').val();
                 let gender = $('#gender').val();
                 let city = $('#city').val();
-                $.ajax({
-                    type: "POST",
-                    contentType: 'application/json',
-                    url: "register",
-                    data: JSON.stringify({
-                        email: email, password: password, first_name: fname,
-                        last_name: lname, age: age, gender: gender, city: city
-                    }),
-                    dataType: 'json',
-                    complete: function (result) {
-                        console.log(result.responseText);
-                        if (result.responseText == "User was registered") {
-                            //console.log(123);
-                            var tokens;
+                $('#result_msg').css("border", "1px solid green")
+                $('#result_msg').html("Success!  Please, check your email for to complete your registration");
 
-                            var xhr = new XMLHttpRequest();
-                            var body = 'email=' + encodeURIComponent(email) + '&password=' + encodeURIComponent(password);
-                            xhr.open("POST", 'login', true);
-                            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-                            xhr.onreadystatechange = function() {
-                                if (this.readyState != 4 && xhr.status != 200) {
-                                    $('#result_msg').html('Wrong username or password');
-                                    return;
-                                }
-                                if(xhr.readyState === 4 && xhr.status === 200) {
-                                    console.log(this.responseText);
-                                    tokens = JSON.parse(this.responseText);
-                                    console.log("access_token: ", tokens.access_token);
-                                    console.log("email: ", tokens.email);
-                                    document.cookie="Authorization=Bearer " + tokens.access_token;
-                                    window.location.replace("/setInterests");
-                                }
-                            };
-                            xhr.send(body);
-                        } else {
-                            $('#result_msg').css("border", "1px solid red")
-                            $('#result_msg').html(result.responseText);
+                if($('#terms').is(":checked")) {
+                    $.ajax({
+                        type: "POST",
+                        contentType: 'application/json',
+                        url: "register",
+                        data: JSON.stringify({
+                            email: email, password: password, first_name: fname,
+                            last_name: lname, age: age, gender: gender, city: city
+                        }),
+                        dataType: 'json',
+                        complete: function (result) {
+                            console.log(result.responseText);
+                            if (result.status === 400) {
+                                console.log("Bad request: " + result.responseText);
+                                $('#result_msg').css("border", "1px solid red")
+                                $('#result_msg').html(result.responseText);
+                            } else {
+                                console.log("Request successful: " + result.responseText);
+                            }
+                            //
+                            // if (result.responseText == "User was registered") {
+                            //     //console.log(123);
+                            //     var tokens;
+                            //
+                            //     var xhr = new XMLHttpRequest();
+                            //     var body = 'email=' + encodeURIComponent(email) + '&password=' + encodeURIComponent(password);
+                            //     xhr.open("POST", 'login', true);
+                            //     xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+                            //     xhr.onreadystatechange = function() {
+                            //         if (this.readyState != 4 && xhr.status != 200) {
+                            //             $('#result_msg').html('Wrong username or password');
+                            //             return;
+                            //         }
+                            //         if(xhr.readyState === 4 && xhr.status === 200) {
+                            //             console.log(this.responseText);
+                            //             tokens = JSON.parse(this.responseText);
+                            //             console.log("access_token: ", tokens.access_token);
+                            //             console.log("email: ", tokens.email);
+                            //             document.cookie="Authorization=Bearer " + tokens.access_token;
+                            //             window.location.replace("/setInterests");
+                            //         }
+                            //     };
+                            //     xhr.send(body);
+                            // } else {
+                            //     $('#result_msg').css("border", "1px solid red")
+                            //     $('#result_msg').html(result.responseText);
+                            // }
                         }
-                    }
-                })
+                    });
+                }
+                else {
+                    $('#result_msg').css("border", "1px solid red")
+                    $('#result_msg').html("Please read and agree to the Terms and Conditions");
+                }
             })
 
         }

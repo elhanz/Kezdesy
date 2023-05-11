@@ -1081,6 +1081,7 @@ ul.ks-cboxtags li input[type="checkbox"]:focus + label {
     margin: 5% auto; /* 15% from the top and centered */
     padding: 20px;
     border: 1px solid #888;
+    border-radius: 30px;
     width: 80%; /* Could be more or less, depending on screen size */
 }
 
@@ -1088,6 +1089,8 @@ ul.ks-cboxtags li input[type="checkbox"]:focus + label {
 .slider {
     max-width: 100%;
     overflow: hidden;
+    font-family: 'Montserrat', sans-serif;
+    white-space: normal;
 }
 
 .slider img {
@@ -1109,8 +1112,8 @@ ul.ks-cboxtags li input[type="checkbox"]:focus + label {
 }
 
 .prev:hover, .next:hover {
-    background-color: #ddd;
-    color: black;
+    background-color: #5db48b;
+    color: white;
 }
 
 /* Close Button */
@@ -1161,11 +1164,10 @@ ul.ks-cboxtags li input[type="checkbox"]:focus + label {
 
 .footer-col3 a {
     text-decoration: none;
-    color: #5cba8e;
+    color: #292D32;
     font-style: normal;
-    font-weight: 700;
+    font-weight: 300;
     font-size: 14px;
-    letter-spacing: 0.28em;
 }
 
 @media only screen and (max-width: 1000px) {

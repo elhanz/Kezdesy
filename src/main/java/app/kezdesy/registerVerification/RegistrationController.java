@@ -15,6 +15,7 @@ import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
@@ -72,18 +73,22 @@ public class RegistrationController {
     }
 
     @GetMapping("/verifyEmail")
-    public ResponseEntity verifyEmail(@RequestParam("token") String token) {
+    public ModelAndView verifyEmail(@RequestParam("token") String token) {
         VerificationToken theToken = tokenRepository.findByToken(token);
         if (theToken.getUser().isEnabled()) {
-            return new ResponseEntity("\"This account has already been verified, please, login.\"", HttpStatus.BAD_REQUEST);
-
+            ModelAndView mav = new ModelAndView("error");
+            mav.addObject("message", "This account has already been verified, please, login.");
+            return mav;
         }
         String verificationResult = userService.validateToken(token);
         if (verificationResult.equalsIgnoreCase("valid")) {
-            return new ResponseEntity("Email verified successfully. Now you can login to your account", HttpStatus.OK);
-
+            ModelAndView mav = new ModelAndView("success");
+            mav.addObject("message", "Email verified successfully. Now you can login to your account.");
+            return mav;
         }
-        return ResponseEntity.badRequest().body("Invalid verification token");
+        ModelAndView mav = new ModelAndView("error");
+        mav.addObject("message", "Invalid verification token.");
+        return mav;
     }
 
 

@@ -63,4 +63,9 @@ public class WebController {
     public String getRoomsPage() {
         return "rooms";
     }
+
+    @GetMapping("/termsPolicy")
+    public String getTermsPolicy() {
+        return "termsPolicy";
+    }
 }
