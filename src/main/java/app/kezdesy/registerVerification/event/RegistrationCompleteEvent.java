@@ -1,4 +1,4 @@
-package app.kezdesy.event;
+package app.kezdesy.registerVerification.event;
 
 import app.kezdesy.entity.User;
 

@@ -5,7 +5,7 @@ import app.kezdesy.entity.User;
 import app.kezdesy.model.ChangeInterestsRequest;
 import app.kezdesy.model.ChangePictureRequest;
 import app.kezdesy.model.DeleteProfileRequest;
-import app.kezdesy.model.UpdatePasswordRequest;
+import app.kezdesy.registerVerification.passwordReset.PasswordResetRequest;
 import app.kezdesy.service.implementation.ProfileServiceImpl;
 import app.kezdesy.validation.UserValidation;
 import lombok.extern.slf4j.Slf4j;
@@ -73,12 +73,12 @@ public class ProfileController {
 
 
     @PostMapping("/setPassword")
-    public ResponseEntity updatePassword(@RequestBody UpdatePasswordRequest updatePasswordRequest) {
+    public ResponseEntity updatePassword(@RequestBody PasswordResetRequest passwordResetRequest) {
 
-        if (!userValidation.isPasswordValid(updatePasswordRequest.getNewPassword())) {
+        if (!userValidation.isPasswordValid(passwordResetRequest.getNewPassword())) {
             return ResponseEntity.badRequest().body("Password must contain 8 or more symbols.");
         }
-        if (profileService.updateUserPassword(updatePasswordRequest.getEmail(), updatePasswordRequest.getOldPassword(), updatePasswordRequest.getNewPassword())) {
+        if (profileService.updateUserPassword(passwordResetRequest.getEmail(), passwordResetRequest.getOldPassword(), passwordResetRequest.getNewPassword())) {
             return new ResponseEntity("Password was changed", HttpStatus.OK);
         }
         return ResponseEntity.badRequest().body("Password wasn't changed");

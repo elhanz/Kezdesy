@@ -2,6 +2,7 @@ package app.kezdesy.service.implementation;
 
 import app.kezdesy.entity.User;
 import app.kezdesy.entity.VerificationToken;
+import app.kezdesy.registerVerification.passwordReset.PasswordResetTokenService;
 import app.kezdesy.repository.RoleRepository;
 import app.kezdesy.repository.UserRepository;
 import app.kezdesy.repository.VerificationTokenRepository;
@@ -18,10 +19,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Collection;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -36,6 +34,8 @@ public class UserServiceImpl implements UserDetailsService, IUserService {
     @Autowired
     private final VerificationTokenRepository tokenRepository;
     public final PasswordEncoder passwordEncoder;
+
+    private final PasswordResetTokenService passwordResetTokenService;
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
@@ -100,5 +100,34 @@ public class UserServiceImpl implements UserDetailsService, IUserService {
         return "valid";
     }
 
+    @Override
+    public VerificationToken generateNewVerificationToken(String oldToken) {
+        VerificationToken verificationToken = tokenRepository.findByToken(oldToken);
+        var tokenExpirationTime = new VerificationToken();
+        verificationToken.setToken(UUID.randomUUID().toString());
+        verificationToken.setExpirationTime(tokenExpirationTime.getTokenExpirationTime());
+        return tokenRepository.save(verificationToken);
+    }
+
+
+    public void resetPassword(User theUser, String newPassword) {
+        theUser.setPassword(passwordEncoder.encode(newPassword));
+        userRepository.save(theUser);
+    }
+
+    @Override
+    public String validatePasswordResetToken(String token) {
+        return passwordResetTokenService.validatePasswordResetToken(token);
+    }
+
+    @Override
+    public User findUserByPasswordToken(String token) {
+        return passwordResetTokenService.findUserByPasswordToken(token).get();
+    }
+
+    @Override
+    public void createPasswordResetTokenForUser(User user, String passwordResetToken) {
+        passwordResetTokenService.createPasswordResetTokenForUser(user, passwordResetToken);
+    }
 
 }
