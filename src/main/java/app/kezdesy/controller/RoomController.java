@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/room")
@@ -61,6 +62,24 @@ public class RoomController {
     public ResponseEntity<List<Room>> findRoom(){
         return new ResponseEntity<List<Room>>(roomRepository.findAll(), HttpStatus.CREATED);
     }
+
+    @GetMapping("/getRoomById")
+    public ResponseEntity<Room> findRoomById(@RequestParam Long id) {
+        Optional<Room> room = roomRepository.findById(id);
+        if (room.isPresent()) {
+            return ResponseEntity.ok(room.get());
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+
+    public User getUserByEmail(String email) {
+        User user = userRepository.findByEmail(email);
+        if (user == null) return null;
+        return user;
+    }
+
 
     public boolean isAgeLimitCorrect(int lower, int higher){
         if(lower <= 11 || lower > higher){
