@@ -984,6 +984,23 @@ ul.ks-cboxtags li input[type="checkbox"]:focus + label {
     text-transform: uppercase;
 }
 
+
+.chat-owner img {
+    width: 40px;
+    height: 40px;
+    overflow: hidden;
+    left: 10px;
+    display: inline-block;
+    vertical-align: middle;
+    font-size: 16px;
+    line-height: 40px;
+    color: #fff;
+    text-align: center;
+    border-radius: 50%;
+    font-style: normal;
+    text-transform: uppercase;
+}
+
 .chat-owner span {
     margin-left: 15px;
 }

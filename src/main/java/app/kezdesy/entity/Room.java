@@ -50,7 +50,7 @@ public class Room {
     private Set<Interest> interests;
 
 
-    @OneToMany
+    @OneToMany(fetch = FetchType.EAGER)
     private Collection<Message> messages = new ArrayList<>();
 
     public Room(String city, String header, String description, int minAgeLimit, int maxAgeLimit, int maxMembers, Set<Interest> interests, String owner) {

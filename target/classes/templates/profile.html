@@ -311,7 +311,7 @@
         if (getCookie("Authorization") != null) {
             let resultC = parseJwt(myCookie);
             let email = resultC.sub;
-            $('.header-login').html("<a class=\"header-login-link\" href=\"#\">\n" +
+            $('.header-login').html("<a class=\"header-login-link\" href=\"/profile\">\n" +
                 "            <div class=\"header-login-button\">\n" +
                 "                <i class=\"svg-icon fas fa-user-circle\" style=\"margin-right: 5px\"></i>" +
                 email + "\n" +
