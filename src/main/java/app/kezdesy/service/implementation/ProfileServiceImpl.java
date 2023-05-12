@@ -5,6 +5,7 @@ import app.kezdesy.entity.Room;
 import app.kezdesy.entity.User;
 import app.kezdesy.repository.RoomRepository;
 import app.kezdesy.repository.UserRepository;
+import app.kezdesy.repository.VerificationTokenRepository;
 import app.kezdesy.service.interfaces.IProfileService;
 import app.kezdesy.validation.UserValidation;
 import lombok.RequiredArgsConstructor;
@@ -23,6 +24,7 @@ public class ProfileServiceImpl implements IProfileService {
     UserRepository userRepository;
     @Autowired
     private RoomRepository roomRepository;
+
     public final PasswordEncoder passwordEncoder;
 
     private UserValidation userValidation = new UserValidation();
@@ -76,7 +78,7 @@ public class ProfileServiceImpl implements IProfileService {
     @Override
     public boolean deleteUserByEmail(String email) {
         User user = userRepository.findByEmail(email);
-        userRepository.deleteById(user.getId());
+        userRepository.delete(user);
         return true;
     }
 

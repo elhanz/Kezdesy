@@ -1,10 +1,9 @@
-package app.kezdesy.registerVerification.passwordReset;
+package app.kezdesy.model;
 
 import lombok.Data;
 
-
 @Data
-public class PasswordResetRequest {
+public class UpdatePasswordRequest {
     private String email;
     private String oldPassword;
     private String newPassword;

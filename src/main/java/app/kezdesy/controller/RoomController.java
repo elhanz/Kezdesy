@@ -73,14 +73,6 @@ public class RoomController {
         }
     }
 
-
-    public User getUserByEmail(String email) {
-        User user = userRepository.findByEmail(email);
-        if (user == null) return null;
-        return user;
-    }
-
-
     public boolean isAgeLimitCorrect(int lower, int higher){
         if(lower <= 11 || lower > higher){
             return false;
