@@ -27,10 +27,11 @@ public class RegistrationCompleteEventListener implements ApplicationListener<Re
     private final JavaMailSender mailSender;
     private User theUser;
 
-    @Override
+
     public void onApplicationEvent(RegistrationCompleteEvent event) {
 
         theUser = event.getUser();
+
         String verificationToken = UUID.randomUUID().toString();
         registerService.saveUserVerificationToken(theUser, verificationToken);
         String url = event.getApplicationUrl() + "/verifyEmail?token=" + verificationToken;
@@ -46,8 +47,7 @@ public class RegistrationCompleteEventListener implements ApplicationListener<Re
     public void sendVerificationEmail(String url) throws MessagingException, UnsupportedEncodingException {
         String subject = "Email Verification";
         String senderName = "User Registration Portal Service";
-        String mailContent = "<p> Hi, " + theUser.getFirst_name() + ", </p>" +
-                "<p>Thank you for registering with us," + "" +
+        String mailContent = "<p>Hi, Thank you for registering with us," + "" +
                 "Please, follow the link below to complete your registration.</p>" +
                 "<a href=\"" + url + "\">Verify your email to activate your account</a>" +
                 "<p> Thank you <br> Users Registration Portal Service";
@@ -61,18 +61,17 @@ public class RegistrationCompleteEventListener implements ApplicationListener<Re
     }
 
 
-    public void sendPasswordResetVerificationEmail(String url) throws MessagingException, UnsupportedEncodingException {
+    public void sendPasswordResetVerificationEmail(String email, String url) throws MessagingException, UnsupportedEncodingException {
         String subject = "Password Reset Request Verification";
         String senderName = "User Registration Portal Service";
-        String mailContent = "<p> Hi, " + theUser.getFirst_name() + ", </p>" +
-                "<p><b>You recently requested to reset your password,</b>" + "" +
+        String mailContent ="<p><b>Hi, You recently requested to reset your password,</b>" + "" +
                 "Please, follow the link below to complete the action.</p>" +
                 "<a href=\"" + url + "\">Reset password</a>" +
                 "<p> Users Registration Portal Service";
         MimeMessage message = mailSender.createMimeMessage();
         var messageHelper = new MimeMessageHelper(message);
         messageHelper.setFrom("kezdesy.kz@gmail.com", senderName);
-        messageHelper.setTo(theUser.getEmail());
+        messageHelper.setTo(email);
         messageHelper.setSubject(subject);
         messageHelper.setText(mailContent, true);
         mailSender.send(message);

@@ -109,7 +109,7 @@ public class RegisterController {
 
         String passwordResetToken = UUID.randomUUID().toString();
         registerService.createPasswordResetTokenForUser(user, passwordResetToken);
-        passwordResetUrl = passwordResetEmailLink(applicationUrl(servletRequest), passwordResetToken);
+        passwordResetUrl = passwordResetEmailLink(emailRequest.getEmail(),applicationUrl(servletRequest), passwordResetToken);
 
         return passwordResetUrl;
     }
@@ -130,10 +130,10 @@ public class RegisterController {
         return "Invalid password reset token";
     }
 
-    private String passwordResetEmailLink(String applicationUrl,
+    private String passwordResetEmailLink(String email, String applicationUrl,
                                           String passwordToken) throws MessagingException, UnsupportedEncodingException {
         String url = applicationUrl + "/reset-password?token=" + passwordToken;
-        eventListener.sendPasswordResetVerificationEmail(url);
+        eventListener.sendPasswordResetVerificationEmail(email, url);
         log.info("Click the link to reset your password :  {}", url);
         return url;
     }
