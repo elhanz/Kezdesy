@@ -3,7 +3,7 @@ package app.kezdesy.registerVerification.passwordReset;
 import app.kezdesy.entity.User;
 import app.kezdesy.entity.VerificationToken;
 import app.kezdesy.repository.UserRepository;
-import app.kezdesy.repository.VerificationTokenRepository;
+import app.kezdesy.repository.TokenRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.var;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.Calendar;
 import java.util.Optional;
-import java.util.UUID;
 
 
 @Service
@@ -22,7 +21,7 @@ public class RegisterService {
 
     public final PasswordEncoder passwordEncoder;
 
-    private final VerificationTokenRepository tokenRepository;
+    private final TokenRepository tokenRepository;
 
 
 

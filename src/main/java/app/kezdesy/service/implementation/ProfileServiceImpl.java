@@ -3,16 +3,17 @@ package app.kezdesy.service.implementation;
 import app.kezdesy.entity.Interest;
 import app.kezdesy.entity.Room;
 import app.kezdesy.entity.User;
+import app.kezdesy.entity.VerificationToken;
 import app.kezdesy.repository.RoomRepository;
+import app.kezdesy.repository.TokenRepository;
 import app.kezdesy.repository.UserRepository;
-import app.kezdesy.repository.VerificationTokenRepository;
 import app.kezdesy.service.interfaces.IProfileService;
-import app.kezdesy.validation.UserValidation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -27,7 +28,7 @@ public class ProfileServiceImpl implements IProfileService {
 
     public final PasswordEncoder passwordEncoder;
 
-    private UserValidation userValidation = new UserValidation();
+    private final TokenRepository tokenRepository;
 
     public boolean changePhoto(String email, String file) {
         String picture = file.replace("{\"file\":\"", "");
@@ -78,6 +79,24 @@ public class ProfileServiceImpl implements IProfileService {
     @Override
     public boolean deleteUserByEmail(String email) {
         User user = userRepository.findByEmail(email);
+        VerificationToken token = tokenRepository.findByUserId(user.getId());
+
+        if (token != null) {
+            tokenRepository.delete(token);
+        }
+        List<Room> userRooms = roomRepository.myRooms(user.getId());
+
+        userRooms.forEach(room -> {
+            if (room.getOwner() == user.getId().toString()) {
+                roomRepository.delete(room);
+            } else {
+
+                room.getUsers().remove(user);
+
+            }
+
+        });
+
         userRepository.delete(user);
         return true;
     }

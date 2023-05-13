@@ -2,12 +2,7 @@ package app.kezdesy.controller;
 
 import app.kezdesy.entity.Role;
 import app.kezdesy.entity.User;
-import app.kezdesy.entity.VerificationToken;
-import app.kezdesy.registerVerification.event.RegistrationCompleteEvent;
-import app.kezdesy.registerVerification.event.listener.RegistrationCompleteEventListener;
-import app.kezdesy.repository.VerificationTokenRepository;
 import app.kezdesy.service.implementation.UserServiceImpl;
-import app.kezdesy.validation.UserValidation;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
@@ -15,16 +10,11 @@ import com.auth0.jwt.interfaces.DecodedJWT;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.context.ApplicationEventPublisher;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -40,10 +30,6 @@ public class UserController {
 
 
     private final UserServiceImpl userService;
-
-
-
-
 
     @GetMapping("/token/refresh")
     public void refreshToken(HttpServletRequest request, HttpServletResponse response) throws IOException {

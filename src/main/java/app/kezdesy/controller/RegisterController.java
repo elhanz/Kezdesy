@@ -8,7 +8,7 @@ import app.kezdesy.registerVerification.event.RegistrationCompleteEvent;
 import app.kezdesy.registerVerification.event.listener.RegistrationCompleteEventListener;
 import app.kezdesy.model.NewPasswordRequest;
 import app.kezdesy.registerVerification.passwordReset.RegisterService;
-import app.kezdesy.repository.VerificationTokenRepository;
+import app.kezdesy.repository.TokenRepository;
 import app.kezdesy.service.implementation.UserServiceImpl;
 import app.kezdesy.validation.UserValidation;
 import lombok.RequiredArgsConstructor;
@@ -33,7 +33,7 @@ public class RegisterController {
 
     private final UserServiceImpl userService;
     private final ApplicationEventPublisher publisher;
-    private final VerificationTokenRepository tokenRepository;
+    private final TokenRepository tokenRepository;
     private final RegistrationCompleteEventListener eventListener;
 
     private final UserValidation userValidation = new UserValidation();
