@@ -1,15 +1,18 @@
 package app.kezdesy.controller;
 
+import app.kezdesy.entity.Message;
 import app.kezdesy.entity.Room;
 import app.kezdesy.entity.User;
 import app.kezdesy.model.EmailRoomId;
 import app.kezdesy.model.RoomEmailRequest;
+import app.kezdesy.repository.ChatMessageRepository;
 import app.kezdesy.repository.RoomRepository;
 import app.kezdesy.repository.UserRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
@@ -28,6 +31,9 @@ public class RoomController {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private ChatMessageRepository chatMessageRepo;
+
 
     @PostMapping("/create")
     public ResponseEntity createRoom(@RequestBody RoomEmailRequest roomEmailRequest) {
@@ -41,6 +47,12 @@ public class RoomController {
                     if (room.getMaxMembers() > 1 && room.getMaxMembers() < 21) {
                         if (!room.getInterests().isEmpty()) {
                             room.getUsers().add(curr_user);
+                            Message messageJoined = new Message();
+                            messageJoined.setType(Message.MessageType.JOIN);
+                            messageJoined.setSender(curr_user.getFirst_name() + ' ' + curr_user.getLast_name());
+                            messageJoined.setSenderId(curr_user.getId());
+                            room.getMessages().add(messageJoined);
+                            chatMessageRepo.save(messageJoined);
                             roomRepository.save(room);
                             return new ResponseEntity("Room was created", HttpStatus.CREATED);
                         } else {
@@ -82,9 +94,15 @@ public class RoomController {
 
         if (roomRepository.existsByRoomIdAndUserId(room.getId(), user.getId()) ) {
 
+            Message messageJoined = new Message();
+            messageJoined.setType(Message.MessageType.LEAVE);
+            messageJoined.setSender(user.getFirst_name() + ' ' + user.getLast_name());
+            messageJoined.setSenderId(user.getId());
+            room.getMessages().add(messageJoined);
+            chatMessageRepo.save(messageJoined);
             roomRepository.kickUser(room.getId(), user.getId());
 
-            return new ResponseEntity( user.getFirst_name() +" " + user.getLast_name() + " was kicked", HttpStatus.CREATED);
+            return new ResponseEntity( user.getFirst_name() +" " + user.getLast_name() + " left!", HttpStatus.CREATED);
 
         }
         return ResponseEntity.badRequest().body("Something is wrong");
@@ -122,7 +140,15 @@ public class RoomController {
 
         if (!isUserInRoom(emailRoomId.getEmail(), room.getUsers())) {
 
-            room.getUsers().add(userRepository.findByEmail(emailRoomId.getEmail()));
+            User curr_user = userRepository.findByEmail(emailRoomId.getEmail());
+
+            room.getUsers().add(curr_user);
+            Message messageJoined = new Message();
+            messageJoined.setType(Message.MessageType.JOIN);
+            messageJoined.setSender(curr_user.getFirst_name() + ' ' + curr_user.getLast_name());
+            messageJoined.setSenderId(curr_user.getId());
+            room.getMessages().add(messageJoined);
+            chatMessageRepo.save(messageJoined);
 
             roomRepository.save(room);
 

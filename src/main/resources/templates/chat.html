@@ -203,7 +203,7 @@
         userId = document.querySelector('#userId').value;
 
         // Subscribe to the Public Topic
-        // stompClient.subscribe('/topic/' + chatId, onMessageReceived);
+        stompClient.subscribe('/topic/' + chatId, onMessageReceived);
 
         // Tell your username to the server
         stompClient.send('/app/chat.addUser/' + chatId,
@@ -246,8 +246,8 @@
         var messageElement = document.createElement('li');
 
         if(message.type === 'JOIN') {
-            // messageElement.classList.add('event-message');
-            // message.content = message.sender + ' joined!';
+            messageElement.classList.add('event-message');
+            message.content = message.sender + ' joined!';
         } else if (message.type === 'LEAVE') {
             messageElement.classList.add('event-message');
             message.content = message.sender + ' left!';
@@ -258,8 +258,7 @@
             if (userSender.profilePic != null) {
                 var avatarElement = document.createElement('img');
                 avatarElement.src = userSender.profilePic;
-            }
-            else {
+            } else {
                 var avatarElement = document.createElement('i');
                 var avatarText = document.createTextNode(message.sender[0]);
                 avatarElement.appendChild(avatarText);
@@ -272,18 +271,18 @@
             var usernameText = document.createTextNode(message.sender);
             usernameElement.appendChild(usernameText);
             messageElement.appendChild(usernameElement);
+
+            var textElement = document.createElement('p');
+            var messageText = document.createTextNode(message.content);
+            textElement.appendChild(messageText);
+
+            messageElement.appendChild(textElement);
+
+            console.log(textElement);
+            console.log(messageElement);
+            messageArea.appendChild(messageElement);
+            messageArea.scrollTop = messageArea.scrollHeight;
         }
-
-        var textElement = document.createElement('p');
-        var messageText = document.createTextNode(message.content);
-        textElement.appendChild(messageText);
-
-        messageElement.appendChild(textElement);
-
-        console.log(textElement);
-        console.log(messageElement);
-        messageArea.appendChild(messageElement);
-        messageArea.scrollTop = messageArea.scrollHeight;
     }
 
 
@@ -295,6 +294,13 @@
 
         var index = Math.abs(hash % colors.length);
         return colors[index];
+    }
+
+    function getHoursAndMinutes(dateString) {
+        const date = new Date(dateString);
+        const hours = date.getHours().toString().padStart(2, '0');
+        const minutes = date.getMinutes().toString().padStart(2, '0');
+        return `${hours}:${minutes}`;
     }
 
     usernameForm.addEventListener('submit', connect, true)
@@ -404,26 +410,31 @@
 
                                     //setting chat's owner
                                     console.log(rooms_info);
+                                    var ownerIsHere = 0;
                                     var owner = rooms_info.users.find(user => user.email === rooms_info.owner);
-                                    var avatarElement;
-                                    if (owner.profilePic == null) {
-                                        avatarElement = "<i style='background-color:" + getAvatarColor(owner.first_name + ' ' + owner.last_name) + "'>" + owner.first_name[0] + "</i>";
-                                    } else {
-                                        avatarElement = "<img src='" + owner.profilePic + "'>";
-                                    }
                                     var html = "<div class=\"chat-roommates\">\n" +
-                                        "    <div class=\"chat-owner-block\">\n" +
-                                        "        <div class=\"chat-owner-title\">\n" +
-                                        "            Owner - <span class=\"chat-owner-count\">1</span>\n" +
-                                        "        </div>\n" +
-                                        "        <div class=\"chat-owner\">\n" +
-                                        avatarElement +
-                                        "            <span>" + owner.first_name + ' ' + owner.last_name + "</span>\n" +
-                                        "        </div>\n" +
-                                        "    </div>\n" +
-                                        "    <div class=\"chat-roommates-block\">\n" +
+                                        "    <div class=\"chat-owner-block\">";
+                                    console.log(owner);
+                                    if (owner !== undefined) {
+                                        ownerIsHere++;
+                                        var avatarElement;
+                                        if (owner.profilePic == null) {
+                                            avatarElement = "<i style='background-color:" + getAvatarColor(owner.first_name + ' ' + owner.last_name) + "'>" + owner.first_name[0] + "</i>";
+                                        } else {
+                                            avatarElement = "<img src='" + owner.profilePic + "'>";
+                                        }
+                                        html += "<div class=\"chat-owner-title\">\n" +
+                                            "            Owner - <span class=\"chat-owner-count\">1</span>\n" +
+                                            "        </div>\n" +
+                                            "        <div class=\"chat-owner\">\n" +
+                                            avatarElement +
+                                            "            <span>" + owner.first_name + ' ' + owner.last_name + "</span>\n" +
+                                            "        </div>\n" +
+                                            "    </div>";
+                                    }
+                                    html += "<div class=\"chat-roommates-block\">\n" +
                                         "        <div class=\"chat-roommates-title\">\n" +
-                                        "            Roommates - <span class=\"chat-roommates-count\">" + (item.users.length-1) + "</span>\n" +
+                                        "            Roommates - <span class=\"chat-roommates-count\">" + (item.users.length-ownerIsHere) + "</span>\n" +
                                         "        </div>\n";
 
                                     rooms_info.users.forEach((user, i) => {
@@ -443,6 +454,24 @@
                                     html += "    </div>\n" +
                                         "</div>";
                                     $('.chat-info').html(html);
+                                    $('.chat-info').append("<div class=\"chat-settings\">\n" +
+                                        "                <div class=\"chat-btn-leave\" id=\"leave" + item.id + "\">Leave</div>\n" +
+                                        "            </div>");
+
+                                    $('#leave' + item.id).on('click', function () {
+                                        $.ajax({
+                                            type: "POST",
+                                            headers: {'Authorization': myCookie},
+                                            contentType: 'application/json',
+                                            url: "/room/kickUser",
+                                            data: JSON.stringify({"email" : email, "roomId" : item.id}),
+                                            dataType: 'json',
+                                            complete: function (result) {
+                                                console.log(result.responseText);
+                                                window.location.replace("/rooms");
+                                            }
+                                        });
+                                    });
 
                                     //setting name of new chat
                                     console.log(rooms_info);
@@ -454,35 +483,54 @@
 
                                     //output all messages
                                     rooms_info.messages.forEach((messageItem, i) => {
-                                        var userSender = rooms_info.users.find(user => user.id === messageItem.senderId);
+
                                         var message = messageItem;
                                         var messageElement = document.createElement('li');
-                                        messageElement.classList.add('chat-message');
 
-                                        if (!(userSender.profilePic == null)) {
-                                            var avatarElement = document.createElement('img');
-                                            avatarElement.src = userSender.profilePic;
+                                        if(message.type === 'JOIN') {
+                                            messageElement.classList.add('event-message');
+                                            message.content = message.sender + ' joined!';
+                                        } else if (message.type === 'LEAVE') {
+                                            messageElement.classList.add('event-message');
+                                            message.content = message.sender + ' left!';
+                                        } else {
+                                            messageElement.classList.add('chat-message');
+
+                                            var userSender = rooms_info.users.find(user => user.id === messageItem.senderId);
+                                            if (userSender.profilePic != null) {
+                                                var avatarElement = document.createElement('img');
+                                                avatarElement.src = userSender.profilePic;
+                                            }
+                                            else {
+                                                var avatarElement = document.createElement('i');
+                                                var avatarText = document.createTextNode(message.sender[0]);
+                                                avatarElement.appendChild(avatarText);
+                                                avatarElement.style['background-color'] = getAvatarColor(message.sender);
+                                            }
+
+                                            messageElement.appendChild(avatarElement);
+
+                                            var usernameElement = document.createElement('span');
+                                            var usernameText = document.createTextNode(message.sender);
+                                            usernameElement.appendChild(usernameText);
+                                            messageElement.appendChild(usernameElement);
+
+                                            var timestampElement = document.createElement('span');
+                                            timestampElement.style.color = '#6e6e6e';
+                                            timestampElement.style.fontSize = '12px';
+                                            timestampElement.style.fontWeight = 'lighter';
+                                            var timestampText = document.createTextNode("  " + getHoursAndMinutes(messageItem.createdAt));
+                                            timestampElement.appendChild(timestampText);
+                                            messageElement.appendChild(timestampElement);
                                         }
-                                        else {
-                                            var avatarElement = document.createElement('i');
-                                            var avatarText = document.createTextNode(userSender.first_name[0]);
-                                            avatarElement.appendChild(avatarText);
-                                            avatarElement.style['background-color'] = getAvatarColor(userSender.first_name + ' ' + userSender.last_name);
-                                        }
-
-                                        messageElement.appendChild(avatarElement);
-
-                                        var usernameElement = document.createElement('span');
-                                        var usernameText = document.createTextNode(userSender.first_name + ' ' + userSender.last_name);
-                                        usernameElement.appendChild(usernameText);
-                                        messageElement.appendChild(usernameElement);
-
                                         var textElement = document.createElement('p');
                                         var messageText = document.createTextNode(message.content);
                                         textElement.appendChild(messageText);
 
                                         messageElement.appendChild(textElement);
 
+                                        console.log(textElement);
+                                        console.log(messageElement);
                                         messageArea.appendChild(messageElement);
                                         messageArea.scrollTop = messageArea.scrollHeight;
                                     });
