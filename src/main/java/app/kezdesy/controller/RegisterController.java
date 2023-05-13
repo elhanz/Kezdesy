@@ -16,6 +16,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -115,19 +117,37 @@ public class RegisterController {
     }
 
 
-    @PostMapping("/reset-password")
-    public String resetPassword(@RequestBody NewPasswordRequest newPasswordRequest,
-                                @RequestParam("token") String token) {
+    @GetMapping("/reset-password")
+    public ModelAndView showResetPasswordForm(@RequestParam("token") String token, Model model) {
         String tokenVerificationResult = registerService.validateToken(token);
         if (!tokenVerificationResult.equalsIgnoreCase("valid")) {
-            return "Invalid token password reset token";
+            model.addAttribute("error", "Invalid password reset token");
+            return new ModelAndView("error", model.asMap());
+        }
+        Optional<User> theUser = registerService.findUserByPasswordToken(token);
+        if (theUser.isPresent()) {
+            model.addAttribute("token", token);
+            return new ModelAndView("pasresdone", model.asMap());
+        }
+        model.addAttribute("error", "Invalid password reset token");
+        return new ModelAndView("error", model.asMap());
+    }
+
+    @PostMapping("/reset-password")
+    public ModelAndView resetPassword(@ModelAttribute("newPasswordRequest") NewPasswordRequest newPasswordRequest,
+                                      @RequestParam("token") String token, Model model) {
+        String tokenVerificationResult = registerService.validateToken(token);
+        if (!tokenVerificationResult.equalsIgnoreCase("valid")) {
+            model.addAttribute("error", "Invalid password reset token");
+            return new ModelAndView("error", model.asMap());
         }
         Optional<User> theUser = registerService.findUserByPasswordToken(token);
         if (theUser.isPresent()) {
             registerService.resetPassword(theUser.get(), newPasswordRequest.getNewPassword());
-            return "Password has been reset successfully";
+            return new ModelAndView("success");
         }
-        return "Invalid password reset token";
+        model.addAttribute("error", "Invalid password reset token");
+        return new ModelAndView("error", model.asMap());
     }
 
     private String passwordResetEmailLink(String email, String applicationUrl,

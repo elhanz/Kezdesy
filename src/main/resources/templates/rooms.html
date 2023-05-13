@@ -134,65 +134,7 @@
             </div>
 
             <div class="rooms-block">
-                <fieldset class="rec-fieldset">
-                    <legend>Recommended Rooms</legend>
-
-                    <div class="room" style="outline: 5px solid #F2C2D4;">
-                        <div class="profile-room-head">
-                            <h3 class="profile-room-title">Find people for camp</h3>
-                            <div class="profile-room-info">
-                                <p>Age range: 14-16</p>
-                                <p>City: Astana</p>
-                            </div>
-                            <div class="room-interests">
-                                Interests:&nbsp;
-                                <div class="profile-room-interest">Travel</div>
-                                <div class="profile-room-interest matched-interest">Music</div>
-                                <div class="profile-room-interest">Camp</div>
-                                <div class="profile-room-interest matched-interest">Books</div>
-                                <div class="profile-room-interest">Vampire</div>
-                                <div class="profile-room-interest matched-interest">Tiktok</div>
-                                <div class="profile-room-interest">Monster High</div>
-                                <div class="profile-room-interest">Sport</div>
-                                <div class="profile-room-interest">School</div>
-                            </div>
-                        </div>
-                        <div class="room-buttons">
-                            <div class="profile-room-count">
-                                <i class="svg-icon fas fa-user-circle" style="margin-right: 5px"></i> 4/6
-                            </div>
-                            <div class="room-button">Join</div>
-                        </div>
-                    </div>
-
-                    <div class="room">
-                        <div class="profile-room-head">
-                            <h3 class="profile-room-title">Find people for camp</h3>
-                            <div class="profile-room-info">
-                                <p>Age range: 14-16</p>
-                                <p>City: Astana</p>
-                            </div>
-                            <div class="room-interests">
-                                Interests:&nbsp;
-                                <div class="profile-room-interest">Travel</div>
-                                <div class="profile-room-interest matched-interest">Music</div>
-                                <div class="profile-room-interest">Camp</div>
-                                <div class="profile-room-interest matched-interest">Books</div>
-                                <div class="profile-room-interest">Vampire</div>
-                                <div class="profile-room-interest matched-interest">Tiktok</div>
-                                <div class="profile-room-interest">Monster High</div>
-                                <div class="profile-room-interest">Sport</div>
-                                <div class="profile-room-interest">School</div>
-                            </div>
-                        </div>
-                        <div class="room-buttons">
-                            <div class="profile-room-count">
-                                <i class="svg-icon fas fa-user-circle" style="margin-right: 5px"></i> 4/6
-                            </div>
-                            <div class="room-button">Join</div>
-                        </div>
-                    </div>
-
+                <fieldset class="rec-fieldset" id="rec">
                 </fieldset>
             </div>
 
@@ -207,7 +149,7 @@
             &#169; 2023 All rights reserved
         </div>
         <div class="footer-col3" >
-            <a href="#" >KEZDESY</a>
+            <a href="/termsPolicy" >Terms and Conditions</a>
         </div>
     </div>
 </div>
@@ -218,6 +160,12 @@
 <script type="text/javascript">
 
     let user_info;
+
+    var colors = [
+        '#A4C5E9', '#32c787', '#00BCD4', '#ff5652',
+        '#ffc107', '#F2C2D4', '#FF9800', '#39bbb0',
+        '#ED4477', '#B5F2E3', '#C0F8D1', '#D4BFFF'
+    ];
 
     if (getCookie("Authorization") == null) {
         window.location.replace("/loginUser");
@@ -234,6 +182,16 @@
         else {
             menu_list.style.maxHeight = "0px"
         }
+    }
+
+    function getAvatarColor(messageSender) {
+        var hash = 0;
+        for (var i = 0; i < messageSender.length; i++) {
+            hash = 31 * hash + messageSender.charCodeAt(i);
+        }
+
+        var index = Math.abs(hash % colors.length);
+        return colors[index];
     }
 
     function parseJwt(token) {
@@ -254,6 +212,7 @@
 
     $(document).ready(function () {
         $('#about').hide();
+        $('#rec').hide();
         $('#advance').hide();
         $('#user__name').html('');
         let myCookie = getCookie("Authorization");
@@ -303,6 +262,91 @@
                 }
             });
 
+            $.ajax({
+                type: "GET",
+                headers: {'Authorization': myCookie},
+                contentType: 'application/json',
+                url: "room/find/recommend",
+                data: {email: email},
+                dataType: 'json',
+                success: function (result) {
+                    console.log(result);
+                    $('#rec').show();
+                    $('#rec').append("<legend>Recommended Rooms</legend>");
+                    result.forEach((item, i) => {
+                        console.log(item.users);
+                        let count = item.users.length;
+                        console.log(count);
+
+                        if (count < item.maxMembers) {
+                            // get the user interests
+
+                            $('#rec').append(
+                                "<div class=\"room\" style=\"outline: 5px solid " + getAvatarColor(item.header) + ";\">\n" +
+                                "                        <div class=\"profile-room-head\">\n" +
+                                "                            <h3 class=\"profile-room-title\">" + item.header + "</h3>\n" +
+                                "                            <div class=\"profile-room-info\" id=\"messages"+item.id+"\" style='color: #2a6496'>\n" +
+                                "                            </div>\n" +
+                                "                            <div class=\"profile-room-info\">\n" +
+                                "                                <p>Description: " + item.description + "</p>\n" +
+                                "                            </div>\n" +
+                                "                            <div class=\"profile-room-info\">\n" +
+                                "                                <p>Age range: " + item.minAgeLimit + "-" + item.maxAgeLimit + "</p>\n" +
+                                "                                <p>City: " + item.city + "</p>\n" +
+                                "                            </div>\n" +
+                                "                            <div class=\"room-interests\" id=\"roomInterests" + item.id + "\">\n" +
+                                "                            </div>\n" +
+                                "                        </div>\n" +
+                                "                        <div class=\"room-buttons\">\n" +
+                                "                            <div class=\"profile-room-count\">\n" +
+                                "                                <i class=\"svg-icon fas fa-user-circle\" style=\"margin-right: 5px\"></i> " + count + '/' + item.maxMembers + "\n" +
+                                "                            </div>\n" +
+                                "                            <div class=\"room-button\" id=\"join"+item.id+"\">Join</div>\n" +
+                                "                        </div>\n" +
+                                "                    </div>"
+                            );
+
+                            var userInterests = user_info.interests;
+                            var roomInterests = item.interests;
+                            $('#roomInterests' + item.id).append("Interests:&nbsp;");
+                            for (var i = 0; i < roomInterests.length; i++) {
+                                var roomInterest = roomInterests[i];
+                                var matched = userInterests.includes(roomInterest);
+                                var interestClass = matched ? 'matched-interest' : '';
+                                var interestHtml = '<div class="profile-room-interest ' + interestClass + '">' + roomInterest + '</div>';
+                                $('#roomInterests' + item.id).append(interestHtml);
+                            }
+
+                            $('#join' + item.id).on('click', function () {
+                                let resultC = parseJwt(myCookie);
+                                let email = resultC.sub;
+                                $.ajax({
+                                    type: "POST",
+                                    headers: {'Authorization': myCookie},
+                                    contentType: 'application/json',
+                                    url: "room/join",
+                                    data: JSON.stringify({"email" : email, "roomId" : item.id}),
+                                    dataType: 'json',
+                                    complete: function (result) {
+                                        console.log(item.id);
+                                        console.log(result.responseText);
+                                        if (result.responseText === "User was added to room.") {
+                                            window.location.replace("/chats");
+                                        }
+                                        else {
+                                            $('#messages' + item.id).html(result.responseText);
+                                        }
+                                    }
+                                });
+                            });
+                        }
+                    })
+                },
+                error: function (e) {
+                    console.log("ERROR: ", e);
+                }
+            });
+
             $('#search').on('click', function () {
                 $('#about').hide();
                 $('#about').html('');
@@ -334,7 +378,7 @@
                     success: function (result) {
                         console.log(result);
                         $('#about').show();
-                        $('#about').append("<legend>Search result:</legend>");
+                        $('#about').append("<legend>Search result</legend>");
                         result.forEach((item, i) => {
                             console.log(item.users);
                             let count = item.users.length;
@@ -392,7 +436,7 @@
                                         complete: function (result) {
                                             console.log(item.id);
                                             console.log(result.responseText);
-                                            if (result.responseText === "User was added to room. Chat was created.") {
+                                            if (result.responseText === "User was added to room.") {
                                                 window.location.replace("/chats");
                                             }
                                             else {

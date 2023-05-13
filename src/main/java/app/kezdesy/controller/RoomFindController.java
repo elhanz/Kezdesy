@@ -64,6 +64,17 @@ public class RoomFindController {
         return new ResponseEntity<List<Room>>(rooms2, HttpStatus.CREATED);
     }
 
+    @GetMapping("/recommend")
+    public ResponseEntity<List<Room>> recommendRoom(@RequestParam String email){
+        User user = userRepository.findByEmail(email);
+        List<Room> rooms = roomRepository.findByCityContainsAndHeaderContainsAndMinAgeLimitGreaterThanEqualAndMaxAgeLimitLessThanEqualAndMaxMembersLessThanEqual(
+                user.getCity(), "", 0, 120, 20);
+        rooms.removeIf(room -> room.getMinAgeLimit() > user.getAge());
+        rooms.removeIf(room -> room.getMaxAgeLimit() < user.getAge());
+        rooms.removeIf(room -> room.getInterests().stream().noneMatch(user.getInterests()::contains));
+        return new ResponseEntity<List<Room>>(rooms, HttpStatus.CREATED);
+    }
+
     public String[] setToStringConverter(Set<Interest> interests){
         Set<String> strings = new HashSet<>();
         for(Interest i : interests){

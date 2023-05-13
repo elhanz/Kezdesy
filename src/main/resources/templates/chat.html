@@ -203,7 +203,7 @@
         userId = document.querySelector('#userId').value;
 
         // Subscribe to the Public Topic
-        stompClient.subscribe('/topic/' + chatId, onMessageReceived);
+        // stompClient.subscribe('/topic/' + chatId, onMessageReceived);
 
         // Tell your username to the server
         stompClient.send('/app/chat.addUser/' + chatId,
@@ -246,8 +246,8 @@
         var messageElement = document.createElement('li');
 
         if(message.type === 'JOIN') {
-            messageElement.classList.add('event-message');
-            message.content = message.sender + ' joined!';
+            // messageElement.classList.add('event-message');
+            // message.content = message.sender + ' joined!';
         } else if (message.type === 'LEAVE') {
             messageElement.classList.add('event-message');
             message.content = message.sender + ' left!';

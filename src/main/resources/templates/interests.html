@@ -137,23 +137,30 @@
 
             $('#registrationButton').on('click', function () {
                 let data = JSON.stringify({email:email, interests: interests});
-                $.ajax({
-                    type: "POST",
-                    contentType: 'application/json',
-                    url: "setInterests",
-                    data: data,
-                    dataType: 'json',
-                    complete: function (result) {
-                        console.log(result.responseText);
-                        if (result.responseText == "Interests were set") {
-                            //console.log(123);
-                            window.location.replace("/profile");
-                        } else {
-                            $('#result_msg').css("border", "1px solid red")
-                            $('#result_msg').html(result.responseText);
+                if (interests.length > 2) {
+                    $.ajax({
+                        type: "POST",
+                        contentType: 'application/json',
+                        url: "setInterests",
+                        data: data,
+                        dataType: 'json',
+                        complete: function (result) {
+                            console.log(result.responseText);
+                            if (result.responseText == "Interests were set") {
+                                //console.log(123);
+                                window.location.replace("/profile");
+                            } else {
+                                $('#result_msg').css("border", "1px solid red")
+                                $('#result_msg').html(result.responseText);
+                            }
                         }
-                    }
-                })
+                    })
+                }
+                else {
+                    $('#result_msg').css("border", "1px solid red");
+                    $('#result_msg').html("Please select at least 3 interests");
+                }
+
             })
 
         }

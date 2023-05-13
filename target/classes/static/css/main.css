@@ -889,7 +889,10 @@ ul.ks-cboxtags li input[type="checkbox"]:focus + label {
 .chats-block {
     display: flex;
     width: 25vw;
+    height: 90vh;
     flex-direction: column;
+    overflow: auto;
+    overflow-y: scroll;
 }
 
 .chat-no-select {

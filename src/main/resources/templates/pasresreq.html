@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org/">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link th:href="@{/css/login.css}" rel="stylesheet"  type="text/css">
+    <link rel="shortcut icon" href="/img/mini_logo.png" type="image/x-icon">
+
+    <title>Password Reset</title>
+</head>
+<body>
+<div class="wrapper fadeInDown">
+    <div id="formContent">
+        <h2 class="active"> Password reset </h2>
+
+        <div class="fadeIn first">
+            <img src="/img/logo2.png" id="icon" alt="User Icon" />
+        </div>
+
+        <div id="result_msg"></div>
+        <input type="email" id="email" class="fadeIn second" name="login" placeholder="email">
+
+        <button type="submit" id="registrationButton" class="button fadeIn fourth">Send</button>
+
+        <div id="formFooter">
+        </div>
+
+    </div>
+</div>
+</body>
+
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script type="text/javascript">
+
+    $(document).ready(function () {
+            $('#registrationButton').on('click', function () {
+                let email = $('#email').val();
+                $('#result_msg').css("border", "1px solid green")
+                $('#result_msg').html("Success!  Please, check your email for to complete your registration");
+
+                $.ajax({
+                    type: "POST",
+                    contentType: 'application/json',
+                    url: "/password-reset-request",
+                    data: JSON.stringify({
+                        email: email
+                    }),
+                    dataType: 'json',
+                    complete: function (result) {
+                        console.log(result);
+                        if (result.responseText === "This email doesn't registered") {
+                            console.log("Bad request: " + result);
+                            $('#result_msg').css("border", "1px solid red")
+                            $('#result_msg').html(result.responseText);
+                        }
+                    }
+                });
+            })
+
+        }
+    );
+</script>
+</html>

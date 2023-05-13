@@ -68,4 +68,9 @@ public class WebController {
     public String getTermsPolicy() {
         return "termsPolicy";
     }
+
+    @GetMapping("/password-reset/request")
+    public String getPasswordResetRequest() {
+        return "pasresreq";
+    }
 }
