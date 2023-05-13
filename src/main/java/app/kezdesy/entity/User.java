@@ -5,11 +5,12 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.annotations.LazyCollection;
-import org.hibernate.annotations.LazyCollectionOption;
-import org.hibernate.annotations.Type;
+import org.hibernate.annotations.*;
 
 import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.Table;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Set;
@@ -63,6 +64,14 @@ public class User {
     @Enumerated(EnumType.STRING)
     @Column(name = "interest")
     private Set<Interest> interests;
+
+    @CreationTimestamp
+    @Column(name = "created_at")
+    private Timestamp createdAt;
+
+    @UpdateTimestamp
+    @Column(name = "updated_at")
+    private Timestamp updatedAt;
 
 
     public User(String first_name, String last_name, int age, String city, String email, String password, String profilePic, Set<Interest> interests) {

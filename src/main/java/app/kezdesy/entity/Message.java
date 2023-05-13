@@ -6,6 +6,8 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
+import java.sql.Timestamp;
+
 @Data
 @NoArgsConstructor
 @Entity
@@ -19,8 +21,12 @@ public class Message {
     private MessageType type;
 
     @CreationTimestamp
+    @Column(name = "created_at")
+    private Timestamp createdAt;
 
     @UpdateTimestamp
+    @Column(name = "updated_at")
+    private Timestamp updatedAt;
 
     private String content;
     private String sender;
