@@ -36,8 +36,8 @@ public class RoomController {
         Room room = new Room(roomEmailRequest.getCity(), roomEmailRequest.getHeader(), roomEmailRequest.getDescription(), roomEmailRequest.getMinAgeLimit(),
                 roomEmailRequest.getMaxAgeLimit(), roomEmailRequest.getMaxMembers(), roomEmailRequest.getInterests(), roomEmailRequest.getEmail());
         if (isAgeLimitCorrect(room.getMinAgeLimit(), room.getMaxAgeLimit())) {
-            if (room.getHeader().length() < 200 && room.getHeader().length() > 5) {
-                if (room.getDescription().length() < 600 && room.getDescription().length() > 5 ) {
+            if (room.getHeader().length() < 200 && room.getHeader().length() > 3) {
+                if (room.getDescription().length() <= 600 ) {
                     if (room.getMaxMembers() > 1 && room.getMaxMembers() < 21) {
                         if (!room.getInterests().isEmpty()) {
                             room.getUsers().add(curr_user);
@@ -50,10 +50,10 @@ public class RoomController {
                         return ResponseEntity.badRequest().body("Max members of room 1-20.");
                     }
                 } else {
-                    return ResponseEntity.badRequest().body("Description text limit  5 - 600 chars.");
+                    return ResponseEntity.badRequest().body("Description text limit 600 chars.");
                 }
             } else {
-                return ResponseEntity.badRequest().body("Header text limit 5 - 200 chars.");
+                return ResponseEntity.badRequest().body("Header text limit 4 - 200 chars.");
             }
         } else {
             return ResponseEntity.badRequest().body("Incorrect age limits.");
