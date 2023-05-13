@@ -80,7 +80,8 @@ public class RoomController {
         Room room = roomRepository.findRoomById(emailRoomId.getRoomId());
         User user = userRepository.findByEmail(emailRoomId.getEmail());
 
-        if (room != null && user!= null) {
+        if (roomRepository.existsByRoomIdAndUserId(room.getId(), user.getId()) ) {
+
             roomRepository.kickUser(room.getId(), user.getId());
 
             return new ResponseEntity( user.getFirst_name() +" " + user.getLast_name() + " was kicked", HttpStatus.CREATED);

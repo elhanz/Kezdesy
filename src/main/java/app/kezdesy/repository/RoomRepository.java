@@ -1,6 +1,7 @@
 package app.kezdesy.repository;
 
 import app.kezdesy.entity.Room;
+import org.springframework.data.domain.Example;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -61,6 +62,14 @@ public interface RoomRepository extends JpaRepository<Room, Long> {
                     "where id = :id",
             nativeQuery = true)
     Room findRoomById(@Param("id") Long id);
+
+    @Query(
+            value = "select exists(select 1 from room_users where rooms_id = :roomId and  users_id = :userId )",
+            nativeQuery = true)
+    boolean existsByRoomIdAndUserId(@Param("roomId") Long roomId, @Param("userId") Long userId);
+
+
+
     @Transactional
     @Modifying
     @Query(
