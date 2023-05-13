@@ -2,6 +2,8 @@ package app.kezdesy.entity;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 @Data
@@ -15,6 +17,10 @@ public class Message {
 
     @Enumerated(EnumType.STRING)
     private MessageType type;
+
+    @CreationTimestamp
+
+    @UpdateTimestamp
 
     private String content;
     private String sender;
