@@ -2,10 +2,12 @@ package app.kezdesy.repository;
 
 import app.kezdesy.entity.Room;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 @Repository
@@ -48,12 +50,24 @@ public interface RoomRepository extends JpaRepository<Room, Long> {
 
     @Query(
             value = "select * from room " +
-                    "join room_users on room.id = room_users.rooms_id "+
+                    "join room_users on room.id = room_users.rooms_id " +
                     "where users_id = :id",
             nativeQuery = true)
     List<Room> myRooms(@Param("id") Long id);
 
 
+    @Query(
+            value = "select * from room " +
+                    "where id = :id",
+            nativeQuery = true)
+    Room findRoomById(@Param("id") Long id);
+    @Transactional
+    @Modifying
+    @Query(
+            value = "delete from room_users " +
+                    "where rooms_id = :roomId and  users_id = :userId",
+            nativeQuery = true)
+    void kickUser(@Param("roomId") Long roomId, @Param("userId") Long userId);
 
 }
 

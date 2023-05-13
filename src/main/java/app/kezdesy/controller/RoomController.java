@@ -6,6 +6,7 @@ import app.kezdesy.model.EmailRoomId;
 import app.kezdesy.model.RoomEmailRequest;
 import app.kezdesy.repository.RoomRepository;
 import app.kezdesy.repository.UserRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +17,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
+@Slf4j
 @RestController
 @RequestMapping("/room")
 public class RoomController {
@@ -28,38 +30,38 @@ public class RoomController {
 
 
     @PostMapping("/create")
-    public ResponseEntity createRoom(@RequestBody RoomEmailRequest roomEmailRequest){
+    public ResponseEntity createRoom(@RequestBody RoomEmailRequest roomEmailRequest) {
         User curr_user = userRepository.findByEmail(roomEmailRequest.getEmail());
 
-        Room room = new Room(roomEmailRequest.getCity(),roomEmailRequest.getHeader(),roomEmailRequest.getDescription(), roomEmailRequest.getMinAgeLimit(),
-                roomEmailRequest.getMaxAgeLimit(),roomEmailRequest.getMaxMembers(),roomEmailRequest.getInterests(), roomEmailRequest.getEmail());
-        if(isAgeLimitCorrect(room.getMinAgeLimit(), room.getMaxAgeLimit())){
-            if(room.getHeader().length() < 200 && room.getHeader() != null){
-                if(room.getDescription().length() < 600 && room.getDescription() != null){
-                    if(room.getMaxMembers() > 1 && room.getMaxMembers() < 21){
-                        if(!room.getInterests().isEmpty()){
+        Room room = new Room(roomEmailRequest.getCity(), roomEmailRequest.getHeader(), roomEmailRequest.getDescription(), roomEmailRequest.getMinAgeLimit(),
+                roomEmailRequest.getMaxAgeLimit(), roomEmailRequest.getMaxMembers(), roomEmailRequest.getInterests(), roomEmailRequest.getEmail());
+        if (isAgeLimitCorrect(room.getMinAgeLimit(), room.getMaxAgeLimit())) {
+            if (room.getHeader().length() < 200 && room.getHeader() != null) {
+                if (room.getDescription().length() < 600 && room.getDescription() != null) {
+                    if (room.getMaxMembers() > 1 && room.getMaxMembers() < 21) {
+                        if (!room.getInterests().isEmpty()) {
                             room.getUsers().add(curr_user);
                             roomRepository.save(room);
                             return new ResponseEntity("Room was created", HttpStatus.CREATED);
-                        }else{
+                        } else {
                             return ResponseEntity.badRequest().body("Room must contain at least 1 interest.");
                         }
-                    }else{
+                    } else {
                         return ResponseEntity.badRequest().body("Max members of room 1-20.");
                     }
-                }else{
+                } else {
                     return ResponseEntity.badRequest().body("Description text limit - 600 chars.");
                 }
-            }else{
+            } else {
                 return ResponseEntity.badRequest().body("Header text limit - 200 chars.");
             }
-        }else{
+        } else {
             return ResponseEntity.badRequest().body("Incorrect age limits.");
         }
     }
 
     @GetMapping("/find")
-    public ResponseEntity<List<Room>> findRoom(){
+    public ResponseEntity<List<Room>> findRoom() {
         return new ResponseEntity<List<Room>>(roomRepository.findAll(), HttpStatus.CREATED);
     }
 
@@ -73,17 +75,32 @@ public class RoomController {
         }
     }
 
-    public boolean isAgeLimitCorrect(int lower, int higher){
-        if(lower <= 11 || lower > higher){
+    @PostMapping("/kickUser")
+    public ResponseEntity kickUser(@RequestBody EmailRoomId emailRoomId) {
+        Room room = roomRepository.findRoomById(emailRoomId.getRoomId());
+        User user = userRepository.findByEmail(emailRoomId.getEmail());
+
+        if (room != null && user!= null) {
+            roomRepository.kickUser(room.getId(), user.getId());
+
+            return new ResponseEntity( user.getFirst_name() +" " + user.getLast_name() + " was kicked", HttpStatus.CREATED);
+
+        }
+        return ResponseEntity.badRequest().body("Something is wrong");
+
+    }
+
+    public boolean isAgeLimitCorrect(int lower, int higher) {
+        if (lower <= 11 || lower > higher) {
             return false;
         }
-        if(higher <= 12){
+        if (higher <= 12) {
             return false;
         }
-        if(higher - lower < 1){
+        if (higher - lower < 1) {
             return false;
         }
-        if(lower > 100 || higher > 100){
+        if (lower > 100 || higher > 100) {
             return false;
         }
         return true;
@@ -99,18 +116,17 @@ public class RoomController {
     }
 
     @PostMapping("/join")
-    public ResponseEntity joinRoom(@RequestBody EmailRoomId emailRoomId){
+    public ResponseEntity joinRoom(@RequestBody EmailRoomId emailRoomId) {
         Room room = roomRepository.findById(emailRoomId.getRoomId()).orElse(null);
 
-        if (!isUserInRoom(emailRoomId.getEmail(), room.getUsers())){
+        if (!isUserInRoom(emailRoomId.getEmail(), room.getUsers())) {
 
             room.getUsers().add(userRepository.findByEmail(emailRoomId.getEmail()));
 
             roomRepository.save(room);
 
             return new ResponseEntity("User was added to room.", HttpStatus.CREATED);
-        }
-        else {
+        } else {
             return new ResponseEntity("User is already in room", HttpStatus.BAD_REQUEST);
         }
     }

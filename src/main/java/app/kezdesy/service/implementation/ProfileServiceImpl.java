@@ -87,7 +87,7 @@ public class ProfileServiceImpl implements IProfileService {
         List<Room> userRooms = roomRepository.myRooms(user.getId());
 
         userRooms.forEach(room -> {
-            if (room.getOwner() == user.getId().toString()) {
+            if (room.getOwner() == user.getEmail()) {
                 roomRepository.delete(room);
             } else {
 
