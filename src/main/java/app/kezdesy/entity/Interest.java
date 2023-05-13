@@ -26,7 +26,7 @@ public enum Interest {
     Marvel,
     Running,
     Gym,
-    Skateboarding,
+    IceSkating,
     Singing,
     Karaoke,
     Memes,
