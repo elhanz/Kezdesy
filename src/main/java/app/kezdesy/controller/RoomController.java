@@ -5,14 +5,14 @@ import app.kezdesy.entity.Room;
 import app.kezdesy.entity.User;
 import app.kezdesy.model.EmailRoomId;
 import app.kezdesy.model.RoomEmailRequest;
-import app.kezdesy.repository.ChatMessageRepository;
+import app.kezdesy.model.RoomMessage;
+import app.kezdesy.repository.MessageRepository;
 import app.kezdesy.repository.RoomRepository;
 import app.kezdesy.repository.UserRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
@@ -31,8 +31,9 @@ public class RoomController {
     @Autowired
     private UserRepository userRepository;
 
+
     @Autowired
-    private ChatMessageRepository chatMessageRepo;
+    private MessageRepository messageRepository;
 
 
     @PostMapping("/create")
@@ -43,7 +44,7 @@ public class RoomController {
                 roomEmailRequest.getMaxAgeLimit(), roomEmailRequest.getMaxMembers(), roomEmailRequest.getInterests(), roomEmailRequest.getEmail());
         if (isAgeLimitCorrect(room.getMinAgeLimit(), room.getMaxAgeLimit())) {
             if (room.getHeader().length() < 200 && room.getHeader().length() > 3) {
-                if (room.getDescription().length() <= 600 ) {
+                if (room.getDescription().length() <= 600) {
                     if (room.getMaxMembers() > 1 && room.getMaxMembers() < 21) {
                         if (!room.getInterests().isEmpty()) {
                             room.getUsers().add(curr_user);
@@ -52,7 +53,7 @@ public class RoomController {
                             messageJoined.setSender(curr_user.getFirst_name() + ' ' + curr_user.getLast_name());
                             messageJoined.setSenderId(curr_user.getId());
                             room.getMessages().add(messageJoined);
-                            chatMessageRepo.save(messageJoined);
+                            messageRepository.save(messageJoined);
                             roomRepository.save(room);
                             return new ResponseEntity("Room was created", HttpStatus.CREATED);
                         } else {
@@ -92,23 +93,48 @@ public class RoomController {
         Room room = roomRepository.findRoomById(emailRoomId.getRoomId());
         User user = userRepository.findByEmail(emailRoomId.getEmail());
 
-        if (roomRepository.existsByRoomIdAndUserId(room.getId(), user.getId()) ) {
+        if (roomRepository.existsByRoomIdAndUserId(room.getId(), user.getId())) {
 
             Message messageJoined = new Message();
             messageJoined.setType(Message.MessageType.LEAVE);
             messageJoined.setSender(user.getFirst_name() + ' ' + user.getLast_name());
             messageJoined.setSenderId(user.getId());
             room.getMessages().add(messageJoined);
-            chatMessageRepo.save(messageJoined);
+            messageRepository.save(messageJoined);
             roomRepository.kickUser(room.getId(), user.getId());
 
-            return new ResponseEntity( user.getFirst_name() +" " + user.getLast_name() + " left!", HttpStatus.CREATED);
+            return new ResponseEntity(user.getFirst_name() + " " + user.getLast_name() + " left!", HttpStatus.CREATED);
 
         }
         return ResponseEntity.badRequest().body("Something is wrong");
 
     }
 
+    @GetMapping("/deleteMessage")
+    public ResponseEntity deleteMessage(@RequestParam Long id) {
+
+        Message message = messageRepository.getById(id);
+        if (message != null) {
+            roomRepository.deleteMessage(id);
+            messageRepository.delete(message);
+            return ResponseEntity.ok("Message was deleted");
+        } else return ResponseEntity.badRequest().body("Message not found");
+
+    }
+
+
+    @PostMapping("/updateMessage")
+    public ResponseEntity UpdateMessage(@RequestBody RoomMessage roomMessage) {
+
+        Message message = messageRepository.getById(roomMessage.getId());
+        if (message != null) {
+            message.setContent(roomMessage.getContent());
+            message.setChanged(true);
+            messageRepository.save(message);
+            return ResponseEntity.ok("Message was updated");
+        } else return ResponseEntity.badRequest().body("Message not found");
+
+    }
     public boolean isAgeLimitCorrect(int lower, int higher) {
         if (lower <= 11 || lower > higher) {
             return false;
@@ -148,7 +174,7 @@ public class RoomController {
             messageJoined.setSender(curr_user.getFirst_name() + ' ' + curr_user.getLast_name());
             messageJoined.setSenderId(curr_user.getId());
             room.getMessages().add(messageJoined);
-            chatMessageRepo.save(messageJoined);
+            messageRepository.save(messageJoined);
 
             roomRepository.save(room);
 

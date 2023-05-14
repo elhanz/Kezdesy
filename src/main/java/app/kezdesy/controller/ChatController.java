@@ -3,7 +3,7 @@ package app.kezdesy.controller;
 import app.kezdesy.entity.Message;
 import app.kezdesy.entity.Room;
 import app.kezdesy.entity.User;
-import app.kezdesy.repository.ChatMessageRepository;
+import app.kezdesy.repository.MessageRepository;
 import app.kezdesy.repository.RoomRepository;
 import app.kezdesy.repository.UserRepository;
 import app.kezdesy.service.implementation.UserServiceImpl;
@@ -32,7 +32,7 @@ public class ChatController {
     private RoomRepository roomRepository;
 
     @Autowired
-    private ChatMessageRepository chatMessageRepo;
+    private MessageRepository chatMessageRepo;
 
     public ChatController(UserServiceImpl userService) {
         this.userService = userService;

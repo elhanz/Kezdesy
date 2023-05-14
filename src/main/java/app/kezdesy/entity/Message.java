@@ -1,14 +1,17 @@
 package app.kezdesy.entity;
 
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
 
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @Entity
 @Table(name = "message")
@@ -31,6 +34,18 @@ public class Message {
     private String content;
     private String sender;
     private Long senderId;
+
+    private boolean isChanged;
+
+    public Message(MessageType type, Timestamp createdAt, Timestamp updatedAt, String content, String sender, Long senderId) {
+        this.type = type;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
+        this.content = content;
+        this.sender = sender;
+        this.senderId = senderId;
+        this.isChanged = false;
+    }
 
     public enum MessageType {
         CHAT,

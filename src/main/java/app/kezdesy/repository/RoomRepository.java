@@ -78,5 +78,14 @@ public interface RoomRepository extends JpaRepository<Room, Long> {
             nativeQuery = true)
     void kickUser(@Param("roomId") Long roomId, @Param("userId") Long userId);
 
+
+    @Transactional
+    @Modifying
+    @Query(
+            value = "delete from room_messages " +
+                    "where messages_id = :id ",
+            nativeQuery = true)
+    void deleteMessage(@Param("id") Long id);
+
 }
 
