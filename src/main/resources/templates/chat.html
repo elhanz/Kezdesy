@@ -99,25 +99,17 @@
                         Owner - <span class="chat-owner-count">1</span>
                     </div>
                     <div class="chat-owner">
-                        <i style="background-color: rgb(33, 150, 243);">H</i>
-                        <span>Hanov Aitkazinov</span>
+                        <i style="background-color: rgb(195,201,208);">.</i>
+                        <span>Loading...</span>
                     </div>
                 </div>
                 <div class="chat-roommates-block">
                     <div class="chat-roommates-title">
-                        Roommates - <span class="chat-roommates-count">3</span>
+                        Roommates - <span class="chat-roommates-count">1</span>
                     </div>
                     <div class="chat-owner">
-                        <i style="background-color: rgb(87,153,122);">J</i>
-                        <span>James Gordon</span>
-                    </div>
-                    <div class="chat-owner">
-                        <i style="background-color: rgb(248,170,71);">A</i>
-                        <span>Arkadi Paravozov</span>
-                    </div>
-                    <div class="chat-owner">
-                        <i style="background-color: rgb(255,157,157);">R</i>
-                        <span>Rose Malina</span>
+                        <i style="background-color: rgb(195,201,208);">.</i>
+                        <span>Loading...</span>
                     </div>
                 </div>
             </div>
@@ -271,6 +263,14 @@
             var usernameText = document.createTextNode(message.sender);
             usernameElement.appendChild(usernameText);
             messageElement.appendChild(usernameElement);
+
+            var timestampElement = document.createElement('span');
+            timestampElement.style.color = '#6e6e6e';
+            timestampElement.style.fontSize = '12px';
+            timestampElement.style.fontWeight = 'lighter';
+            var timestampText = document.createTextNode("  " + getHoursAndMinutes(message.createdAt));
+            timestampElement.appendChild(timestampText);
+            messageElement.appendChild(timestampElement);
 
             var textElement = document.createElement('p');
             var messageText = document.createTextNode(message.content);
@@ -426,16 +426,16 @@
                                         html += "<div class=\"chat-owner-title\">\n" +
                                             "            Owner - <span class=\"chat-owner-count\">1</span>\n" +
                                             "        </div>\n" +
-                                            "        <div class=\"chat-owner\">\n" +
+                                            "        <table class=\"profile-info-table chat-owner\"><tr><td>\n" +
                                             avatarElement +
-                                            "            <span>" + owner.first_name + ' ' + owner.last_name + "</span>\n" +
-                                            "        </div>\n" +
+                                            "</td><td>" + owner.first_name + ' ' + owner.last_name + "</td></tr>\n" +
+                                            "                    </table>\n" +
                                             "    </div>";
                                     }
                                     html += "<div class=\"chat-roommates-block\">\n" +
                                         "        <div class=\"chat-roommates-title\">\n" +
                                         "            Roommates - <span class=\"chat-roommates-count\">" + (item.users.length-ownerIsHere) + "</span>\n" +
-                                        "        </div>\n";
+                                        "        </div><table class=\"profile-info-table chat-owner\" \n";
 
                                     rooms_info.users.forEach((user, i) => {
                                         if (user.email !== rooms_info.owner) {
@@ -445,13 +445,39 @@
                                             } else {
                                                 avatarElement = "<img src='" + user.profilePic + "'>";
                                             }
-                                            html += "        <div class=\"chat-owner\">\n" +
-                                                "            "+ avatarElement +"\n" +
-                                                "            <span>" + user.first_name + ' ' + user.last_name + "</span>\n" +
-                                                "        </div>\n";
+                                            html += "<tr><td>" + avatarElement +"</td>\n" +
+                                                "<td>" + user.first_name + ' ' + user.last_name + "</td>";
+                                            if (rooms_info.owner === email) {
+                                                html += "<td><div class='alink' id=\"kick_" + user.id + "\">\n" +
+                                                    "&nbsp;kick</div></td>";
+                                            }
+                                            html += "</tr>";
                                         }
                                     });
-                                    html += "    </div>\n" +
+
+                                    $(document).on('click', '[id^="kick_"]', function () {
+                                        console.log("its clicked");
+                                        var id = $(this).attr('id').substring(5);
+                                        var user = rooms_info.users.find(u => u.id === parseInt(id));
+                                        $.ajax({
+                                            type: "POST",
+                                            headers: {'Authorization': myCookie},
+                                            contentType: 'application/json',
+                                            url: "/room/kickUser",
+                                            data: JSON.stringify({"email" : user.email, "roomId" : rooms_info.id}),
+                                            dataType: 'json',
+                                            complete: function (result) {
+                                                console.log(result.responseText);
+                                                if (result.responseText !== "Something is wrong") {
+                                                    document.location.reload();
+                                                }
+                                            },
+                                            error: function (e) {
+                                                console.log(e);
+                                            }
+                                        });
+                                    });
+                                    html += "</table></div>\n" +
                                         "</div>";
                                     $('.chat-info').html(html);
                                     $('.chat-info').append("<div class=\"chat-settings\">\n" +

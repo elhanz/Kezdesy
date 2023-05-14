@@ -985,6 +985,11 @@ ul.ks-cboxtags li input[type="checkbox"]:focus + label {
     font-size: 14px;
 }
 
+.chat-owner .alink {
+    color: #d75d5d;
+    cursor: pointer;
+}
+
 .chat-owner i {
     width: 40px;
     height: 40px;
