@@ -10,6 +10,10 @@ body {
     background-color: #FFFFFF;
 }
 
+.logo {
+    display: flex;
+}
+
 .header-logo {
     width: 20vw;
     display: flex;
@@ -208,7 +212,6 @@ body {
 .content2 {
     display: flex;
 }
-
 
 .container-first-left {
     width: 40vw;
@@ -962,6 +965,19 @@ ul.ks-cboxtags li input[type="checkbox"]:focus + label {
     justify-content: space-between;
 }
 
+.chat-menu {
+    position: fixed;
+    top: 0;
+    right: -15vw;
+    height: 100%;
+    background-color: #fff;
+    transition: right 0.3s ease-in-out;
+}
+
+.chat-menu-hidden {
+    right: -100%;
+}
+
 .chat-roommates {
     padding: 10px 20px;
 }
@@ -1159,6 +1175,53 @@ ul.ks-cboxtags li input[type="checkbox"]:focus + label {
     min-height: 10vh;
 }
 
+
+.menu-drop {
+    position: relative;
+    display: inline-block;
+    margin-left: auto;
+}
+
+.menu-drop i {
+    font-size: 16px;
+    margin-left: 10px;
+    color: #333;
+    cursor: pointer;
+}
+
+.menu-drop ul {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    z-index: 1;
+    display: none;
+    padding: 8px 0;
+    margin: 0;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    list-style: none;
+}
+
+.menu-drop ul li {
+    padding: 8px 16px;
+    margin: 0 !important;
+}
+
+.menu-drop ul li a {
+    display: block;
+    text-decoration: none;
+    color: #333;
+}
+
+.menu-drop ul li:hover {
+    background-color: #f5f5f5;
+}
+
+.menu-drop:hover ul {
+    display: block;
+}
+
 .footer-box {
     display: flex;
     border: #e5e5e5 solid 1px;
@@ -1216,9 +1279,35 @@ ul.ks-cboxtags li input[type="checkbox"]:focus + label {
     .container-first-left .header-login-button, .container-second-right .header-login-button {
         font-size: 12px;
     }
+
+    .room {
+        width: 100%;
+    }
+
+    .profile-rooms {
+        flex-direction: column;
+        overflow-y: auto;
+        max-height: 480px;
+    }
+
+    .profile-room {
+        margin-bottom: 20px;
+    }
+
+    .profile-room + .profile-room {
+        margin-left: 0;
+    }
+
+    .profile-room-interests {
+        width: auto;
+    }
+
+    .profile-room .profile-room-count, .profile-room .room-button, .profile-room .profile-room-button {
+        width: fit-content;
+    }
 }
 
-@media only screen and (max-width: 600px) {
+@media only screen and (max-width: 700px) {
     .container-first-left h2, .container-second-right h2 {
         font-size: 20px;
     }
@@ -1254,6 +1343,60 @@ ul.ks-cboxtags li input[type="checkbox"]:focus + label {
 
     .container-first-left a, .container-second-right a {
         width: fit-content;
+    }
+
+    .profile-container-first-left, .profile-container-first-right {
+        width: 90vw;
+    }
+
+    .profile-interests-blocks {
+        width: 75vw;
+    }
+
+    .profile-interests-block {
+        width: fit-content;
+    }
+
+    .profile-left-block, .profile-info, .profile-interests {
+        width: auto;
+    }
+
+    .header-login-button {
+        display: none;
+    }
+
+    ul.ks-cboxtags li label {
+        padding: 2px 4px;
+    }
+
+    .row input, .row select {
+        width: fit-content;
+    }
+
+    .row {
+        justify-content: center;
+    }
+
+    .row-buttons {
+        flex-direction: column;
+    }
+
+    .profile-room-count, .room-button, .profile-room-button {
+        width: fit-content;
+    }
+
+    .btn-search {
+        width: 50%;
+    }
+
+    .input-field {
+        flex-direction: column;
+    }
+
+    .btn-filter {
+        margin-top: 20px;
+        margin-left: 0;
+        width: 60vw;
     }
 
     .header-logo {

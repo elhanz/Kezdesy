@@ -259,6 +259,9 @@
                 dataType: 'json',
                 success: function (result) {
                     user_info = result;
+                    if (user_info.enabled === false) {
+                        window.location.replace("/profile");
+                    }
                 }
             });
 

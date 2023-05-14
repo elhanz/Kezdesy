@@ -167,6 +167,13 @@
         window.location.replace("/loginUser");
     }
 
+    const chatBtnSettings = document.querySelector('.chat-btn-settings');
+    const chatInfo = document.querySelector('.chat-menu');
+
+    chatBtnSettings.addEventListener('click', () => {
+        chatInfo.classList.toggle('chat-menu-hidden');
+    });
+
     function connect(event) {
         username = document.querySelector('#name').value.trim();
 
@@ -282,6 +289,7 @@
             console.log(messageElement);
             messageArea.appendChild(messageElement);
             messageArea.scrollTop = messageArea.scrollHeight;
+
         }
     }
 
@@ -351,6 +359,9 @@
                 dataType: 'json',
                 success: function (result) {
                     user_info = result;
+                    if (user_info.enabled === false) {
+                        window.location.replace("/profile");
+                    }
                     $('#userId').val(user_info.id);
                     $('#name').val(result.first_name + " " + result.last_name);
                 }

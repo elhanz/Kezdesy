@@ -49,7 +49,7 @@
 
 <div class="page_content">
     <div class="profile-container">
-        <div class="content1" style="height: fit-content;">
+        <div class="content2" style="height: fit-content;">
             <div class="profile-container-first-left">
                 <div class="profile-left-block">
                     <div class="profile-picture-block">
@@ -58,6 +58,7 @@
                         </div>
                         <h2 style="margin-block-end: 0" id="user__name">Loading...</h2>
                         <div style="font-size: 18px" id="user__email">Loading...</div>
+                        <div id="verifyEmail" style="display:none; font-size: 18px; color: #984040">Please verify your email</div>
                     </div>
                     <a href="" id="logout" style="text-decoration: none">
                         <div class="profile-left-button">Log Out</div>
@@ -85,30 +86,6 @@
                 <div class="profile-interests">
                     <h2 style="color: #6e6e6e"> My Interests </h2>
                     <div class="profile-interests-blocks">
-                        <div class="profile-interests-block">
-                            <i class="fa fa-book"></i>
-                            <p style="margin-block-end: 0">Books</p>
-                        </div>
-                        <div class="profile-interests-block">
-                            <i class="fas fa-lightbulb"></i>
-                            <p>TikTok</p>
-                        </div>
-                        <div class="profile-interests-block">
-                            <i class="fa fa-music"></i>
-                            <p>Music</p>
-                        </div>
-                        <div class="profile-interests-block">
-                            <i class="fa fa-futbol-o"></i>
-                            <p>Football</p>
-                        </div>
-                        <div class="profile-interests-block">
-                            <i class="fa-brands fa-youtube"></i>
-                            <p>Youtube</p>
-                        </div>
-                        <div class="profile-interests-block">
-                            <i class="fa-brands fa-youtube"></i>
-                            <p>Youtube</p>
-                        </div>
                     </div>
                     <div class="profile-interests-button-block">
                         <a href="/setInterests" style="color: white; text-decoration: none;">
@@ -124,7 +101,7 @@
             <h2 style="margin-left: 3vw"> My Rooms </h2>
             <div class="profile-no-rooms">
                 <h2 style="color: #74C69D"> There are no rooms </h2>
-                <a href="/createRoom" style="text-decoration: none"><div class="profile-no-rooms-button">+ Create Room</div></a>
+                <a id="createRoomLink" href="/createRoom" style="text-decoration: none"><div class="profile-no-rooms-button">+ Create Room</div></a>
             </div>
             <div class="profile-rooms" id="myRoomsList">
             </div>
@@ -330,6 +307,12 @@
                     user_info = result;
                     if(result.interests.length === 0) {
                         window.location.replace("/setInterests");
+                    }
+                    if (result.enabled === false) {
+                        $('#verifyEmail').css({
+                            display: 'flex'});
+                        $('#createRoomLink').css({
+                            display: 'none'});
                     }
                     console.log(result);
                     $('#user__email').html(result.email);
