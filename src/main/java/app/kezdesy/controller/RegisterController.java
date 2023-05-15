@@ -38,7 +38,7 @@ public class RegisterController {
     private final TokenRepository tokenRepository;
     private final RegistrationCompleteEventListener eventListener;
 
-    private final UserValidation userValidation = new UserValidation();
+    private final UserValidation userValidation ;
 
     private final RegisterService registerService;
 
@@ -70,7 +70,7 @@ public class RegisterController {
 
         }
 
-        return new ResponseEntity("Email is already occupied ", HttpStatus.BAD_REQUEST);
+       return ResponseEntity.badRequest().body("Email is already occupied.");
     }
 
     public String applicationUrl(HttpServletRequest request) {

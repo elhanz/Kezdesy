@@ -6,7 +6,7 @@ import lombok.Data;
 import java.util.Set;
 
 @Data
-public class RoomEmailRequest {
+public class RoomRequest {
     private String email;
     private String city;
     private String header;
