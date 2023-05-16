@@ -50,8 +50,11 @@
 </div>
 <div class="page_content">
     <div class="chats-container">
-        <div class="chats-block" id="user-chats">
+        <div class="chats-list">
+            <div class="chats-block" id="user-chats">
+            </div>
         </div>
+
         <div class="chat-no-select">
             <h2 style="font-weight: 500;font-size: 30px;line-height: 45px;color: #8D8D8D;">Choose a chat</h2>
         </div>
@@ -74,12 +77,14 @@
                         </div>
                     </div>
                     <div class="chat-header">
+                        <div class="chat-btn-settings chatListBtn"><i class="fas fa-comments"></i></div>
                         <h2 id="chat__name"></h2>
+                        <div class="chat-btn-settings chatMenuBtn"><i class="fa fa-cog fa-fw"></i></div>
                     </div>
                     <div class="connecting">
                         Connecting...
                     </div>
-                    <ul id="messageArea">
+                    <ul id="messageArea" class="message-area">
                     </ul>
                     <form id="messageForm" name="messageForm" nameForm="messageForm">
                         <div class="form-group">
@@ -92,30 +97,32 @@
                 </div>
             </div>
         </div>
-        <div class="chat-info">
-            <div class="chat-roommates">
-                <div class="chat-owner-block">
-                    <div class="chat-owner-title">
-                        Owner - <span class="chat-owner-count">1</span>
+        <div class="chat-menu">
+            <div class="chat-info">
+                <div class="chat-roommates">
+                    <div class="chat-owner-block">
+                        <div class="chat-owner-title">
+                            Owner - <span class="chat-owner-count">1</span>
+                        </div>
+                        <div class="chat-owner">
+                            <i style="background-color: rgb(195,201,208);">.</i>
+                            <span>Loading...</span>
+                        </div>
                     </div>
-                    <div class="chat-owner">
-                        <i style="background-color: rgb(195,201,208);">.</i>
-                        <span>Loading...</span>
+                    <div class="chat-roommates-block">
+                        <div class="chat-roommates-title">
+                            Roommates - <span class="chat-roommates-count">1</span>
+                        </div>
+                        <div class="chat-owner">
+                            <i style="background-color: rgb(195,201,208);">.</i>
+                            <span>Loading...</span>
+                        </div>
                     </div>
                 </div>
-                <div class="chat-roommates-block">
-                    <div class="chat-roommates-title">
-                        Roommates - <span class="chat-roommates-count">1</span>
-                    </div>
-                    <div class="chat-owner">
-                        <i style="background-color: rgb(195,201,208);">.</i>
-                        <span>Loading...</span>
-                    </div>
+                <div class="chat-settings">
+                    <div class="chat-btn-settings chatMenuBtn"><i class="fas fa-arrow-right"></i></div>
+                    <div class="chat-btn-leave">Leave</div>
                 </div>
-            </div>
-            <div class="chat-settings">
-                <div class="chat-btn-settings"><i class="fa fa-cog fa-fw"></i>Settings</div>
-                <div class="chat-btn-leave">Leave</div>
             </div>
         </div>
     </div>
@@ -166,13 +173,6 @@
     if (getCookie("Authorization") == null) {
         window.location.replace("/loginUser");
     }
-
-    const chatBtnSettings = document.querySelector('.chat-btn-settings');
-    const chatInfo = document.querySelector('.chat-menu');
-
-    chatBtnSettings.addEventListener('click', () => {
-        chatInfo.classList.toggle('chat-menu-hidden');
-    });
 
     function connect(event) {
         username = document.querySelector('#name').value.trim();
@@ -243,6 +243,7 @@
         var message = JSON.parse(payload.body);
 
         var messageElement = document.createElement('li');
+        messageElement.setAttribute('id', 'message' + message.id);
 
         if(message.type === 'JOIN') {
             messageElement.classList.add('event-message');
@@ -262,6 +263,7 @@
                 var avatarText = document.createTextNode(message.sender[0]);
                 avatarElement.appendChild(avatarText);
                 avatarElement.style['background-color'] = getAvatarColor(message.sender);
+                avatarElement.classList.add('i');
             }
 
             messageElement.appendChild(avatarElement);
@@ -279,6 +281,32 @@
             timestampElement.appendChild(timestampText);
             messageElement.appendChild(timestampElement);
 
+            // Create the parent div element
+            var menuDrop = document.createElement('div');
+            menuDrop.classList.add('menu-drop');
+            // Create the i element
+            var iconElement = document.createElement('i');
+            iconElement.classList.add('fa', 'fa-ellipsis-v');
+
+            // Create the ul element
+            var ulElement = document.createElement('ul');
+
+            // Create the second li element
+            var liElement2 = document.createElement('li');
+            var link2 = document.createElement('a');
+            link2.setAttribute('href', '#');
+            link2.setAttribute('id', 'delete' + message.id);
+            link2.textContent = 'Delete';
+            liElement2.appendChild(link2);
+
+            // Append the li elements to the ul element
+            ulElement.appendChild(liElement2);
+
+            // Append the i element and ul element to the parent div
+            menuDrop.appendChild(iconElement);
+            menuDrop.appendChild(ulElement);
+            messageElement.appendChild(menuDrop);
+
             var textElement = document.createElement('p');
             var messageText = document.createTextNode(message.content);
             textElement.appendChild(messageText);
@@ -289,10 +317,57 @@
             console.log(messageElement);
             messageArea.appendChild(messageElement);
             messageArea.scrollTop = messageArea.scrollHeight;
+        }
 
+        // Attach delete event listener
+        $(document).on('click', '#delete' + message.id, function () {
+            console.log("its clicked");
+            if (message.senderId === user_info.id) {
+                deleteMessage(message.id);
+            }
+        });
+
+        // Handle deletion event
+        if (payload.headers['content-type'] === 'text/plain' && payload.headers['destination'].endsWith('/messageDeleted')) {
+            // Message deletion event
+            var deletedMessageId = parseInt(payload.body);
+            var deletedMessageElement = document.getElementById('message' + deletedMessageId);
+            if (deletedMessageElement) {
+                var deletionTextElement = document.createElement('p');
+                var deletionMessageText = document.createTextNode('Message was deleted');
+                deletionTextElement.appendChild(deletionMessageText);
+                deletedMessageElement.innerHTML = '';
+                deletedMessageElement.appendChild(deletionTextElement);
+            }
         }
     }
 
+    function deleteMessage(messageId) {
+        var messageElement = document.getElementById('message' + messageId);
+        var textElement = messageElement.getElementsByTagName('p')[0];
+        var originalContent = textElement.textContent;
+
+            $.ajax({
+                type: 'GET',
+                headers: {'Authorization': getCookie("Authorization")},
+                contentType: 'application/json',
+                url: '/room/deleteMessage',
+                data: {'id': messageId},
+                dataType: 'json',
+                complete: function (result) {
+                    console.log(result.responseText);
+                    if (result.responseText !== 'Message not found') {
+                        textElement.textContent = 'Message was deleted';
+
+                        // Send the deletion event to the server
+                        stompClient.send('/app/chat.deleteMessage/' + chatId, {}, JSON.stringify(messageId));
+                    }
+                },
+                error: function (e) {
+                    console.log(e);
+                }
+            });
+    }
 
     function getAvatarColor(messageSender) {
         var hash = 0;
@@ -340,6 +415,14 @@
 
         let myCookie = getCookie("Authorization");
 
+        $(document).on('click', '.chatMenuBtn', function() {
+            $('.chat-menu').toggleClass('chat-menu-hidden');
+        });
+
+        $(document).on('click', '.chatListBtn', function() {
+            $('.chats-list').toggleClass('chats-list-hidden');
+        });
+
         if (myCookie != null) {
             let resultC = parseJwt(myCookie);
             let email = resultC.sub;
@@ -376,7 +459,7 @@
                 dataType: 'json',
                 success: function (result) {
                     console.log(result);
-
+                    $('#user-chats').append("<div class=\"chat-btn-settings chatListBtn\"><i class=\"fas fa-arrow-left\"></i></div>");
                     result.forEach((item, i) => {
                         $('#user-chats').append(
                             "<div id=\"join"+item.id+"\" class=\"chat-block-nav\">\n" +
@@ -492,6 +575,7 @@
                                         "</div>";
                                     $('.chat-info').html(html);
                                     $('.chat-info').append("<div class=\"chat-settings\">\n" +
+                                        "                <div class=\"chat-btn-settings chatMenuBtn\"><i class=\"fas fa-arrow-right\"></i></div>\n" +
                                         "                <div class=\"chat-btn-leave\" id=\"leave" + item.id + "\">Leave</div>\n" +
                                         "            </div>");
 
@@ -523,6 +607,7 @@
 
                                         var message = messageItem;
                                         var messageElement = document.createElement('li');
+                                        messageElement.setAttribute('id', 'message' + messageItem.id);
 
                                         if(message.type === 'JOIN') {
                                             messageElement.classList.add('event-message');
@@ -543,6 +628,7 @@
                                                 var avatarText = document.createTextNode(message.sender[0]);
                                                 avatarElement.appendChild(avatarText);
                                                 avatarElement.style['background-color'] = getAvatarColor(message.sender);
+                                                avatarElement.classList.add('i');
                                             }
 
                                             messageElement.appendChild(avatarElement);
@@ -559,6 +645,32 @@
                                             var timestampText = document.createTextNode("  " + getHoursAndMinutes(messageItem.createdAt));
                                             timestampElement.appendChild(timestampText);
                                             messageElement.appendChild(timestampElement);
+
+                                            // Create the parent div element
+                                            var menuDrop = document.createElement('div');
+                                            menuDrop.classList.add('menu-drop');
+                                            // Create the i element
+                                            var iconElement = document.createElement('i');
+                                            iconElement.classList.add('fa', 'fa-ellipsis-v');
+
+                                            // Create the ul element
+                                            var ulElement = document.createElement('ul');
+
+                                            // Create the second li element
+                                            var liElement2 = document.createElement('li');
+                                            var link2 = document.createElement('a');
+                                            link2.setAttribute('href', '#');
+                                            link2.setAttribute('id', 'delete' + message.id);
+                                            link2.textContent = 'Delete';
+                                            liElement2.appendChild(link2);
+
+                                            // Append the li elements to the ul element
+                                            ulElement.appendChild(liElement2);
+
+                                            // Append the i element and ul element to the parent div
+                                            menuDrop.appendChild(iconElement);
+                                            menuDrop.appendChild(ulElement);
+                                            messageElement.appendChild(menuDrop);
                                         }
                                         var textElement = document.createElement('p');
                                         var messageText = document.createTextNode(message.content);
@@ -570,7 +682,47 @@
                                         console.log(messageElement);
                                         messageArea.appendChild(messageElement);
                                         messageArea.scrollTop = messageArea.scrollHeight;
+
+                                        // Attach delete event listener
+                                        $(document).on('click', '#delete' + message.id, function () {
+                                            console.log("its clicked");
+                                            if (message.senderId === user_info.id) {
+                                                deleteMessage(message.id);
+                                            }
+                                        });
                                     });
+
+                                    // $(document).on('click', '[id^="delete"]', function () {
+                                    //     console.log("its clicked");
+                                    //     var messageId = this.id.replace('delete', ''); // Get the message ID from the delete button ID
+                                    //     var messageElement = document.getElementById('message' + messageId);
+                                    //     var textElement = messageElement.getElementsByTagName('p')[0];
+                                    //     var originalContent = textElement.textContent;
+                                    //     var message = rooms_info.messages.find(m => m.id == messageId);
+                                    //     console.log(rooms_info);
+                                    //     console.log(messageId);
+                                    //     console.log(message);
+                                    //
+                                    //     if (message.senderId === user_info.id) {
+                                    //         $.ajax({
+                                    //             type: "GET",
+                                    //             headers: {'Authorization': myCookie},
+                                    //             contentType: 'application/json',
+                                    //             url: "/room/deleteMessage",
+                                    //             data: {"id": messageId},
+                                    //             dataType: 'json',
+                                    //             complete: function (result) {
+                                    //                 console.log(result.responseText);
+                                    //                 if (result.responseText !== "Message not found") {
+                                    //                     textElement.textContent = "Message was deleted";
+                                    //                 }
+                                    //             },
+                                    //             error: function (e) {
+                                    //                 console.log(e);
+                                    //             }
+                                    //         });
+                                    //     }
+                                    // });
                                 },
                                 error: function (e) {
                                     console.log(e);
@@ -588,8 +740,6 @@
         } else {
             window.location.replace("/loginUser");
         }
-
-
     });
 
 </script>
