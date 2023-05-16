@@ -1,7 +1,6 @@
 package app.kezdesy.registerVerification.event;
 
 import app.kezdesy.entity.User;
-
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.context.ApplicationEvent;

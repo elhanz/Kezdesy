@@ -6,8 +6,10 @@ import app.kezdesy.entity.User;
 import java.util.List;
 
 public interface IAdminService {
-    boolean addRoleToUser (String email, String roleName);
-    Role saveRole (Role role);
+    boolean addRoleToUser(String email, String roleName);
+
+    Role saveRole(Role role);
+
     List<User> getAllUsers();
 
 }

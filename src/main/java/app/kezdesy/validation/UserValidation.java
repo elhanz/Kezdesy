@@ -41,7 +41,7 @@ public class UserValidation {
     }
 
     public boolean isGenderValid(String gender) {
-        return gender != null && (gender.equals("Male") || gender.equals("Female") );
+        return gender != null && (gender.equals("Male") || gender.equals("Female"));
     }
 
 }

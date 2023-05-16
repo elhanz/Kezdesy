@@ -15,7 +15,7 @@ public interface IProfileService {
 
     User getUserByEmail(String email);
 
-    List<Room> getUserRooms( String email);
+    List<Room> getUserRooms(String email);
 
     boolean setInterests(String email, Set<Interest> interests);
 

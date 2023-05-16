@@ -4,9 +4,9 @@ package app.kezdesy.controller;
 import app.kezdesy.entity.User;
 import app.kezdesy.entity.VerificationToken;
 import app.kezdesy.model.EmailRequest;
+import app.kezdesy.model.NewPasswordRequest;
 import app.kezdesy.registerVerification.event.RegistrationCompleteEvent;
 import app.kezdesy.registerVerification.event.listener.RegistrationCompleteEventListener;
-import app.kezdesy.model.NewPasswordRequest;
 import app.kezdesy.registerVerification.passwordReset.RegisterService;
 import app.kezdesy.repository.TokenRepository;
 import app.kezdesy.service.implementation.UserServiceImpl;
@@ -16,7 +16,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -38,7 +37,7 @@ public class RegisterController {
     private final TokenRepository tokenRepository;
     private final RegistrationCompleteEventListener eventListener;
 
-    private final UserValidation userValidation = new UserValidation() ;
+    private final UserValidation userValidation = new UserValidation();
 
     private final RegisterService registerService;
 
@@ -70,7 +69,7 @@ public class RegisterController {
 
         }
 
-       return ResponseEntity.badRequest().body("Email is already occupied.");
+        return ResponseEntity.badRequest().body("Email is already occupied.");
     }
 
     public String applicationUrl(HttpServletRequest request) {
@@ -111,7 +110,7 @@ public class RegisterController {
 
         String passwordResetToken = UUID.randomUUID().toString();
         registerService.createPasswordResetTokenForUser(user, passwordResetToken);
-        passwordResetUrl = passwordResetEmailLink(emailRequest.getEmail(),applicationUrl(servletRequest), passwordResetToken);
+        passwordResetUrl = passwordResetEmailLink(emailRequest.getEmail(), applicationUrl(servletRequest), passwordResetToken);
 
         return passwordResetUrl;
     }

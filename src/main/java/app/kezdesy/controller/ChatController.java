@@ -10,8 +10,10 @@ import app.kezdesy.service.implementation.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.messaging.core.AbstractDestinationResolvingMessagingTemplate;
-import org.springframework.messaging.handler.annotation.*;
+import org.springframework.messaging.handler.annotation.DestinationVariable;
+import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.handler.annotation.Payload;
+import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -45,7 +47,7 @@ public class ChatController {
     }
 
     @GetMapping("/my")
-    public ResponseEntity<Collection<Room>> getMyChats(String userEmail){
+    public ResponseEntity<Collection<Room>> getMyChats(String userEmail) {
         return new ResponseEntity<>(userRepository.findByEmail(userEmail).getRooms(), HttpStatus.CREATED);
     }
 
@@ -90,7 +92,7 @@ public class ChatController {
 
     @MessageMapping("/chat/{chatId}")
     @SendTo("/topic/{chatId}")
-    public Message message(@DestinationVariable Long chatId, @Payload Message message){
+    public Message message(@DestinationVariable Long chatId, @Payload Message message) {
         return message;
     }
 

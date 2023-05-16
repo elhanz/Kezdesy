@@ -4,9 +4,10 @@ import app.kezdesy.entity.Interest;
 import app.kezdesy.entity.Message;
 import app.kezdesy.entity.Room;
 import app.kezdesy.entity.User;
-import app.kezdesy.model.EmailRoomId;
-import app.kezdesy.model.RoomMessage;
+import app.kezdesy.model.EmailRoomIdRequest;
+import app.kezdesy.model.RoomMessageRequest;
 import app.kezdesy.model.RoomRequest;
+import app.kezdesy.model.UpdateRoomRequest;
 import app.kezdesy.repository.MessageRepository;
 import app.kezdesy.repository.RoomRepository;
 import app.kezdesy.repository.UserRepository;
@@ -72,7 +73,7 @@ public class RoomServiceImpl implements IRoomService {
 
         User user = userRepository.findByEmail(email);
         List<Room> rooms = roomRepository.findByCityContainsAndHeaderContainsAndMinAgeLimitGreaterThanEqualAndMaxAgeLimitLessThanEqualAndMaxMembersLessThanEqual(
-                user.getCity(), "", 0, 120, 20);
+                user.getCity(), "", 18, 110, 20);
         rooms.removeIf(room -> room.getMinAgeLimit() > user.getAge());
         rooms.removeIf(room -> room.getMaxAgeLimit() < user.getAge());
         rooms.removeIf(room -> room.getInterests().stream().noneMatch(user.getInterests()::contains));
@@ -84,6 +85,21 @@ public class RoomServiceImpl implements IRoomService {
     @Override
     public void createRoom(Room room) {
         roomRepository.save(room);
+    }
+
+    @Override
+    public void updateRoom(UpdateRoomRequest updateRoomRequest) {
+        Room existRoom = roomRepository.findRoomById(updateRoomRequest.getId());
+
+        existRoom.setCity(updateRoomRequest.getCity());
+        existRoom.setMaxMembers(updateRoomRequest.getMaxMembers());
+        existRoom.setMinAgeLimit(updateRoomRequest.getMinAgeLimit());
+        existRoom.setMaxAgeLimit(updateRoomRequest.getMaxAgeLimit());
+        existRoom.setDescription(updateRoomRequest.getDescription());
+        existRoom.setHeader(updateRoomRequest.getHeader());
+        existRoom.setInterests(updateRoomRequest.getInterests());
+        existRoom.setOwner(updateRoomRequest.getOwner());
+        roomRepository.save(existRoom);
     }
 
     @Override
@@ -101,6 +117,11 @@ public class RoomServiceImpl implements IRoomService {
     public void deleteMessage(Long id) {
         roomRepository.deleteMessage(id);
         messageRepository.deleteById(id);
+    }
+
+    @Override
+    public void deleteRoom(Long id) {
+    roomRepository.deleteById(id);
     }
 
     @Override
@@ -127,11 +148,11 @@ public class RoomServiceImpl implements IRoomService {
     }
 
     @Override
-    public boolean updateMessage(RoomMessage roomMessage) {
+    public boolean updateMessage(RoomMessageRequest roomMessageRequest) {
 
-        Message message = messageRepository.getById(roomMessage.getId());
+        Message message = messageRepository.getById(roomMessageRequest.getId());
         if (message != null) {
-            message.setContent(roomMessage.getContent());
+            message.setContent(roomMessageRequest.getContent());
             message.setChanged(true);
             messageRepository.save(message);
             return true;
@@ -140,12 +161,12 @@ public class RoomServiceImpl implements IRoomService {
     }
 
     @Override
-    public boolean joinRoom(EmailRoomId emailRoomId) {
-        Room room = roomRepository.findById(emailRoomId.getRoomId()).orElse(null);
+    public boolean joinRoom(EmailRoomIdRequest emailRoomIdRequest) {
+        Room room = roomRepository.findById(emailRoomIdRequest.getRoomId()).orElse(null);
 
-        if (!isUserInRoom(emailRoomId.getEmail(), room.getUsers())) {
+        if (!isUserInRoom(emailRoomIdRequest.getEmail(), room.getUsers())) {
 
-            User user = userRepository.findByEmail(emailRoomId.getEmail());
+            User user = userRepository.findByEmail(emailRoomIdRequest.getEmail());
 
             room.getUsers().add(user);
             Message messageJoined = new Message();
