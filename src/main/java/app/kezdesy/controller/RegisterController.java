@@ -38,7 +38,7 @@ public class RegisterController {
     private final TokenRepository tokenRepository;
     private final RegistrationCompleteEventListener eventListener;
 
-    private final UserValidation userValidation ;
+    private final UserValidation userValidation = new UserValidation() ;
 
     private final RegisterService registerService;
 

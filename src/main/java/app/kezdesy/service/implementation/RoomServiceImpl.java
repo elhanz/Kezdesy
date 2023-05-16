@@ -12,9 +12,11 @@ import app.kezdesy.repository.RoomRepository;
 import app.kezdesy.repository.UserRepository;
 import app.kezdesy.service.interfaces.IRoomService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.*;
 
+@Service
 public class RoomServiceImpl implements IRoomService {
 
     @Autowired

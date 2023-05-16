@@ -10,6 +10,7 @@ import app.kezdesy.repository.RoomRepository;
 import app.kezdesy.service.implementation.RoomServiceImpl;
 import app.kezdesy.service.implementation.UserServiceImpl;
 import app.kezdesy.validation.RoomValidation;
+import app.kezdesy.validation.UserValidation;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -30,7 +31,7 @@ public class RoomController {
     private final UserServiceImpl userService;
 
 
-    private final RoomValidation roomValidation;
+    private final RoomValidation roomValidation = new RoomValidation();
 
 
     @PostMapping("/create")
