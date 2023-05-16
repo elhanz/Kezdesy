@@ -39,9 +39,6 @@ public class ChatController {
     @Autowired
     private MessageRepository chatMessageRepo;
 
-    @Autowired
-    private SimpMessagingTemplate messagingTemplate;
-
     public ChatController(UserServiceImpl userService) {
         this.userService = userService;
     }

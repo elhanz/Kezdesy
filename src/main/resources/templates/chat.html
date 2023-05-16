@@ -89,6 +89,10 @@
                     <form id="messageForm" name="messageForm" nameForm="messageForm">
                         <div class="form-group">
                             <div class="input-group clearfix">
+                                <label for="picture" class="picture-button">
+                                    <i class="fa fa-image"></i>
+                                </label>
+                                <input type="file" id="picture" style="display: none" accept="image/png, image/gif, image/jpeg" formenctype="multipart/form-data" name="file" onchange="changeAvatars()"/>
                                 <input type="text" id="message" placeholder="Type a message..." autocomplete="off" class="form-control"/>
                                 <button type="submit" class="primary">Send</button>
                             </div>
@@ -154,6 +158,7 @@
     var chatPage = document.querySelector('#chat-page');
     var usernameForm = document.querySelector('#usernameForm');
     var messageForm = document.querySelector('#messageForm');
+    var imageForm = document.querySelector('#picture');
     var messageInput = document.querySelector('#message');
     var messageArea = document.querySelector('#messageArea');
     var connectingElement = document.querySelector('.connecting');
@@ -219,6 +224,43 @@
         connectingElement.style.color = 'red';
     }
 
+    function getBase64(file) {
+        let reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = function () {
+            let myCookie = getCookie("Authorization");
+            let resultC = parseJwt(myCookie);
+            let email = resultC.sub;
+        }
+        reader.onerror = function (error) {
+            console.log("Error: " + error);
+        }
+    }
+
+    function sendImage(event) {
+        let file = document.getElementById('picture').files[0];
+        let reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = function () {
+            if(stompClient) {
+                var message = {
+                    sender: username,
+                    content: reader.result,
+                    type: 'PICTURE',
+                    senderId: userId
+                };
+
+                stompClient.send('/app/chat.sendMessage/' + chatId,
+                    {}, JSON.stringify(message));
+                messageInput.value = '';
+            }
+            event.preventDefault();
+        }
+        reader.onerror = function (error) {
+            console.log("Error: " + error);
+        }
+    }
+
 
     function sendMessage(event) {
         var messageContent = messageInput.value.trim();
@@ -250,7 +292,7 @@
             message.content = message.sender + ' joined!';
         } else if (message.type === 'LEAVE') {
             messageElement.classList.add('event-message');
-            message.content = message.sender + ' left!';
+            message.content = message.sender + ' left!';PICTURE
         } else {
             messageElement.classList.add('chat-message');
 
@@ -258,6 +300,7 @@
             if (userSender.profilePic != null) {
                 var avatarElement = document.createElement('img');
                 avatarElement.src = userSender.profilePic;
+                avatarElement.setAttribute('class', 'img');
             } else {
                 var avatarElement = document.createElement('i');
                 var avatarText = document.createTextNode(message.sender[0]);
@@ -308,8 +351,15 @@
             messageElement.appendChild(menuDrop);
 
             var textElement = document.createElement('p');
-            var messageText = document.createTextNode(message.content);
-            textElement.appendChild(messageText);
+            if (message.type === 'CHAT') {
+                var messageText = document.createTextNode(message.content);
+                textElement.appendChild(messageText);
+            } else if (message.type === 'PICTURE') {
+                var imageElement = document.createElement('img');
+                imageElement.src = message.content;
+                imageElement.style.maxWidth = '90%';
+                textElement.appendChild(imageElement);
+            }
 
             messageElement.appendChild(textElement);
 
@@ -388,6 +438,7 @@
 
     usernameForm.addEventListener('submit', connect, true)
     messageForm.addEventListener('submit', sendMessage, true)
+    imageForm.addEventListener('change', sendImage, true)
 
     function parseJwt(token) {
         let base64Url = token.split('.')[1];
@@ -506,8 +557,15 @@
                                     console.log(rooms_info);
                                     var ownerIsHere = 0;
                                     var owner = rooms_info.users.find(user => user.email === rooms_info.owner);
-                                    var html = "<div class=\"chat-roommates\">\n" +
-                                        "    <div class=\"chat-owner-block\">";
+                                    var html = "<div class=\"chat-roommates\">";
+                                    html += "<div class=\"chat-owner-block\">\n" +
+                                        "                    <div class=\"chat-owner-title\">\n" +
+                                        rooms_info.header + "</div>\n" +
+                                        "                    <div class=\"chat-description\">\n" +
+                                        "                        <div class=\"chat-description-i\"><i class=\"fa-solid fa-circle-info\" style=\"font-size: 25px\"></i></div>\n" +
+                                        "                        <span>" + rooms_info.description + "</span>\n" +
+                                        "                    </div>\n" +
+                                        "                </div>";
                                     console.log(owner);
                                     if (owner !== undefined) {
                                         ownerIsHere++;
@@ -517,7 +575,8 @@
                                         } else {
                                             avatarElement = "<img src='" + owner.profilePic + "'>";
                                         }
-                                        html += "<div class=\"chat-owner-title\">\n" +
+                                        html += "<div class=\"chat-owner-block\">\n" +
+                                        "<div class=\"chat-owner-title\">\n" +
                                             "            Owner - <span class=\"chat-owner-count\">1</span>\n" +
                                             "        </div>\n" +
                                             "        <table class=\"profile-info-table chat-owner\"><tr><td>\n" +
@@ -574,10 +633,25 @@
                                     html += "</table></div>\n" +
                                         "</div>";
                                     $('.chat-info').html(html);
-                                    $('.chat-info').append("<div class=\"chat-settings\">\n" +
-                                        "                <div class=\"chat-btn-settings chatMenuBtn\"><i class=\"fas fa-arrow-right\"></i></div>\n" +
-                                        "                <div class=\"chat-btn-leave\" id=\"leave" + item.id + "\">Leave</div>\n" +
-                                        "            </div>");
+                                    if (rooms_info.owner === email) {
+                                        $('.chat-info').append("<div class=\"chat-settings\">\n" +
+                                            "                <div class=\"chat-btn-settings chatMenuBtn\"><i class=\"fas fa-arrow-right\"></i></div>\n" +
+                                            "                <div class=\"chat-btn-leave\" id=\"leave" + item.id + "\">Leave</div>\n" +
+                                            "                <div class=\"chat-btn-edit\" id=\"edit" + item.id + "\">Edit Room</div>\n" +
+                                            "                <div class=\"chat-btn-delete\" id=\"delete" + item.id + "\">Delete Room</div>\n" +
+                                            "            </div>");
+                                    } else {
+                                        $('.chat-info').append("<div class=\"chat-settings\">\n" +
+                                            "                <div class=\"chat-btn-settings chatMenuBtn\"><i class=\"fas fa-arrow-right\"></i></div>\n" +
+                                            "                <div class=\"chat-btn-leave\" id=\"leave" + item.id + "\">Leave</div>\n" +
+                                            "            </div>");
+                                    }
+
+                                    $('#edit' + item.id).on('click', function () {
+                                        eraseCookie("RoomId");
+                                        document.cookie = "RoomId= " + item.id;
+                                        window.location.replace("/editRoom");
+                                    });
 
                                     $('#leave' + item.id).on('click', function () {
                                         $.ajax({
@@ -590,6 +664,23 @@
                                             complete: function (result) {
                                                 console.log(result.responseText);
                                                 window.location.replace("/rooms");
+                                            }
+                                        });
+                                    });
+
+                                    $('#delete' + item.id).on('click', function () {
+                                        $.ajax({
+                                            type: "GET",
+                                            headers: {'Authorization': myCookie},
+                                            contentType: 'application/json',
+                                            url: "/room/deleteRoom",
+                                            data: {"id" : item.id},
+                                            dataType: 'json',
+                                            complete: function (result) {
+                                                console.log(result.responseText);
+                                                if (result.responseText === "Room was deleted") {
+                                                    window.location.replace("/chats");
+                                                }
                                             }
                                         });
                                     });
@@ -622,6 +713,7 @@
                                             if (userSender.profilePic != null) {
                                                 var avatarElement = document.createElement('img');
                                                 avatarElement.src = userSender.profilePic;
+                                                avatarElement.setAttribute('class', 'img');
                                             }
                                             else {
                                                 var avatarElement = document.createElement('i');
@@ -673,8 +765,15 @@
                                             messageElement.appendChild(menuDrop);
                                         }
                                         var textElement = document.createElement('p');
-                                        var messageText = document.createTextNode(message.content);
-                                        textElement.appendChild(messageText);
+                                        if (message.type === 'CHAT') {
+                                            var messageText = document.createTextNode(message.content);
+                                            textElement.appendChild(messageText);
+                                        } else if (message.type === 'PICTURE') {
+                                            var imageElement = document.createElement('img');
+                                            imageElement.src = message.content;
+                                            imageElement.style.maxWidth = '90%';
+                                            textElement.appendChild(imageElement);
+                                        }
 
                                         messageElement.appendChild(textElement);
 

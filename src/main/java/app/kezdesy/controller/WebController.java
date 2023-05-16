@@ -58,6 +58,11 @@ public class WebController {
         return "rooms";
     }
 
+    @GetMapping("/editRoom")
+    public String getEditRoomPage() {
+        return "editRoom";
+    }
+
     @GetMapping("/termsPolicy")
     public String getTermsPolicy() {
         return "termsPolicy";

@@ -7,12 +7,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" crossorigin="anonymous">
-    <title>Create Room</title>
+    <title>Edit Room</title>
 </head>
 <body>
 <div class="wrapper fadeInDown">
     <div id="formContent" style="max-width: 700px">
-        <h2 class="active"> Create Room </h2>
+        <h2 class="active"> Edit Room </h2>
 
         <div id="result_msg"></div>
         <input type="text" id="header" class="fadeIn second" placeholder="title">
@@ -38,6 +38,9 @@
             <option value="Petropavlsk">Petropavlsk</option>
             <option value="Taldykorgan">Taldykorgan</option>
             <option value="Kokshetau">Kokshetau</option>
+        </select>
+        <select name="login" id="owner" class="fadeIn third">
+            <option value="">- owner -</option>
         </select>
         <div class="fadeIn third">
             <h2 style="color: #0d0d0d"> Choose interests: </h2>
@@ -102,7 +105,7 @@
                 <li><input type="checkbox" id="checkbox58" value="MakeUp"><label for="checkbox58">MakeUp</label></li>
             </ul>
         </div>
-        <button type="submit" id="createButton" class="fadeIn fourth button">Create</button>
+        <button type="submit" id="createButton" class="fadeIn fourth button">Submit</button>
     </div>
 </div>
 </body>
@@ -134,11 +137,63 @@
     function eraseCookie(name) {
         document.cookie = name + '=; Max-Age=-99999999;';
     }
+
     $(document).ready(function () {
         let myCookie = getCookie("Authorization");
         let resultC = parseJwt(myCookie);
+        let roomId = getCookie("RoomId");
         let email = resultC.sub;
         var interests = [];
+
+        $.ajax({
+            type: "GET",
+            headers: {'Authorization': myCookie},
+            contentType: 'application/json',
+            url: "/chats/getChat",
+            data: {chatID : roomId},
+            dataType: 'json',
+            success: function (result) {
+                if (result.owner !== email) {
+                    window.location.replace("/");
+                }
+                console.log(result);
+                $('#header').val(result.header);
+                $('#description').val(result.description);
+                $('#minAgeLimit').val(result.minAgeLimit);
+                $('#maxAgeLimit').val(result.maxAgeLimit);
+                $('#maxMembers').val(result.maxMembers);
+                $('#city').val(result.city);
+
+                interests = result.interests;
+                $('.ks-cboxtags input[type=checkbox]').each(function() {
+                    if (interests.indexOf($(this).val()) !== -1) {
+                        $(this).prop('checked', true);
+                    }
+                });
+
+                var selectElement = document.getElementById('owner');
+                selectElement.innerHTML = '';
+                var defaultOption = document.createElement('option');
+                defaultOption.value = '';
+                defaultOption.textContent = '- owner -';
+                selectElement.appendChild(defaultOption);
+
+                result.users.forEach(function(user) {
+                    var option = document.createElement('option');
+                    option.value = user.email;
+                    option.textContent = user.email;
+
+                    if (user.email === result.owner) {
+                        option.selected = true;
+                    }
+                    selectElement.appendChild(option);
+                });
+            },
+            error: function (e) {
+                console.log("ERROR: ", e);
+                // window.location.replace("/loginUser");
+            }
+        });
 
         $("input:checkbox").change(function() {
             if($(this).is(":checked")) {
@@ -160,28 +215,27 @@
             let maxAgeLimit = $('#maxAgeLimit').val();
             let maxMembers = $('#maxMembers').val();
             let city = $('#city').val();
-            let data = JSON.stringify({email:email, city: city, header:header, description: description, minAgeLimit: minAgeLimit,
+            let owner = $('#owner').val();
+            let data = JSON.stringify({id: roomId, city: city, header:header, description: description, owner:owner, minAgeLimit: minAgeLimit,
                 maxAgeLimit: maxAgeLimit, maxMembers: maxMembers, interests: interests});
-                $.ajax({
-                    type: "POST",
-                    contentType: 'application/json',
-                    url: "room/create",
-                    data: data,
-                    dataType: 'json',
-                    complete: function (result) {
-                        console.log(result.responseText);
-                        if (result.responseText == "Room was created") {
-                            //console.log(123);
-                            window.location.replace("/");
-                        } else {
-                            $('#result_msg').css("border", "1px solid red")
-                            $('#result_msg').html(result.responseText);
-                        }
+            $.ajax({
+                type: "POST",
+                contentType: 'application/json',
+                url: "room/updateRoom",
+                data: data,
+                dataType: 'json',
+                complete: function (result) {
+                    console.log(result.responseText);
+                    if (result.responseText == "Room was updated") {
+                        //console.log(123);
+                        window.location.replace("/chats");
+                    } else {
+                        $('#result_msg').css("border", "1px solid red");
+                        $('#result_msg').html(result.responseText);
                     }
-                })
+                }
             })
-
-        }
-    );
+        })
+    });
 </script>
 </html>

@@ -971,7 +971,7 @@ ul.ks-cboxtags li input[type="checkbox"]:focus + label {
     right: 0;
     height: 100%;
     background-color: #fff;
-    transition: right 0.3s ease-in-out;
+    transition: right 0.5s ease-in-out;
 }
 
 .chats-list {
@@ -980,15 +980,15 @@ ul.ks-cboxtags li input[type="checkbox"]:focus + label {
     z-index: 3;
     height: 100%;
     background-color: #fff;
-    transition: left 0.3s ease-in-out;
+    transition: left 0.5s ease-in-out;
 }
 
 .chats-list-hidden {
-    left: -100%;
+    left: -200%;
 }
 
 .chat-menu-hidden {
-    right: -100%;
+    right: -200%;
 }
 
 .chat-roommates {
@@ -1013,6 +1013,26 @@ ul.ks-cboxtags li input[type="checkbox"]:focus + label {
     margin-top: 10px;
     font-size: 14px;
 }
+
+.chat-description {
+    display: flex;
+    font-size: 14px;
+    margin: 10px 0 20px;
+}
+
+.chat-description-i {
+    display: flex;
+    min-width: 45px;
+    justify-content: center;
+    align-items: center;
+    font-size: 25px;
+}
+
+
+
+
+
+
 
 .chat-owner .alink {
     color: #d75d5d;
@@ -1098,7 +1118,7 @@ ul.ks-cboxtags li input[type="checkbox"]:focus + label {
     border: none;
     align-items: center;
     justify-content: center;
-    width: 80px;
+    width: 100px;
     text-align: center;
     padding: 5px 20px;
     border-radius: 15px;
@@ -1110,6 +1130,64 @@ ul.ks-cboxtags li input[type="checkbox"]:focus + label {
 
 .chat-btn-leave:hover {
     background: #984040;
+}
+
+.chat-btn-edit {
+    display: flex;
+    background: #FFFFFF;
+    border: 1px solid #292D32;
+    align-items: center;
+    justify-content: center;
+    width: 100px;
+    text-align: center;
+    padding: 5px 20px;
+    border-radius: 15px;
+    color: #292D32;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 15px;
+}
+
+.chat-btn-edit:hover, .chat-btn-delete:hover {
+    transform: scale(0.9);
+}
+
+.chat-btn-delete {
+    display: flex;
+    background: #292D32;
+    border: none;
+    align-items: center;
+    justify-content: center;
+    width: 100px;
+    text-align: center;
+    padding: 5px 20px;
+    border-radius: 15px;
+    color: #FFFFFF;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 15px;
+}
+
+.picture-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 40px;
+    height: 40px;
+    background-color: #74C69D;
+    border-radius: 50%;
+    color: #FFFFFF;
+    text-align: center;
+    cursor: pointer;
+}
+
+.picture-button i {
+    font-size: 25px;
+    color: #FFFFFF;
+}
+
+.picture-button:hover {
+    background-color: #57997a;
 }
 
 .modal {

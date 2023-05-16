@@ -417,6 +417,13 @@
                         $('.profile-no-rooms').hide();
                         result.forEach((item, i) => {
                             let count = item.users.length;
+                            var htmlBtn = "";
+                            if (item.owner === email) {
+                                htmlBtn = "<a href='#' id='editRoom" + item.id + "' style='text-decoration: none'><div class=\"profile-room-button\">Edit</div></a>";
+                            }
+                            else {
+                                htmlBtn = "<a href='/chats' style='text-decoration: none'><div class=\"profile-room-button\">Open</div></a>";
+                            }
                             $('#myRoomsList').append("<div class=\"profile-room\">\n" +
                                 "                    <div class=\"profile-room-head\">\n" +
                                 "                        <h3 class=\"profile-room-title\">" + item.header + "</h3>\n" +
@@ -430,10 +437,7 @@
                                 "                    <div class=\"profile-room-buttons\">\n" +
                                 "                        <div class=\"profile-room-count\">\n" +
                                 "                            <i class=\"svg-icon fas fa-user-circle\" style=\"margin-right: 5px\"></i>" + count + '/' + item.maxMembers + "\n" +
-                                "                        </div>\n" +
-                                "                        <a href='/chats' style='text-decoration: none'><div class=\"profile-room-button\">Open</div></a>\n" +
-                                "                    </div>\n" +
-                                "                </div>");
+                                "                        </div>" + htmlBtn + "</div></div>");
                             var userInterests = user_info.interests;
                             var roomInterests = item.interests;
                             $('#roomInterests' + item.id).append("Interests:&nbsp;");
@@ -444,6 +448,12 @@
                                 var interestHtml = '<div class="profile-room-interest ' + interestClass + '">' + roomInterest + '</div>';
                                 $('#roomInterests' + item.id).append(interestHtml);
                             }
+
+                            $('#editRoom' + item.id).on('click', function () {
+                                eraseCookie("RoomId");
+                                document.cookie = "RoomId= " + item.id;
+                                window.location.replace("/editRoom");
+                            });
                         });
                     }
                 }

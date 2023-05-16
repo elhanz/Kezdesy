@@ -138,7 +138,7 @@ a {
     position: relative;
 }
 
-#chat-page .chat-message .i, #chat-page .chat-message img{
+#chat-page .chat-message .i, #chat-page .chat-message .img{
     position: absolute;
     width: 42px;
     height: 42px;
@@ -164,12 +164,17 @@ a {
     color: #43464b;
 }
 
-#messageForm .input-group input {
+.input-group {
+    display: flex;
+}
+
+#messageForm .input-group #message {
     float: left;
     width: calc(95% - 85px);
     background: #FFFFFF;
     border-radius: 30px;
     border: none;
+    margin-left: 5px;
 }
 
 #messageForm .input-group input::placeholder {
