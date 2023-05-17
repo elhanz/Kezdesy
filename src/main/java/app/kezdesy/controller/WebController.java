@@ -2,14 +2,20 @@ package app.kezdesy.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 
 @Controller
 public class WebController {
 
     @GetMapping("/termsPolicy")
-    public String getTermsPolicy(@RequestParam("lang") String language) {
+    public String getTermsPolicy(HttpServletRequest request) {
+        String language = getLanguageFromCookie(request);
 
         if (language.equals("kz")) {
             return "termsPolicy_kz";
@@ -23,7 +29,8 @@ public class WebController {
 
 
     @GetMapping("/auth")
-    public String getPage(@RequestParam("lang") String language) {
+    public String getPage(HttpServletRequest request) {
+        String language = getLanguageFromCookie(request);
         if (language.equals("kz")) {
             return "register_kz";
         } else if (language.equals("ru")) {
@@ -34,8 +41,8 @@ public class WebController {
     }
 
     @GetMapping("/")
-    public String getHomePage(@RequestParam("lang") String language) {
-
+    public String getHomePage(HttpServletRequest request) {
+        String language = getLanguageFromCookie(request);
         if (language.equals("kz")) {
             return "index_kz";
         } else if (language.equals("ru")) {
@@ -43,11 +50,11 @@ public class WebController {
         } else {
             return "index";
         }
-
     }
 
     @GetMapping("/loginUser")
-    public String getLoginPage(@RequestParam("lang") String language) {
+    public String getLoginPage(HttpServletRequest request) {
+        String language = getLanguageFromCookie(request);
         if (language.equals("kz")) {
             return "login_kz";
         } else if (language.equals("ru")) {
@@ -58,7 +65,8 @@ public class WebController {
     }
 
     @GetMapping("/profile")
-    public String getProfilePage(@RequestParam("lang") String language) {
+    public String getProfilePage(HttpServletRequest request) {
+        String language = getLanguageFromCookie(request);
         if (language.equals("kz")) {
             return "profile_kz";
         } else if (language.equals("ru")) {
@@ -69,7 +77,8 @@ public class WebController {
     }
 
     @GetMapping("/chats")
-    public String getChats(@RequestParam("lang") String language) {
+    public String getChats(HttpServletRequest request) {
+        String language = getLanguageFromCookie(request);
 
         if (language.equals("kz")) {
             return "chat_kz";
@@ -81,7 +90,8 @@ public class WebController {
     }
 
     @GetMapping("/updateUser")
-    public String getEditPage(@RequestParam("lang") String language) {
+    public String getEditPage(HttpServletRequest request) {
+        String language = getLanguageFromCookie(request);
         if (language.equals("kz")) {
             return "updateUser_kz";
         } else if (language.equals("ru")) {
@@ -93,7 +103,8 @@ public class WebController {
     }
 
     @GetMapping("/createRoom")
-    public String getCreateRoomPage(@RequestParam("lang") String language) {
+    public String getCreateRoomPage(HttpServletRequest request) {
+        String language = getLanguageFromCookie(request);
 
         if (language.equals("kz")) {
             return "addRoom_kz";
@@ -106,7 +117,8 @@ public class WebController {
     }
 
     @GetMapping("/setInterests")
-    public String setInterests(@RequestParam("lang") String language) {
+    public String setInterests(HttpServletRequest request) {
+        String language = getLanguageFromCookie(request);
         if (language.equals("kz")) {
             return "interests_kz";
         } else if (language.equals("ru")) {
@@ -118,7 +130,8 @@ public class WebController {
     }
 
     @GetMapping("/rooms")
-    public String getRoomsPage(@RequestParam("lang") String language) {
+    public String getRoomsPage(HttpServletRequest request) {
+        String language = getLanguageFromCookie(request);
         if (language.equals("kz")) {
             return "rooms_kz";
         } else if (language.equals("ru")) {
@@ -129,7 +142,8 @@ public class WebController {
     }
 
     @GetMapping("/editRoom")
-    public String getEditRoomPage(@RequestParam("lang") String language) {
+    public String getEditRoomPage(HttpServletRequest request) {
+        String language = getLanguageFromCookie(request);
         if (language.equals("kz")) {
             return "editRoom_kz";
         } else if (language.equals("ru")) {
@@ -141,7 +155,8 @@ public class WebController {
 
 
     @GetMapping("/password-reset/request")
-    public String getPasswordResetRequest(@RequestParam("lang") String language) {
+    public String getPasswordResetRequest(HttpServletRequest request) {
+        String language = getLanguageFromCookie(request);
         if (language.equals("kz")) {
             return "pasresreq_kz";
         } else if (language.equals("ru")) {
@@ -149,5 +164,25 @@ public class WebController {
         } else {
             return "pasresreq";
         }
+    }
+
+    private String getLanguageFromCookie(HttpServletRequest request) {
+        Cookie[] cookies = request.getCookies();
+        if (cookies != null) {
+            for (Cookie cookie : cookies) {
+                if (cookie.getName().equals("lang")) {
+                    return cookie.getValue();
+                }
+            }
+        }
+        return "en"; // Default to English if the language cookie is not found
+    }
+
+    @PostMapping("/language")
+    public String setLanguageCookie(@RequestParam("language") String language, HttpServletResponse response) {
+        Cookie languageCookie = new Cookie("lang", language);
+        languageCookie.setMaxAge(30 * 24 * 60 * 60); // 30 days expiration
+        response.addCookie(languageCookie);
+        return "redirect:/";
     }
 }

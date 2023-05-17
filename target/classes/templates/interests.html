@@ -161,7 +161,7 @@
 
             $('#registrationButton').on('click', function () {
                 let data = JSON.stringify({email:email, interests: interests});
-                if (interests.length > 2) {
+                if (interests.length > 2 && interests.length < 8) {
                     $.ajax({
                         type: "POST",
                         contentType: 'application/json',
@@ -182,7 +182,7 @@
                 }
                 else {
                     $('#result_msg').css("border", "1px solid red");
-                    $('#result_msg').html("Please select at least 3 interests");
+                    $('#result_msg').html("Please select from 3 to 7 interests");
                 }
 
             })

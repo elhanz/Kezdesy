@@ -84,7 +84,7 @@
                 </div>
 
                 <div class="row-interests">
-                    <h2 style="color: #0d0d0d"> Қызығушылықтарды таңдаңыз: </h2>
+                    <span class="desc"> Қызығушылықтарды таңдаңыз: </span>
                     <ul class="ks-cboxtags">
                         <li><input type="checkbox" id="checkboxOne" value="Football"><label for="checkboxOne">Футбол</label></li>
                         <li><input type="checkbox" id="checkboxTwo" value="Sport"><label for="checkboxTwo">Спорт</label></li>
@@ -423,8 +423,8 @@
                                 "                        </div>\n" +
                                 "                        <div class=\"room-buttons\">\n" +
                                 "                            <div class=\"profile-room-count\">\n" +
-                                "                                <i class=\"svg-icon fas fa-user-circle\" style=\"margin-right: 5px\"></i> " + count + '/' + item.maxMembers + "\n" + html +
-                                "                            </div>\n" +
+                                "                                <i class=\"svg-icon fas fa-user-circle\" style=\"margin-right: 5px\"></i> " + count + '/' + item.maxMembers + "\n" +
+                                "                            </div>" + html + "\n" +
                                 "                        </div>\n" +
                                 "                    </div>"
                             );
@@ -502,7 +502,7 @@
                     success: function (result) {
                         console.log(result);
                         $('#about').show();
-                        $('#about').append("<legend>Результат поиска</legend>");
+                        $('#about').append("<legend>Іздеу нәтижелері</legend>");
                         result.forEach((item, i) => {
                             console.log(item.users);
                             let count = item.users.length;
@@ -519,7 +519,7 @@
                                     ? "<a style='text-decoration: none' href='/chats'><div class=\"room-button\">Ашу</div></a>"
                                     : "<div class=\"room-button\" id=\"join" + item.id + "\">Қосылу</div>";
 
-                                $('#rec').append(
+                                $('#about').append(
                                     "<div class=\"room\" style=\"outline: 5px solid " + getAvatarColor(item.header) + ";\">\n" +
                                     "                        <div class=\"profile-room-head\">\n" +
                                     "                            <h3 class=\"profile-room-title\">" + item.header + "</h3>\n" +
@@ -537,8 +537,8 @@
                                     "                        </div>\n" +
                                     "                        <div class=\"room-buttons\">\n" +
                                     "                            <div class=\"profile-room-count\">\n" +
-                                    "                                <i class=\"svg-icon fas fa-user-circle\" style=\"margin-right: 5px\"></i> " + count + '/' + item.maxMembers + "\n" + html +
-                                    "                            </div>\n" +
+                                    "                                <i class=\"svg-icon fas fa-user-circle\" style=\"margin-right: 5px\"></i> " + count + '/' + item.maxMembers + "\n" +
+                                    "                            </div>" + html + "\n" +
                                     "                        </div>\n" +
                                     "                    </div>"
                                 );

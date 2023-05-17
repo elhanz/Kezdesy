@@ -79,6 +79,22 @@
                     Additionally, it offers a favorable environment where individuals can interact, share ideas, and build positive relationships. Get started now!
                 </p>
                 <a href="/auth"><div class="header-login-button">Sign Up</div></a>
+
+                <h3>Choose language</h3>
+                <div class="radio-inputs">
+                    <label class="radio">
+                        <input type="radio" name="language" value="kz" onclick="setLanguageCookie('kz')">
+                        <span class="name">Kazakh</span>
+                    </label>
+                    <label class="radio">
+                        <input type="radio" name="language" value="ru" onclick="setLanguageCookie('ru')">
+                        <span class="name">Russian</span>
+                    </label>
+                    <label class="radio">
+                        <input type="radio" name="language" value="en" onclick="setLanguageCookie('en')" checked>
+                        <span class="name">English</span>
+                    </label>
+                </div>
             </div>
 
             <div class="container-first-right">
@@ -141,6 +157,14 @@
 <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script type="text/javascript">
+
+    function setLanguageCookie(language) {
+        var date = new Date();
+        date.setTime(date.getTime() + (30 * 24 * 60 * 60 * 1000)); // 30 days expiration
+        var expires = "expires=" + date.toUTCString();
+        document.cookie = "lang=" + language + ";" + expires + ";path=/";
+        location.reload(); // Refresh the page to apply the language cookie
+    }
 
     const tween = KUTE.fromTo(
         '#blob1',

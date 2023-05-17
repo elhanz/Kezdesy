@@ -77,6 +77,22 @@
                     Kezdesy — это веб-приложение, предназначенное для объединения пользователей на основе общих интересов.
                     Кроме того, здесь вы найдете благоприятную среду, в которой люди могут взаимодействовать, делиться идеями и строить позитивные отношения. Начать сейчас!</p>
                 <a href="/auth"><div class="header-login-button">Зарегестрироваться</div></a>
+
+                <h3>Выберите язык</h3>
+                <div class="radio-inputs">
+                    <label class="radio">
+                        <input type="radio" name="language" value="kz" onclick="setLanguageCookie('kz')">
+                        <span class="name">Казахский</span>
+                    </label>
+                    <label class="radio">
+                        <input type="radio" name="language" value="ru" onclick="setLanguageCookie('ru')" checked>
+                        <span class="name">Русский</span>
+                    </label>
+                    <label class="radio">
+                        <input type="radio" name="language" value="en" onclick="setLanguageCookie('en')">
+                        <span class="name">Английский</span>
+                    </label>
+                </div>
             </div>
 
             <div class="container-first-right">
@@ -139,6 +155,14 @@
 <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script type="text/javascript">
+
+    function setLanguageCookie(language) {
+        var date = new Date();
+        date.setTime(date.getTime() + (30 * 24 * 60 * 60 * 1000)); // 30 days expiration
+        var expires = "expires=" + date.toUTCString();
+        document.cookie = "lang=" + language + ";" + expires + ";path=/";
+        location.reload(); // Refresh the page to apply the language cookie
+    }
 
     const tween = KUTE.fromTo(
         '#blob1',
