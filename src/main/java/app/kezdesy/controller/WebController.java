@@ -1,12 +1,26 @@
 package app.kezdesy.controller;
 
-
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 
 @Controller
 public class WebController {
+
+
+//    @GetMapping("/")
+//    public String getHomePage(@RequestParam("lang") String language) {
+//
+//        if (language.equals("kz")) {
+//            return "redirect:/index_kz.html";
+//        } else if (language.equals("en")) {
+//            return "redirect:/index_en.html";
+//        } else {
+//            return "redirect:/index_ru.html";
+//        }
+//
+//    }
 
     @GetMapping("/auth")
     public String getPage() {
