@@ -61,7 +61,7 @@
                 <div class="row">
                     <input type="number" id="minAgeLimit" class="fadeIn third" placeholder="минималды жас шегі" min="18">
                     <input type="number" id="maxAgeLimit" class="fadeIn third" placeholder="максималды жас шегі" min="19">
-                    <input type="number" id="maxMembers" class="fadeIn third" placeholder="максималды адам саны" min="2" max="20">
+                    <input type="number" id="maxMembers" class="fadeIn third" style="min-width: 100px"  placeholder="максималды адам саны" min="2" max="20">
                     <select name="login" id="city" class="fadeIn third">
                         <option value="">- қала -</option>
                         <option value="Astana">Астана</option>
@@ -440,7 +440,7 @@
                                 $('#roomInterests' + item.id).append(interestHtml);
                             }
 
-                            if (userExists) {
+                            if (!userExists) {
                                 $('#join' + item.id).on('click', function () {
                                     let resultC = parseJwt(myCookie);
                                     let email = resultC.sub;
@@ -554,7 +554,7 @@
                                     $('#roomInterests' + item.id).append(interestHtml);
                                 }
 
-                                if (userExists) {
+                                if (!userExists) {
                                     $('#join' + item.id).on('click', function () {
                                         let resultC = parseJwt(myCookie);
                                         let email = resultC.sub;

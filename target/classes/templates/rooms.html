@@ -311,8 +311,8 @@
                                 "                        </div>\n" +
                                 "                        <div class=\"room-buttons\">\n" +
                                 "                            <div class=\"profile-room-count\">\n" +
-                                "                                <i class=\"svg-icon fas fa-user-circle\" style=\"margin-right: 5px\"></i> " + count + '/' + item.maxMembers + "\n" + html +
-                                "                            </div>\n" +
+                                "                                <i class=\"svg-icon fas fa-user-circle\" style=\"margin-right: 5px\"></i> " + count + '/' + item.maxMembers + "\n" +
+                                "                            </div>" + html + "\n" +
                                 "                        </div>\n" +
                                 "                    </div>"
                             );
@@ -328,7 +328,7 @@
                                 $('#roomInterests' + item.id).append(interestHtml);
                             }
 
-                            if (userExists) {
+                            if (!userExists) {
                                 $('#join' + item.id).on('click', function () {
                                     let resultC = parseJwt(myCookie);
                                     let email = resultC.sub;
@@ -442,7 +442,7 @@
                                     $('#roomInterests' + item.id).append(interestHtml);
                                 }
 
-                                if (userExists) {
+                                if (!userExists) {
                                     $('#join' + item.id).on('click', function () {
                                         let resultC = parseJwt(myCookie);
                                         let email = resultC.sub;

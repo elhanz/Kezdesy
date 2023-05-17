@@ -53,15 +53,15 @@
                         </svg>
                     </div>
                 </div>
-                <button class="btn-filter" id="filter">Фильтер</button>
+                <button class="btn-filter" id="filter">Фильтр</button>
             </div>
 
             <div id="advance" class="advance-search">
                 <span class="desc">Расширенный поиск</span>
                 <div class="row">
-                    <input type="number" id="minAgeLimit" class="fadeIn third" placeholder="минимальный возрастной порог" min="18">
-                    <input type="number" id="maxAgeLimit" class="fadeIn third" placeholder="максимальный возрастной порог" min="19">
-                    <input type="number" id="maxMembers" class="fadeIn third" placeholder="максимальное количество участников" min="2" max="20">
+                    <input type="number" id="minAgeLimit" class="fadeIn third" placeholder="минимальный возраст" min="18">
+                    <input type="number" id="maxAgeLimit" class="fadeIn third" placeholder="максимальный возраст" min="19">
+                    <input type="number" id="maxMembers" class="fadeIn third" style="min-width: 100px" placeholder="максимальное количество участников" min="2" max="20">
                     <select name="login" id="city" class="fadeIn third">
                         <option value="">- город -</option>
                         <option value="Astana">Астана</option>
@@ -390,7 +390,7 @@
                 success: function (result) {
                     console.log(result);
                     $('#rec').show();
-                    $('#rec').append("<legend>Рекомендаций</legend>");
+                    $('#rec').append("<legend>Рекомендации</legend>");
                     result.forEach((item, i) => {
                         console.log(item.users);
                         let count = item.users.length;
@@ -406,7 +406,7 @@
 
                             html += userExists
                                 ? "<a style='text-decoration: none' href='/chats'><div class=\"room-button\">Открыть</div></a>"
-                                : "<div class=\"room-button\" id=\"join" + item.id + "\">Присоедениться</div>";
+                                : "<div class=\"room-button\" id=\"join" + item.id + "\">Присоединиться</div>";
 
                             $('#rec').append(
                                 "<div class=\"room\" style=\"outline: 5px solid " + getAvatarColor(item.header) + ";\">\n" +
@@ -443,7 +443,7 @@
                                 $('#roomInterests' + item.id).append(interestHtml);
                             }
 
-                            if (userExists) {
+                            if (!userExists) {
                                 $('#join' + item.id).on('click', function () {
                                     let resultC = parseJwt(myCookie);
                                     let email = resultC.sub;
@@ -557,7 +557,7 @@
                                     $('#roomInterests' + item.id).append(interestHtml);
                                 }
 
-                                if (userExists) {
+                                if (!userExists) {
                                     $('#join' + item.id).on('click', function () {
                                         let resultC = parseJwt(myCookie);
                                         let email = resultC.sub;

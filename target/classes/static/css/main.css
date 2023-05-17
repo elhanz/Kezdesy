@@ -916,7 +916,7 @@ ul.ks-cboxtags li input[type="checkbox"]:focus + label {
     background: #292929;
     border-radius: 15px;
     padding: 5px 10px;
-    width: 5vw;
+    width: fit-content;
     color: #FFFFFF;
     text-align: center;
     cursor: pointer;
@@ -1019,7 +1019,7 @@ ul.ks-cboxtags li input[type="checkbox"]:focus + label {
 .chats-list {
     position: fixed;
     left: 0;
-    z-index: 3;
+    z-index: 1;
     height: 100%;
     background-color: #fff;
     transition: left 0.5s ease-in-out;
@@ -1515,6 +1515,16 @@ ul.ks-cboxtags li input[type="checkbox"]:focus + label {
 
     .profile-left-block, .profile-info, .profile-interests {
         width: auto;
+    }
+
+    .profile-info-buttons {
+        flex-direction: column;
+    }
+
+    .profile-info-button {
+        width: auto;
+        text-align: center;
+        margin-top: 10px;
     }
 
     .header-login-button {

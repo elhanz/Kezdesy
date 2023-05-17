@@ -96,74 +96,44 @@
 
 
     $(document).ready(function () {
-            $('#registrationButton').on('click', function () {
-                let email = $('#email').val();
-                let password = $('#password-field').val();
-                let fname = $('#fname').val();
-                let lname = $('#lname').val();
-                let age = $('#age').val();
-                let gender = $('#gender').val();
-                let city = $('#city').val();
-                $('#result_msg').css("border", "1px solid green")
-                $('#result_msg').html("Success!  Please, check your email for to complete your registration");
+        $('#registrationButton').on('click', function () {
+            let email = $('#email').val();
+            let password = $('#password-field').val();
+            let fname = $('#fname').val();
+            let lname = $('#lname').val();
+            let age = $('#age').val();
+            let gender = $('#gender').val();
+            let city = $('#city').val();
+            $('#result_msg').css("border", "1px solid green")
+            $('#result_msg').html("Success!  Please, check your email for to complete your registration");
 
-                if($('#terms').is(":checked")) {
-                    $.ajax({
-                        type: "POST",
-                        contentType: 'application/json',
-                        url: "register",
-                        data: JSON.stringify({
-                            email: email, password: password, first_name: fname,
-                            last_name: lname, age: age, gender: gender, city: city
-                        }),
-                        dataType: 'json',
-                        complete: function (result) {
-                            console.log(result.responseText);
-                            if (result.status === 400) {
-                                console.log("Bad request: " + result.responseText);
-                                $('#result_msg').css("border", "1px solid red")
-                                $('#result_msg').html(result.responseText);
-                            } else {
-                                console.log("Request successful: " + result.responseText);
-                            }
-                            //
-                            // if (result.responseText == "User was registered") {
-                            //     //console.log(123);
-                            //     var tokens;
-                            //
-                            //     var xhr = new XMLHttpRequest();
-                            //     var body = 'email=' + encodeURIComponent(email) + '&password=' + encodeURIComponent(password);
-                            //     xhr.open("POST", 'login', true);
-                            //     xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-                            //     xhr.onreadystatechange = function() {
-                            //         if (this.readyState != 4 && xhr.status != 200) {
-                            //             $('#result_msg').html('Wrong username or password');
-                            //             return;
-                            //         }
-                            //         if(xhr.readyState === 4 && xhr.status === 200) {
-                            //             console.log(this.responseText);
-                            //             tokens = JSON.parse(this.responseText);
-                            //             console.log("access_token: ", tokens.access_token);
-                            //             console.log("email: ", tokens.email);
-                            //             document.cookie="Authorization=Bearer " + tokens.access_token;
-                            //             window.location.replace("/setInterests");
-                            //         }
-                            //     };
-                            //     xhr.send(body);
-                            // } else {
-                            //     $('#result_msg').css("border", "1px solid red")
-                            //     $('#result_msg').html(result.responseText);
-                            // }
+            if($('#terms').is(":checked")) {
+                $.ajax({
+                    type: "POST",
+                    contentType: 'application/json',
+                    url: "register",
+                    data: JSON.stringify({
+                        email: email, password: password, first_name: fname,
+                        last_name: lname, age: age, gender: gender, city: city
+                    }),
+                    dataType: 'json',
+                    complete: function (result) {
+                        console.log(result.responseText);
+                        if (result.status === 400) {
+                            console.log("Bad request: " + result.responseText);
+                            $('#result_msg').css("border", "1px solid red")
+                            $('#result_msg').html(result.responseText);
+                        } else {
+                            console.log("Request successful: " + result.responseText);
                         }
-                    });
-                }
-                else {
-                    $('#result_msg').css("border", "1px solid red")
-                    $('#result_msg').html("Please read and agree to the Terms and Conditions");
-                }
-            })
-
-        }
-    );
+                    }
+                });
+            }
+            else {
+                $('#result_msg').css("border", "1px solid red")
+                $('#result_msg').html("Please read and agree to the Terms and Conditions");
+            }
+        })
+    });
 </script>
 </html>
