@@ -283,6 +283,15 @@
 
                         if (count < item.maxMembers) {
                             // get the user interests
+                            var html = "";
+
+                            var userExists = item.users.some(function(user) {
+                                return user.email === user_info.email;
+                            });
+
+                            html += userExists
+                                ? "<a style='text-decoration: none' href='/chats'><div class=\"room-button\">Open</div></a>"
+                                : "<div class=\"room-button\" id=\"join" + item.id + "\">Join</div>";
 
                             $('#rec').append(
                                 "<div class=\"room\" style=\"outline: 5px solid " + getAvatarColor(item.header) + ";\">\n" +
@@ -302,9 +311,8 @@
                                 "                        </div>\n" +
                                 "                        <div class=\"room-buttons\">\n" +
                                 "                            <div class=\"profile-room-count\">\n" +
-                                "                                <i class=\"svg-icon fas fa-user-circle\" style=\"margin-right: 5px\"></i> " + count + '/' + item.maxMembers + "\n" +
+                                "                                <i class=\"svg-icon fas fa-user-circle\" style=\"margin-right: 5px\"></i> " + count + '/' + item.maxMembers + "\n" + html +
                                 "                            </div>\n" +
-                                "                            <div class=\"room-button\" id=\"join"+item.id+"\">Join</div>\n" +
                                 "                        </div>\n" +
                                 "                    </div>"
                             );
@@ -320,28 +328,29 @@
                                 $('#roomInterests' + item.id).append(interestHtml);
                             }
 
-                            $('#join' + item.id).on('click', function () {
-                                let resultC = parseJwt(myCookie);
-                                let email = resultC.sub;
-                                $.ajax({
-                                    type: "POST",
-                                    headers: {'Authorization': myCookie},
-                                    contentType: 'application/json',
-                                    url: "room/join",
-                                    data: JSON.stringify({"email" : email, "roomId" : item.id}),
-                                    dataType: 'json',
-                                    complete: function (result) {
-                                        console.log(item.id);
-                                        console.log(result.responseText);
-                                        if (result.responseText === "User was added to room.") {
-                                            window.location.replace("/chats");
+                            if (userExists) {
+                                $('#join' + item.id).on('click', function () {
+                                    let resultC = parseJwt(myCookie);
+                                    let email = resultC.sub;
+                                    $.ajax({
+                                        type: "POST",
+                                        headers: {'Authorization': myCookie},
+                                        contentType: 'application/json',
+                                        url: "room/join",
+                                        data: JSON.stringify({"email": email, "roomId": item.id}),
+                                        dataType: 'json',
+                                        complete: function (result) {
+                                            console.log(item.id);
+                                            console.log(result.responseText);
+                                            if (result.responseText === "User was added to room.") {
+                                                window.location.replace("/chats");
+                                            } else {
+                                                $('#messages' + item.id).html(result.responseText);
+                                            }
                                         }
-                                        else {
-                                            $('#messages' + item.id).html(result.responseText);
-                                        }
-                                    }
+                                    });
                                 });
-                            });
+                            }
                         }
                     })
                 },
@@ -388,7 +397,15 @@
                             console.log(count);
 
                             if (count < item.maxMembers) {
-                                // get the user interests
+                                var html = "";
+
+                                var userExists = item.users.some(function(user) {
+                                    return user.email === user_info.email;
+                                });
+
+                                html += userExists
+                                    ? "<a style='text-decoration: none' href='/chats'><div class=\"room-button\">Open</div></a>"
+                                    : "<div class=\"room-button\" id=\"join" + item.id + "\">Join</div>";
 
                                 $('#about').append(
                                     "<div class=\"room\">\n" +
@@ -409,8 +426,7 @@
                                     "                        <div class=\"room-buttons\">\n" +
                                     "                            <div class=\"profile-room-count\">\n" +
                                     "                                <i class=\"svg-icon fas fa-user-circle\" style=\"margin-right: 5px\"></i> " + count + '/' + item.maxMembers + "\n" +
-                                    "                            </div>\n" +
-                                    "                            <div class=\"room-button\" id=\"join"+item.id+"\">Join</div>\n" +
+                                    "                            </div>\n" + html +
                                     "                        </div>\n" +
                                     "                    </div>"
                                     );
@@ -426,28 +442,31 @@
                                     $('#roomInterests' + item.id).append(interestHtml);
                                 }
 
-                                $('#join' + item.id).on('click', function () {
-                                    let resultC = parseJwt(myCookie);
-                                    let email = resultC.sub;
-                                    $.ajax({
-                                        type: "POST",
-                                        headers: {'Authorization': myCookie},
-                                        contentType: 'application/json',
-                                        url: "room/join",
-                                        data: JSON.stringify({"email" : email, "roomId" : item.id}),
-                                        dataType: 'json',
-                                        complete: function (result) {
-                                            console.log(item.id);
-                                            console.log(result.responseText);
-                                            if (result.responseText === "User was added to room.") {
-                                                window.location.replace("/chats");
+                                if (userExists) {
+                                    $('#join' + item.id).on('click', function () {
+                                        let resultC = parseJwt(myCookie);
+                                        let email = resultC.sub;
+                                        $.ajax({
+                                            type: "POST",
+                                            headers: {'Authorization': myCookie},
+                                            contentType: 'application/json',
+                                            url: "room/join",
+                                            data: JSON.stringify({"email" : email, "roomId" : item.id}),
+                                            dataType: 'json',
+                                            complete: function (result) {
+                                                console.log(item.id);
+                                                console.log(result.responseText);
+                                                if (result.responseText === "User was added to room.") {
+                                                    window.location.replace("/chats");
+                                                }
+                                                else {
+                                                    $('#messages' + item.id).html(result.responseText);
+                                                }
                                             }
-                                            else {
-                                                $('#messages' + item.id).html(result.responseText);
-                                            }
-                                        }
+                                        });
                                     });
-                                });
+                                }
+
                             }
                         })
                     },

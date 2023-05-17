@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org/">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link th:href="@{/css/login.css}" rel="stylesheet"  type="text/css">
+    <link rel="shortcut icon" href="/img/mini_logo.png" type="image/x-icon">
+
+    <title>Тіркелу</title>
+</head>
+<body>
+<div class="wrapper fadeInDown">
+    <div id="formContent">
+        <h2 class="active"> Тіркелу </h2>
+
+        <div class="fadeIn first">
+            <img src="/img/logo2.png" id="icon" alt="User Icon" />
+        </div>
+
+        <div id="result_msg"></div>
+        <input type="email" id="email" class="fadeIn second" name="login" placeholder="электронды пошта">
+        <div class="password-block-auth">
+            <input type="password" id="password-field" class="fadeIn third" name="login" placeholder="құпия сөз">
+            <button class="button-password-auth" type="button" id="toggle-password-visibility">
+                <svg id="hide-icon" fill="#424B5A" width="16" height="16" viewBox="0 0 512 512">
+                    <path d="M409.84,132.33l95.91-95.91A21.33,21.33,0,1,0,475.58,6.25L6.25,475.58a21.33,21.33,0,1,0,30.17,30.17L140.77,401.4A275.84,275.84,0,0,0,256,426.67c107.6,0,204.85-61.78,253.81-161.25a21.33,21.33,0,0,0,0-18.83A291,291,0,0,0,409.84,132.33ZM256,362.67a105.78,105.78,0,0,1-58.7-17.8l31.21-31.21A63.29,63.29,0,0,0,256,320a64.07,64.07,0,0,0,64-64,63.28,63.28,0,0,0-6.34-27.49l31.21-31.21A106.45,106.45,0,0,1,256,362.67ZM2.19,265.42a21.33,21.33,0,0,1,0-18.83C51.15,147.11,148.4,85.33,256,85.33a277,277,0,0,1,70.4,9.22l-55.88,55.88A105.9,105.9,0,0,0,150.44,270.52L67.88,353.08A295.2,295.2,0,0,1,2.19,265.42Z"/>
+                </svg>
+                <svg id="show-icon" fill="#424B5A" width="16" height="16" viewBox="0 0 512 512">
+                    <path d="M320,256a64,64,0,1,1-64-64A64.07,64.07,0,0,1,320,256Zm189.81,9.42C460.86,364.89,363.6,426.67,256,426.67S51.14,364.89,2.19,265.42a21.33,21.33,0,0,1,0-18.83C51.14,147.11,148.4,85.33,256,85.33s204.86,61.78,253.81,161.25A21.33,21.33,0,0,1,509.81,265.42ZM362.67,256A106.67,106.67,0,1,0,256,362.67,106.79,106.79,0,0,0,362.67,256Z"/>
+                </svg>
+            </button>
+        </div>
+        <input type="text" id="fname" class="fadeIn third" name="login" placeholder="аты">
+        <input type="text" id="lname" class="fadeIn third" name="login" placeholder="жөні">
+        <input type="number" id="age" class="fadeIn third" name="login" placeholder="жасы" min="18">
+        <select name="login" id="gender" class="fadeIn third">
+            <option value="">- жынысы -</option>
+            <option value="Male">Еркек</option>
+            <option value="Female">Әйел</option>
+        </select>
+        <select name="login" id="city" class="fadeIn third">
+            <option value="">- қала -</option>
+            <option value="Astana">Астана</option>
+            <option value="Almaty">Алматы</option>
+            <option value="Shymkent">Шымкент</option>
+            <option value="Aktobe">Ақтөбе</option>
+            <option value="Karaganda">Қарағанды</option>
+            <option value="Atyrau">Атырау</option>
+            <option value="Taraz">Тараз</option>
+            <option value="Pavlodar">Павлодар</option>
+            <option value="Semey">Семей</option>
+            <option value="Ust-Kamenogorsk">Өскемен</option>
+            <option value="Kyzylorda">Қызылорда</option>
+            <option value="Uralsk">Орал</option>
+            <option value="Kostanay">Қостанай</option>
+            <option value="Petropavlsk">Петропавл</option>
+            <option value="Taldykorgan">Талдықорған</option>
+            <option value="Kokshetau">Көкшетау</option>
+        </select>
+        <div style="display: flex; align-items: center; justify-content: center; margin-bottom: 30px; margin-top: 10px; padding: 0 10px; flex-wrap: wrap;">
+            <input id="terms" type="checkbox" />
+            <label for="terms">Мен оқыдым және келістім </label>
+            <a href="/termsPolicy">Шарттар мен ережелер</a>
+        </div>
+        <button type="submit" id="registrationButton" class="button fadeIn fourth">Тіркелу</button>
+
+        <div id="formFooter">
+            <a class="underlineHover" href="/loginUser">Тіркелгі бар ма?</a>
+        </div>
+
+    </div>
+</div>
+</body>
+
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script type="text/javascript">
+    const passwordField = document.getElementById("password-field");
+    const toggleButton = document.getElementById("toggle-password-visibility");
+    const hideIcon = document.getElementById("hide-icon");
+    const showIcon = document.getElementById("show-icon");
+    hideIcon.style.display = "block";
+    showIcon.style.display = "none";
+
+    toggleButton.addEventListener("click", function () {
+        if (passwordField.type === "password") {
+            passwordField.type = "text";
+            hideIcon.style.display = "none";
+            showIcon.style.display = "block";
+        } else {
+            passwordField.type = "password";
+            hideIcon.style.display = "block";
+            showIcon.style.display = "none";
+        }
+    });
+
+
+    $(document).ready(function () {
+            $('#registrationButton').on('click', function () {
+                let email = $('#email').val();
+                let password = $('#password-field').val();
+                let fname = $('#fname').val();
+                let lname = $('#lname').val();
+                let age = $('#age').val();
+                let gender = $('#gender').val();
+                let city = $('#city').val();
+                $('#result_msg').css("border", "1px solid green")
+                $('#result_msg').html("Сәттілік! Аяқтау үшін электрондық поштаңызды тексеріңіз");
+
+                if($('#terms').is(":checked")) {
+                    $.ajax({
+                        type: "POST",
+                        contentType: 'application/json',
+                        url: "register",
+                        data: JSON.stringify({
+                            email: email, password: password, first_name: fname,
+                            last_name: lname, age: age, gender: gender, city: city
+                        }),
+                        dataType: 'json',
+                        complete: function (result) {
+                            console.log(result.responseText);
+                            if (result.status === 400) {
+                                console.log("Bad request: " + result.responseText);
+                                $('#result_msg').css("border", "1px solid red")
+                                $('#result_msg').html(result.responseText);
+                            } else {
+                                console.log("Request successful: " + result.responseText);
+                            }
+                        }
+                    });
+                }
+                else {
+                    $('#result_msg').css("border", "1px solid red")
+                    $('#result_msg').html("Please read and agree to the Terms and Conditions");
+                }
+            })
+
+        }
+    );
+</script>
+</html>

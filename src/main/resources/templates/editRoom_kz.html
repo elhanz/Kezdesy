@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org/">
+<head>
+    <meta charset="UTF-8">
+    <link th:href="@{/css/login.css}" rel="stylesheet"  type="text/css">
+    <link rel="shortcut icon" href="/img/mini_logo.png" type="image/x-icon">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" crossorigin="anonymous">
+    <title> Бөлмені өзгерту </title>
+</head>
+<body>
+<div class="wrapper fadeInDown">
+    <div id="formContent" style="max-width: 700px">
+        <h2 class="active"> Бөлмені өзгерту </h2>
+
+        <div id="result_msg"></div>
+        <input type="text" id="header" class="fadeIn second" placeholder="атауы">
+        <input type="text" id="description" class="fadeIn second" placeholder="сипаттамасы">
+        <input type="number" id="minAgeLimit" class="fadeIn third" placeholder="минималды жас шегі" min="18">
+        <input type="number" id="maxAgeLimit" class="fadeIn third" placeholder="максималды жас шегі" min="19">
+        <input type="number" id="maxMembers" class="fadeIn third" placeholder="максималды адам саны" min="2" max="20">
+        <select name="login" id="city" class="fadeIn third">
+            <option value="">- қала -</option>
+            <option value="Astana">Астана</option>
+            <option value="Almaty">Алматы</option>
+            <option value="Shymkent">Шымкент</option>
+            <option value="Aktobe">Ақтөбе</option>
+            <option value="Karaganda">Қарағанды</option>
+            <option value="Atyrau">Атырау</option>
+            <option value="Taraz">Тараз</option>
+            <option value="Pavlodar">Павлодар</option>
+            <option value="Semey">Семей</option>
+            <option value="Ust-Kamenogorsk">Өскемен</option>
+            <option value="Kyzylorda">Қызылорда</option>
+            <option value="Uralsk">Орал</option>
+            <option value="Kostanay">Қостанай</option>
+            <option value="Petropavlsk">Петропавл</option>
+            <option value="Taldykorgan">Талдықорған</option>
+            <option value="Kokshetau">Көкшетау</option>
+        </select>
+        <select name="login" id="owner" class="fadeIn third">
+            <option value="">- иесі -</option>
+        </select>
+        <div class="fadeIn third">
+            <h2 style="color: #0d0d0d"> Қызығушылықтарды таңдаңыз: </h2>
+            <ul class="ks-cboxtags">
+                <li><input type="checkbox" id="checkboxOne" value="Football"><label for="checkboxOne">Футбол</label></li>
+                <li><input type="checkbox" id="checkboxTwo" value="Sport"><label for="checkboxTwo">Спорт</label></li>
+                <li><input type="checkbox" id="checkboxThree" value="Basketball"><label for="checkboxThree">Баскетбол</label></li>
+                <li><input type="checkbox" id="checkboxFour" value="Books"><label for="checkboxFour">Кітаптар</label></li>
+                <li><input type="checkbox" id="checkboxFive" value="Movies"><label for="checkboxFive">Фильмдер</label></li>
+                <li><input type="checkbox" id="checkboxSix" value="Painting"><label for="checkboxSix">Сурет салу</label></li>
+                <li><input type="checkbox" id="checkboxSeven" value="TableGames"><label for="checkboxSeven">Үстел ойындары</label></li>
+                <li><input type="checkbox" id="checkboxEight" value="Music"><label for="checkboxEight">Музыка</label></li>
+                <li><input type="checkbox" id="checkboxNine" value="Twitch"><label for="checkboxNine">Твич</label></li>
+                <li><input type="checkbox" id="checkboxTen" value="Netflix"><label for="checkboxTen">Нетфликс</label></li>
+                <li><input type="checkbox" id="checkboxEleven" value="Politics"><label for="checkboxEleven">Саясат</label></li>
+                <li><input type="checkbox" id="checkboxTwelve" value="Tea"><label for="checkboxTwelve">Шай</label></li>
+                <li><input type="checkbox" id="checkboxThirteen" value="Swimming"><label for="checkboxThirteen">Жүзу</label></li>
+                <li><input type="checkbox" id="checkboxFourteen" value="Beer"><label for="checkboxFourteen">Сыра</label></li>
+                <li><input type="checkbox" id="checkboxFifteen" value="Bicycling"><label for="checkboxFifteen">Велосипед тебу</label></li>
+                <li><input type="checkbox" id="checkbox16" value="TikTok"><label for="checkbox16">ТикТок</label></li>
+                <li><input type="checkbox" id="checkbox17" value="Museum"><label for="checkbox17">Музей</label></li>
+                <li><input type="checkbox" id="checkbox18" value="Dance"><label for="checkbox18">Билеу</label></li>
+                <li><input type="checkbox" id="checkbox19" value="Cooking"><label for="checkbox19">Тамақ пісіру</label></li>
+                <li><input type="checkbox" id="checkbox20" value="Hockey"><label for="checkbox20">Хоккей</label></li>
+                <li><input type="checkbox" id="checkbox21" value="Manga"><label for="checkbox21">Манга</label></li>
+                <li><input type="checkbox" id="checkbox22" value="MartialArts"><label for="checkbox22">Жекпе-жек өнері</label></li>
+                <li><input type="checkbox" id="checkbox23" value="Marvel"><label for="checkbox23">Марвел</label></li>
+                <li><input type="checkbox" id="checkbox24" value="Running"><label for="checkbox24">Жүгіру</label></li>
+                <li><input type="checkbox" id="checkbox25" value="Gym"><label for="checkbox25">Спорт залы</label></li>
+                <li><input type="checkbox" id="checkbox26" value="IceSkating"><label for="checkbox26">Коньки тебу</label></li>
+                <li><input type="checkbox" id="checkbox27" value="Singing"><label for="checkbox27">Ән айту</label></li>
+                <li><input type="checkbox" id="checkbox28" value="Karaoke"><label for="checkbox28">Караоке</label></li>
+                <li><input type="checkbox" id="checkbox29" value="Memes"><label for="checkbox29">Мемдер</label></li>
+                <li><input type="checkbox" id="checkbox30" value="NFT"><label for="checkbox30">NFT</label></li>
+                <li><input type="checkbox" id="checkbox31" value="Fishing"><label for="checkbox31">Балық аулау</label></li>
+                <li><input type="checkbox" id="checkbox32" value="Investing"><label for="checkbox32">Инвестеулер</label></li>
+                <li><input type="checkbox" id="checkbox33" value="Cosplay"><label for="checkbox33">Косплей</label></li>
+                <li><input type="checkbox" id="checkbox34" value="Bowling"><label for="checkbox34">Боулинг</label></li>
+                <li><input type="checkbox" id="checkbox35" value="Gardening"><label for="checkbox35">Бау-бақша</label></li>
+                <li><input type="checkbox" id="checkbox36" value="Photography"><label for="checkbox36">Фотосуреттер</label></li>
+                <li><input type="checkbox" id="checkbox37" value="Yoga"><label for="checkbox37">Йога</label></li>
+                <li><input type="checkbox" id="checkbox38" value="Chess"><label for="checkbox38">Шахмат</label></li>
+                <li><input type="checkbox" id="checkbox39" value="Travel"><label for="checkbox39">Саяхат</label></li>
+                <li><input type="checkbox" id="checkbox40" value="Coding"><label for="checkbox40">Код жазу</label></li>
+                <li><input type="checkbox" id="checkbox41" value="Guitar"><label for="checkbox41">Гитара</label></li>
+                <li><input type="checkbox" id="checkbox42" value="Cats"><label for="checkbox42">Мысықтар</label></li>
+                <li><input type="checkbox" id="checkbox43" value="Dogs"><label for="checkbox43">Иттер</label></li>
+                <li><input type="checkbox" id="checkbox44" value="Hiking"><label for="checkbox44">Туризм</label></li>
+                <li><input type="checkbox" id="checkbox45" value="Snowboarding"><label for="checkbox45">Сноуборд</label></li>
+                <li><input type="checkbox" id="checkbox46" value="Fashion"><label for="checkbox46">Мода</label></li>
+                <li><input type="checkbox" id="checkbox47" value="Camping"><label for="checkbox47">Кемпинг</label></li>
+                <li><input type="checkbox" id="checkbox48" value="Writing"><label for="checkbox48">Жазу</label></li>
+                <li><input type="checkbox" id="checkbox49" value="Surfing"><label for="checkbox49">Серфинг</label></li>
+                <li><input type="checkbox" id="checkbox50" value="Skiing"><label for="checkbox50">Лыжа</label></li>
+                <li><input type="checkbox" id="checkbox51" value="Reading"><label for="checkbox51">Оқу</label></li>
+                <li><input type="checkbox" id="checkbox52" value="Piano"><label for="checkbox52">Пианино</label></li>
+                <li><input type="checkbox" id="checkbox53" value="Coffee"><label for="checkbox53">Кофе</label></li>
+                <li><input type="checkbox" id="checkbox54" value="Fitness"><label for="checkbox54">Фитнес</label></li>
+                <li><input type="checkbox" id="checkbox55" value="Gaming"><label for="checkbox55">Ойын ойнау</label></li>
+                <li><input type="checkbox" id="checkbox56" value="Nature"><label for="checkbox56">Табиғат</label></li>
+                <li><input type="checkbox" id="checkbox57" value="Sims"><label for="checkbox57">Симс</label></li>
+                <li><input type="checkbox" id="checkbox58" value="MakeUp"><label for="checkbox58">Макияж</label></li>
+            </ul>
+        </div>
+        <button type="submit" id="createButton" class="fadeIn fourth button">Құру</button>
+    </div>
+</div>
+</body>
+
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script type="text/javascript">
+
+    if (getCookie("Authorization") == null) {
+        window.location.replace("/loginUser");
+    }
+
+    function parseJwt(token) {
+        let base64Url = token.split('.')[1];
+        let base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+        let jsonPayload = decodeURIComponent(atob(base64).split('').map(function (c) {
+            return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+        }).join(''));
+
+        return JSON.parse(jsonPayload);
+    }
+
+    function getCookie(name) {
+        const value = `; ${document.cookie}`;
+        const parts = value.split(`; ${name}=`);
+        if (parts.length === 2) return parts.pop().split(';').shift();
+    }
+
+    function eraseCookie(name) {
+        document.cookie = name + '=; Max-Age=-99999999;';
+    }
+
+    $(document).ready(function () {
+        let myCookie = getCookie("Authorization");
+        let resultC = parseJwt(myCookie);
+        let roomId = getCookie("RoomId");
+        let email = resultC.sub;
+        var interests = [];
+
+        $.ajax({
+            type: "GET",
+            headers: {'Authorization': myCookie},
+            contentType: 'application/json',
+            url: "/chats/getChat",
+            data: {chatID : roomId},
+            dataType: 'json',
+            success: function (result) {
+                if (result.owner !== email) {
+                    window.location.replace("/");
+                }
+                console.log(result);
+                $('#header').val(result.header);
+                $('#description').val(result.description);
+                $('#minAgeLimit').val(result.minAgeLimit);
+                $('#maxAgeLimit').val(result.maxAgeLimit);
+                $('#maxMembers').val(result.maxMembers);
+                $('#city').val(result.city);
+
+                interests = result.interests;
+                $('.ks-cboxtags input[type=checkbox]').each(function() {
+                    if (interests.indexOf($(this).val()) !== -1) {
+                        $(this).prop('checked', true);
+                    }
+                });
+
+                var selectElement = document.getElementById('owner');
+                selectElement.innerHTML = '';
+                var defaultOption = document.createElement('option');
+                defaultOption.value = '';
+                defaultOption.textContent = '- иесі -';
+                selectElement.appendChild(defaultOption);
+
+                result.users.forEach(function(user) {
+                    var option = document.createElement('option');
+                    option.value = user.email;
+                    option.textContent = user.email;
+
+                    if (user.email === result.owner) {
+                        option.selected = true;
+                    }
+                    selectElement.appendChild(option);
+                });
+            },
+            error: function (e) {
+                console.log("ERROR: ", e);
+                // window.location.replace("/loginUser");
+            }
+        });
+
+        $("input:checkbox").change(function() {
+            if($(this).is(":checked")) {
+                interests.push(this.value);
+                console.log(this.value + " added");
+            } else {
+                let pos = interests.indexOf(this);
+                interests.splice(pos, 1);
+                console.log("not added");
+            }
+        });
+
+        $('#createButton').on('click', function () {
+            console.log(interests)
+            let email = resultC.sub;
+            let header = $('#header').val();
+            let description = $('#description').val();
+            let minAgeLimit = $('#minAgeLimit').val();
+            let maxAgeLimit = $('#maxAgeLimit').val();
+            let maxMembers = $('#maxMembers').val();
+            let city = $('#city').val();
+            let owner = $('#owner').val();
+            let data = JSON.stringify({id: roomId, city: city, header:header, description: description, owner:owner, minAgeLimit: minAgeLimit,
+                maxAgeLimit: maxAgeLimit, maxMembers: maxMembers, interests: interests});
+            $.ajax({
+                type: "POST",
+                contentType: 'application/json',
+                url: "room/updateRoom",
+                data: data,
+                dataType: 'json',
+                complete: function (result) {
+                    console.log(result.responseText);
+                    if (result.responseText == "Room was updated") {
+                        //console.log(123);
+                        window.location.replace("/chats");
+                    } else {
+                        $('#result_msg').css("border", "1px solid red");
+                        $('#result_msg').html(result.responseText);
+                    }
+                }
+            })
+        })
+    });
+</script>
+</html>

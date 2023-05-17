@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>My Chats</title>
+    <title>Мои чаты</title>
     <meta charset="UTF-8">
     <meta name="description" content="">
     <meta name="author" content="templatemo">
@@ -30,13 +30,13 @@
     </div>
     <div class="header-menu">
         <ul class="menu-list" id="menuList">
-            <li class="list-item"><a href="/rooms">Rooms</a></li>
-            <li class="list-item"><a href="/chats" style="color: #74C69D;">Chats</a></li>
-            <li class="list-item"><a href="/profile">Profile</a></li>
+            <li class="list-item"><a href="/rooms">Комнаты</a></li>
+            <li class="list-item"><a href="/chats" style="color: #74C69D;">Чаты</a></li>
+            <li class="list-item"><a href="/profile">Профиль</a></li>
         </ul>
     </div>
     <div class="header-login">
-        <a class="header-login-link" href="/loginUser"><div class="header-login-button">LOGIN</div></a>
+        <a class="header-login-link" href="/loginUser"><div class="header-login-button">ВОЙТИ</div></a>
     </div>
     <div class="logo">
         <button class="menu menu-icon" onclick="this.classList.toggle('opened');this.setAttribute('aria-expanded', this.classList.contains('opened')); togglemenu()" aria-label="Main Menu">
@@ -56,7 +56,7 @@
         </div>
 
         <div class="chat-no-select">
-            <h2 style="font-weight: 500;font-size: 30px;line-height: 45px;color: #8D8D8D;">Choose a chat</h2>
+            <h2 style="font-weight: 500;font-size: 30px;line-height: 45px;color: #8D8D8D;">Выберите чат</h2>
         </div>
         <div class="chat-messages hidden">
             <div id="chat-page" class="">
@@ -82,7 +82,7 @@
                         <div class="chat-btn-settings chatMenuBtn"><i class="fa fa-cog fa-fw"></i></div>
                     </div>
                     <div class="connecting">
-                        Connecting...
+                        Подключение...
                     </div>
                     <ul id="messageArea" class="message-area">
                     </ul>
@@ -93,8 +93,8 @@
                                     <i class="fa fa-image"></i>
                                 </label>
                                 <input type="file" id="picture" style="display: none" accept="image/png, image/gif, image/jpeg" formenctype="multipart/form-data" name="file" onchange="changeAvatars()"/>
-                                <input type="text" id="message" placeholder="Type a message..." autocomplete="off" class="form-control"/>
-                                <button type="submit" class="primary">Send</button>
+                                <input type="text" id="message" placeholder="Написать сообщение..." autocomplete="off" class="form-control"/>
+                                <button type="submit" class="primary">Отправить</button>
                             </div>
                         </div>
                     </form>
@@ -106,26 +106,26 @@
                 <div class="chat-roommates">
                     <div class="chat-owner-block">
                         <div class="chat-owner-title">
-                            Owner - <span class="chat-owner-count">1</span>
+                            Владелец - <span class="chat-owner-count">1</span>
                         </div>
                         <div class="chat-owner">
                             <i style="background-color: rgb(195,201,208);">.</i>
-                            <span>Loading...</span>
+                            <span>Загрузка...</span>
                         </div>
                     </div>
                     <div class="chat-roommates-block">
                         <div class="chat-roommates-title">
-                            Roommates - <span class="chat-roommates-count">1</span>
+                            Соседи по комнате - <span class="chat-roommates-count">1</span>
                         </div>
                         <div class="chat-owner">
                             <i style="background-color: rgb(195,201,208);">.</i>
-                            <span>Loading...</span>
+                            <span>Загрузка...</span>
                         </div>
                     </div>
                 </div>
                 <div class="chat-settings">
                     <div class="chat-btn-settings chatMenuBtn"><i class="fas fa-arrow-right"></i></div>
-                    <div class="chat-btn-leave">Leave</div>
+                    <div class="chat-btn-leave">Выйти</div>
                 </div>
             </div>
         </div>
@@ -276,10 +276,10 @@
 
         if(message.type === 'JOIN') {
             messageElement.classList.add('event-message');
-            message.content = message.sender + ' joined!';
+            message.content = message.sender + ' присоединился!';
         } else if (message.type === 'LEAVE') {
             messageElement.classList.add('event-message');
-            message.content = message.sender + ' left!';
+            message.content = message.sender + ' вышел!';
         } else {
             messageElement.classList.add('chat-message');
 
@@ -326,7 +326,7 @@
             var link2 = document.createElement('a');
             link2.setAttribute('href', '#');
             link2.setAttribute('id', 'delete' + message.id);
-            link2.textContent = 'Delete';
+            link2.textContent = 'Удалить';
             liElement2.appendChild(link2);
 
             // Append the li elements to the ul element
@@ -371,7 +371,7 @@
             var deletedMessageElement = document.getElementById('message' + deletedMessageId);
             if (deletedMessageElement) {
                 var deletionTextElement = document.createElement('p');
-                var deletionMessageText = document.createTextNode('Message was deleted');
+                var deletionMessageText = document.createTextNode('Сообщение удалено');
                 deletionTextElement.appendChild(deletionMessageText);
                 deletedMessageElement.innerHTML = '';
                 deletedMessageElement.appendChild(deletionTextElement);
@@ -384,26 +384,26 @@
         var textElement = messageElement.getElementsByTagName('p')[0];
         var originalContent = textElement.textContent;
 
-            $.ajax({
-                type: 'GET',
-                headers: {'Authorization': getCookie("Authorization")},
-                contentType: 'application/json',
-                url: '/room/deleteMessage',
-                data: {'id': messageId},
-                dataType: 'json',
-                complete: function (result) {
-                    console.log(result.responseText);
-                    if (result.responseText !== 'Message not found') {
-                        textElement.textContent = 'Message was deleted';
+        $.ajax({
+            type: 'GET',
+            headers: {'Authorization': getCookie("Authorization")},
+            contentType: 'application/json',
+            url: '/room/deleteMessage',
+            data: {'id': messageId},
+            dataType: 'json',
+            complete: function (result) {
+                console.log(result.responseText);
+                if (result.responseText !== 'Message not found') {
+                    textElement.textContent = 'Сообщение удалено';
 
-                        // Send the deletion event to the server
-                        stompClient.send('/app/chat.deleteMessage/' + chatId, {}, JSON.stringify(messageId));
-                    }
-                },
-                error: function (e) {
-                    console.log(e);
+                    // Send the deletion event to the server
+                    stompClient.send('/app/chat.deleteMessage/' + chatId, {}, JSON.stringify(messageId));
                 }
-            });
+            },
+            error: function (e) {
+                console.log(e);
+            }
+        });
     }
 
     function getAvatarColor(messageSender) {
@@ -563,8 +563,8 @@
                                             avatarElement = "<img src='" + owner.profilePic + "'>";
                                         }
                                         html += "<div class=\"chat-owner-block\">\n" +
-                                        "<div class=\"chat-owner-title\">\n" +
-                                            "            Owner - <span class=\"chat-owner-count\">1</span>\n" +
+                                            "<div class=\"chat-owner-title\">\n" +
+                                            "            Владелец - <span class=\"chat-owner-count\">1</span>\n" +
                                             "        </div>\n" +
                                             "        <table class=\"profile-info-table chat-owner\"><tr><td>\n" +
                                             avatarElement +
@@ -574,7 +574,7 @@
                                     }
                                     html += "<div class=\"chat-roommates-block\">\n" +
                                         "        <div class=\"chat-roommates-title\">\n" +
-                                        "            Roommates - <span class=\"chat-roommates-count\">" + (item.users.length-ownerIsHere) + "</span>\n" +
+                                        "            Соседи по комнате - <span class=\"chat-roommates-count\">" + (item.users.length-ownerIsHere) + "</span>\n" +
                                         "        </div><table class=\"profile-info-table chat-owner\" \n";
 
                                     rooms_info.users.forEach((user, i) => {
@@ -589,7 +589,7 @@
                                                 "<td>" + user.first_name + ' ' + user.last_name + "</td>";
                                             if (rooms_info.owner === email) {
                                                 html += "<td><div class='alink' id=\"kick_" + user.id + "\">\n" +
-                                                    "&nbsp;kick</div></td>";
+                                                    "&nbsp;выгнать</div></td>";
                                             }
                                             html += "</tr>";
                                         }
@@ -623,14 +623,14 @@
                                     if (rooms_info.owner === email) {
                                         $('.chat-info').append("<div class=\"chat-settings\">\n" +
                                             "                <div class=\"chat-btn-settings chatMenuBtn\"><i class=\"fas fa-arrow-right\"></i></div>\n" +
-                                            "                <div class=\"chat-btn-leave\" id=\"leave" + item.id + "\">Leave</div>\n" +
-                                            "                <div class=\"chat-btn-edit\" id=\"edit" + item.id + "\">Edit Room</div>\n" +
-                                            "                <div class=\"chat-btn-delete\" id=\"delete" + item.id + "\">Delete Room</div>\n" +
+                                            "                <div class=\"chat-btn-leave\" id=\"leave" + item.id + "\">Выйти</div>\n" +
+                                            "                <div class=\"chat-btn-edit\" id=\"edit" + item.id + "\">Редактировать комнату</div>\n" +
+                                            "                <div class=\"chat-btn-delete\" id=\"delete" + item.id + "\">Удалить комнату</div>\n" +
                                             "            </div>");
                                     } else {
                                         $('.chat-info').append("<div class=\"chat-settings\">\n" +
                                             "                <div class=\"chat-btn-settings chatMenuBtn\"><i class=\"fas fa-arrow-right\"></i></div>\n" +
-                                            "                <div class=\"chat-btn-leave\" id=\"leave" + item.id + "\">Leave</div>\n" +
+                                            "                <div class=\"chat-btn-leave\" id=\"leave" + item.id + "\">Выйти</div>\n" +
                                             "            </div>");
                                     }
 
@@ -689,10 +689,10 @@
 
                                         if(message.type === 'JOIN') {
                                             messageElement.classList.add('event-message');
-                                            message.content = message.sender + ' joined!';
+                                            message.content = message.sender + ' присоединился!';
                                         } else if (message.type === 'LEAVE') {
                                             messageElement.classList.add('event-message');
-                                            message.content = message.sender + ' left!';
+                                            message.content = message.sender + ' вышел!';
                                         } else {
                                             messageElement.classList.add('chat-message');
 
@@ -740,7 +740,7 @@
                                             var link2 = document.createElement('a');
                                             link2.setAttribute('href', '#');
                                             link2.setAttribute('id', 'delete' + message.id);
-                                            link2.textContent = 'Delete';
+                                            link2.textContent = 'Удалить';
                                             liElement2.appendChild(link2);
 
                                             // Append the li elements to the ul element
@@ -777,38 +777,6 @@
                                             }
                                         });
                                     });
-
-                                    // $(document).on('click', '[id^="delete"]', function () {
-                                    //     console.log("its clicked");
-                                    //     var messageId = this.id.replace('delete', ''); // Get the message ID from the delete button ID
-                                    //     var messageElement = document.getElementById('message' + messageId);
-                                    //     var textElement = messageElement.getElementsByTagName('p')[0];
-                                    //     var originalContent = textElement.textContent;
-                                    //     var message = rooms_info.messages.find(m => m.id == messageId);
-                                    //     console.log(rooms_info);
-                                    //     console.log(messageId);
-                                    //     console.log(message);
-                                    //
-                                    //     if (message.senderId === user_info.id) {
-                                    //         $.ajax({
-                                    //             type: "GET",
-                                    //             headers: {'Authorization': myCookie},
-                                    //             contentType: 'application/json',
-                                    //             url: "/room/deleteMessage",
-                                    //             data: {"id": messageId},
-                                    //             dataType: 'json',
-                                    //             complete: function (result) {
-                                    //                 console.log(result.responseText);
-                                    //                 if (result.responseText !== "Message not found") {
-                                    //                     textElement.textContent = "Message was deleted";
-                                    //                 }
-                                    //             },
-                                    //             error: function (e) {
-                                    //                 console.log(e);
-                                    //             }
-                                    //         });
-                                    //     }
-                                    // });
                                 },
                                 error: function (e) {
                                     console.log(e);

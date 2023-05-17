@@ -44,7 +44,7 @@ public class WebController {
 
     @GetMapping("/chats")
     public String getChats() {
-        return "chat";
+        return "chat_kz";
     }
 
     @GetMapping("/updateUser")
@@ -54,17 +54,12 @@ public class WebController {
 
     @GetMapping("/createRoom")
     public String getCreateRoomPage() {
-        return "addroom";
+        return "addroom_en";
     }
 
     @GetMapping("/setInterests")
     public String setInterests() {
         return "interests";
-    }
-
-    @GetMapping("/chats/chatpage")
-    public String getChat() {
-        return "websocket";
     }
 
     @GetMapping("/rooms")

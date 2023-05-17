@@ -3,7 +3,7 @@
 <head>
     <link th:href="@{/css/main.css}" rel="stylesheet"  type="text/css">
     <meta charset="UTF-8">
-    <title>Rooms</title>
+    <title>Бөлмелер</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" href="/img/mini_logo.png" type="image/x-icon">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/3.2.1/css/font-awesome-ie7.css">
@@ -22,13 +22,13 @@
     </div>
     <div class="header-menu">
         <ul class="menu-list" id="menuList">
-            <li class="list-item"><a href="/rooms" style="color: #74C69D;">Rooms</a></li>
-            <li class="list-item"><a href="/chats">Chats</a></li>
-            <li class="list-item"><a href="/profile">Profile</a></li>
+            <li class="list-item"><a href="/rooms" style="color: #74C69D;">Бөлмелер</a></li>
+            <li class="list-item"><a href="/chats">Чаттар</a></li>
+            <li class="list-item"><a href="/profile">Профиль</a></li>
         </ul>
     </div>
     <div class="header-login">
-        <a class="header-login-link" href="/loginUser"><div class="header-login-button">LOGIN</div></a>
+        <a class="header-login-link" href="/loginUser"><div class="header-login-button">КІРУ</div></a>
     </div>
     <div class="logo">
         <button class="menu menu-icon" onclick="this.classList.toggle('opened');this.setAttribute('aria-expanded', this.classList.contains('opened')); togglemenu()" aria-label="Main Menu">
@@ -46,85 +46,110 @@
         <div class="content1" style="height: fit-content; flex-direction: column">
             <div class="input-field">
                 <div class="input-inner">
-                    <input id="header" type="text" placeholder="Search..." />
+                    <input id="header" type="text" placeholder="Іздеу..." />
                     <div class="icon-wrap">
                         <svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="35" height="35" viewBox="0 0 20 20">
                             <path d="M18.869 19.162l-5.943-6.484c1.339-1.401 2.075-3.233 2.075-5.178 0-2.003-0.78-3.887-2.197-5.303s-3.3-2.197-5.303-2.197-3.887 0.78-5.303 2.197-2.197 3.3-2.197 5.303 0.78 3.887 2.197 5.303 3.3 2.197 5.303 2.197c1.726 0 3.362-0.579 4.688-1.645l5.943 6.483c0.099 0.108 0.233 0.162 0.369 0.162 0.121 0 0.242-0.043 0.338-0.131 0.204-0.187 0.217-0.503 0.031-0.706zM1 7.5c0-3.584 2.916-6.5 6.5-6.5s6.5 2.916 6.5 6.5-2.916 6.5-6.5 6.5-6.5-2.916-6.5-6.5z"></path>
                         </svg>
                     </div>
                 </div>
-                <button class="btn-filter" id="filter">Filter</button>
+                <button class="btn-filter" id="filter">Сүзгі</button>
             </div>
+
             <div id="advance" class="advance-search">
-                <span class="desc">Advanced Search</span>
+                <span class="desc">Кеңейтілген іздеу</span>
                 <div class="row">
-                    <input type="number" id="minAgeLimit" class="fadeIn" placeholder="minimum age limit">
-                    <input type="number" id="maxAgeLimit" class="fadeIn" placeholder="maximum age limit">
-                    <input type="number" id="maxMembers" class="fadeIn" placeholder="maximum members">
-                    <select id="city" class="fadeIn third">
-                        <option value="">- city -</option>
-                        <option value="Astana">Astana</option>
-                        <option value="Almaty">Almaty</option>
-                        <option value="Shymkent">Shymkent</option>
-                        <option value="Aktobe">Aktobe</option>
-                        <option value="Karaganda">Karaganda</option>
-                        <option value="Atyrau">Atyrau</option>
-                        <option value="Taraz">Taraz</option>
-                        <option value="Pavlodar">Pavlodar</option>
-                        <option value="Semey">Semey</option>
-                        <option value="Ust-Kamenogorsk">Ust-Kamenogorsk</option>
-                        <option value="Kyzylorda">Kyzylorda</option>
-                        <option value="Uralsk">Uralsk</option>
-                        <option value="Kostanay">Kostanay</option>
-                        <option value="Petropavlsk">Petropavlsk</option>
-                        <option value="Taldykorgan">Taldykorgan</option>
-                        <option value="Kokshetau">Kokshetau</option>
+                    <input type="number" id="minAgeLimit" class="fadeIn third" placeholder="минималды жас шегі" min="18">
+                    <input type="number" id="maxAgeLimit" class="fadeIn third" placeholder="максималды жас шегі" min="19">
+                    <input type="number" id="maxMembers" class="fadeIn third" placeholder="максималды адам саны" min="2" max="20">
+                    <select name="login" id="city" class="fadeIn third">
+                        <option value="">- қала -</option>
+                        <option value="Astana">Астана</option>
+                        <option value="Almaty">Алматы</option>
+                        <option value="Shymkent">Шымкент</option>
+                        <option value="Aktobe">Ақтөбе</option>
+                        <option value="Karaganda">Қарағанды</option>
+                        <option value="Atyrau">Атырау</option>
+                        <option value="Taraz">Тараз</option>
+                        <option value="Pavlodar">Павлодар</option>
+                        <option value="Semey">Семей</option>
+                        <option value="Ust-Kamenogorsk">Өскемен</option>
+                        <option value="Kyzylorda">Қызылорда</option>
+                        <option value="Uralsk">Орал</option>
+                        <option value="Kostanay">Қостанай</option>
+                        <option value="Petropavlsk">Петропавл</option>
+                        <option value="Taldykorgan">Талдықорған</option>
+                        <option value="Kokshetau">Көкшетау</option>
                     </select>
                 </div>
 
                 <div class="row-interests">
-                    <span class="desc"> Choose interests: </span>
+                    <h2 style="color: #0d0d0d"> Қызығушылықтарды таңдаңыз: </h2>
                     <ul class="ks-cboxtags">
-                        <li><input type="checkbox" id="checkboxOne" value="Football"><label for="checkboxOne">Football</label></li>
-                        <li><input type="checkbox" id="checkboxTwo" value="Sport"><label for="checkboxTwo">Sport</label></li>
-                        <li><input type="checkbox" id="checkboxThree" value="Basketball"><label for="checkboxThree">Basketball</label></li>
-                        <li><input type="checkbox" id="checkboxFour" value="Books"><label for="checkboxFour">Books</label></li>
-                        <li><input type="checkbox" id="checkboxFive" value="Movies"><label for="checkboxFive">Movies</label></li>
-                        <li><input type="checkbox" id="checkboxSix" value="Painting"><label for="checkboxSix">Painting</label></li>
-                        <li><input type="checkbox" id="checkboxSeven" value="TableGames"><label for="checkboxSeven">Table Games</label></li>
-                        <li><input type="checkbox" id="checkboxEight" value="Music"><label for="checkboxEight">Music</label></li>
-                        <li><input type="checkbox" id="checkboxNine" value="Twitch"><label for="checkboxNine">Twitch</label></li>
-                        <li><input type="checkbox" id="checkboxTen" value="Netflix"><label for="checkboxTen">Netflix</label></li>
-                        <li><input type="checkbox" id="checkboxEleven" value="Politics"><label for="checkboxEleven">Politics</label></li>
-                        <li><input type="checkbox" id="checkboxTwelve" value="Tea"><label for="checkboxTwelve">Tea</label></li>
-                        <li><input type="checkbox" id="checkboxThirteen" value="Swimming"><label for="checkboxThirteen">Swimming</label></li>
-                        <li><input type="checkbox" id="checkboxFourteen" value="Beer"><label for="checkboxFourteen">Beer</label></li>
-                        <li><input type="checkbox" id="checkboxFifteen" value="Bicycling"><label for="checkboxFifteen">Bicycling</label></li>
-                        <li><input type="checkbox" id="checkbox16" value="TikTok"><label for="checkbox16">TikTok</label></li>
-                        <li><input type="checkbox" id="checkbox17" value="Museum"><label for="checkbox17">Museum</label></li>
-                        <li><input type="checkbox" id="checkbox18" value="Dance"><label for="checkbox18">Dance</label></li>
-                        <li><input type="checkbox" id="checkbox19" value="Cooking"><label for="checkbox19">Cooking</label></li>
-                        <li><input type="checkbox" id="checkbox20" value="Hockey"><label for="checkbox20">Hockey</label></li>
-                        <li><input type="checkbox" id="checkbox21" value="Manga"><label for="checkbox21">Manga</label></li>
-                        <li><input type="checkbox" id="checkbox22" value="MartialArts"><label for="checkbox22">Martial Arts</label></li>
-                        <li><input type="checkbox" id="checkbox23" value="Marvel"><label for="checkbox23">Marvel</label></li>
-                        <li><input type="checkbox" id="checkbox24" value="Running"><label for="checkbox24">Running</label></li>
-                        <li><input type="checkbox" id="checkbox25" value="Gym"><label for="checkbox25">Gym</label></li>
-                        <li><input type="checkbox" id="checkbox26" value="IceSkating"><label for="checkbox26">IceSkating</label></li>
-                        <li><input type="checkbox" id="checkbox27" value="Singing"><label for="checkbox27">Singing</label></li>
-                        <li><input type="checkbox" id="checkbox28" value="Karaoke"><label for="checkbox28">Karaoke</label></li>
-                        <li><input type="checkbox" id="checkbox29" value="Memes"><label for="checkbox29">Memes</label></li>
+                        <li><input type="checkbox" id="checkboxOne" value="Football"><label for="checkboxOne">Футбол</label></li>
+                        <li><input type="checkbox" id="checkboxTwo" value="Sport"><label for="checkboxTwo">Спорт</label></li>
+                        <li><input type="checkbox" id="checkboxThree" value="Basketball"><label for="checkboxThree">Баскетбол</label></li>
+                        <li><input type="checkbox" id="checkboxFour" value="Books"><label for="checkboxFour">Кітаптар</label></li>
+                        <li><input type="checkbox" id="checkboxFive" value="Movies"><label for="checkboxFive">Фильмдер</label></li>
+                        <li><input type="checkbox" id="checkboxSix" value="Painting"><label for="checkboxSix">Сурет салу</label></li>
+                        <li><input type="checkbox" id="checkboxSeven" value="TableGames"><label for="checkboxSeven">Үстел ойындары</label></li>
+                        <li><input type="checkbox" id="checkboxEight" value="Music"><label for="checkboxEight">Музыка</label></li>
+                        <li><input type="checkbox" id="checkboxNine" value="Twitch"><label for="checkboxNine">Твич</label></li>
+                        <li><input type="checkbox" id="checkboxTen" value="Netflix"><label for="checkboxTen">Нетфликс</label></li>
+                        <li><input type="checkbox" id="checkboxEleven" value="Politics"><label for="checkboxEleven">Саясат</label></li>
+                        <li><input type="checkbox" id="checkboxTwelve" value="Tea"><label for="checkboxTwelve">Шай</label></li>
+                        <li><input type="checkbox" id="checkboxThirteen" value="Swimming"><label for="checkboxThirteen">Жүзу</label></li>
+                        <li><input type="checkbox" id="checkboxFourteen" value="Beer"><label for="checkboxFourteen">Сыра</label></li>
+                        <li><input type="checkbox" id="checkboxFifteen" value="Bicycling"><label for="checkboxFifteen">Велосипед тебу</label></li>
+                        <li><input type="checkbox" id="checkbox16" value="TikTok"><label for="checkbox16">ТикТок</label></li>
+                        <li><input type="checkbox" id="checkbox17" value="Museum"><label for="checkbox17">Музей</label></li>
+                        <li><input type="checkbox" id="checkbox18" value="Dance"><label for="checkbox18">Билеу</label></li>
+                        <li><input type="checkbox" id="checkbox19" value="Cooking"><label for="checkbox19">Тамақ пісіру</label></li>
+                        <li><input type="checkbox" id="checkbox20" value="Hockey"><label for="checkbox20">Хоккей</label></li>
+                        <li><input type="checkbox" id="checkbox21" value="Manga"><label for="checkbox21">Манга</label></li>
+                        <li><input type="checkbox" id="checkbox22" value="MartialArts"><label for="checkbox22">Жекпе-жек өнері</label></li>
+                        <li><input type="checkbox" id="checkbox23" value="Marvel"><label for="checkbox23">Марвел</label></li>
+                        <li><input type="checkbox" id="checkbox24" value="Running"><label for="checkbox24">Жүгіру</label></li>
+                        <li><input type="checkbox" id="checkbox25" value="Gym"><label for="checkbox25">Спорт залы</label></li>
+                        <li><input type="checkbox" id="checkbox26" value="IceSkating"><label for="checkbox26">Коньки тебу</label></li>
+                        <li><input type="checkbox" id="checkbox27" value="Singing"><label for="checkbox27">Ән айту</label></li>
+                        <li><input type="checkbox" id="checkbox28" value="Karaoke"><label for="checkbox28">Караоке</label></li>
+                        <li><input type="checkbox" id="checkbox29" value="Memes"><label for="checkbox29">Мемдер</label></li>
                         <li><input type="checkbox" id="checkbox30" value="NFT"><label for="checkbox30">NFT</label></li>
-                        <li><input type="checkbox" id="checkbox31" value="Fishing"><label for="checkbox31">Fishing</label></li>
-                        <li><input type="checkbox" id="checkbox32" value="Investing"><label for="checkbox32">Investing</label></li>
-                        <li><input type="checkbox" id="checkbox33" value="Cosplay"><label for="checkbox33">Cosplay</label></li>
-                        <li><input type="checkbox" id="checkbox34" value="Bowling"><label for="checkbox34">Bowling</label></li>
+                        <li><input type="checkbox" id="checkbox31" value="Fishing"><label for="checkbox31">Балық аулау</label></li>
+                        <li><input type="checkbox" id="checkbox32" value="Investing"><label for="checkbox32">Инвестеулер</label></li>
+                        <li><input type="checkbox" id="checkbox33" value="Cosplay"><label for="checkbox33">Косплей</label></li>
+                        <li><input type="checkbox" id="checkbox34" value="Bowling"><label for="checkbox34">Боулинг</label></li>
+                        <li><input type="checkbox" id="checkbox35" value="Gardening"><label for="checkbox35">Бау-бақша</label></li>
+                        <li><input type="checkbox" id="checkbox36" value="Photography"><label for="checkbox36">Фотосуреттер</label></li>
+                        <li><input type="checkbox" id="checkbox37" value="Yoga"><label for="checkbox37">Йога</label></li>
+                        <li><input type="checkbox" id="checkbox38" value="Chess"><label for="checkbox38">Шахмат</label></li>
+                        <li><input type="checkbox" id="checkbox39" value="Travel"><label for="checkbox39">Саяхат</label></li>
+                        <li><input type="checkbox" id="checkbox40" value="Coding"><label for="checkbox40">Код жазу</label></li>
+                        <li><input type="checkbox" id="checkbox41" value="Guitar"><label for="checkbox41">Гитара</label></li>
+                        <li><input type="checkbox" id="checkbox42" value="Cats"><label for="checkbox42">Мысықтар</label></li>
+                        <li><input type="checkbox" id="checkbox43" value="Dogs"><label for="checkbox43">Иттер</label></li>
+                        <li><input type="checkbox" id="checkbox44" value="Hiking"><label for="checkbox44">Туризм</label></li>
+                        <li><input type="checkbox" id="checkbox45" value="Snowboarding"><label for="checkbox45">Сноуборд</label></li>
+                        <li><input type="checkbox" id="checkbox46" value="Fashion"><label for="checkbox46">Мода</label></li>
+                        <li><input type="checkbox" id="checkbox47" value="Camping"><label for="checkbox47">Кемпинг</label></li>
+                        <li><input type="checkbox" id="checkbox48" value="Writing"><label for="checkbox48">Жазу</label></li>
+                        <li><input type="checkbox" id="checkbox49" value="Surfing"><label for="checkbox49">Серфинг</label></li>
+                        <li><input type="checkbox" id="checkbox50" value="Skiing"><label for="checkbox50">Лыжа</label></li>
+                        <li><input type="checkbox" id="checkbox51" value="Reading"><label for="checkbox51">Оқу</label></li>
+                        <li><input type="checkbox" id="checkbox52" value="Piano"><label for="checkbox52">Пианино</label></li>
+                        <li><input type="checkbox" id="checkbox53" value="Coffee"><label for="checkbox53">Кофе</label></li>
+                        <li><input type="checkbox" id="checkbox54" value="Fitness"><label for="checkbox54">Фитнес</label></li>
+                        <li><input type="checkbox" id="checkbox55" value="Gaming"><label for="checkbox55">Ойын ойнау</label></li>
+                        <li><input type="checkbox" id="checkbox56" value="Nature"><label for="checkbox56">Табиғат</label></li>
+                        <li><input type="checkbox" id="checkbox57" value="Sims"><label for="checkbox57">Симс</label></li>
+                        <li><input type="checkbox" id="checkbox58" value="MakeUp"><label for="checkbox58">Макияж</label></li>
                     </ul>
                 </div>
 
                 <div class="row-buttons">
-                    <button id="search" class="btn-search">Search</button>
-                    <a href="/createRoom" class="link-portfolio">Create Room</a>
+                    <button id="search" class="btn-search">Іздеу</button>
+                    <a href="/createRoom" class="link-portfolio">Бөлме құру</a>
                 </div>
             </div>
 
@@ -142,18 +167,16 @@
     </div>
 </div>
 
-
 <div class="page_footer">
     <div class="footer-box">
         <div class="footer-col1">
-            &#169; 2023 All rights reserved
+            &#169; 2023 Барлық құқықтар қорғалған
         </div>
         <div class="footer-col3" >
-            <a href="/termsPolicy" >Terms and Conditions</a>
+            <a href="/termsPolicy" >Шарттар мен ережелер</a>
         </div>
     </div>
 </div>
-
 
 <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -192,6 +215,95 @@
 
         var index = Math.abs(hash % colors.length);
         return colors[index];
+    }
+
+    function getRussianCity(city) {
+        const kazakhTranslations = {
+            'Astana': 'Астана',
+            'Almaty': 'Алматы',
+            'Shymkent': 'Шымкент',
+            'Aktobe': 'Ақтөбе',
+            'Karaganda': 'Қарағанды',
+            'Atyrau': 'Атырау',
+            'Taraz': 'Тараз',
+            'Pavlodar': 'Павлодар',
+            'Semey': 'Семей',
+            'Ust-Kamenogorsk': 'Өскемен',
+            'Kyzylorda': 'Қызылорда',
+            'Uralsk': 'Орал',
+            'Kostanay': 'Қостанай',
+            'Petropavlsk': 'Петропавл',
+            'Taldykorgan': 'Талдықорған',
+            'Kokshetau': 'Көкшетау',
+            // Add more translations as needed
+        };
+
+        return kazakhTranslations[city] || city;
+    }
+
+    function getRussianLanguage(interest) {
+        const russianTranslations = {
+            'Football': 'Футбол',
+            'Sport': 'Спорт',
+            'Basketball': 'Баскетбол',
+            'Books': 'Кітаптар',
+            'Movies': 'Фильмдер',
+            'Painting': 'Сурет салу',
+            'TableGames': 'Үстел ойындары',
+            'Music': 'Музыка',
+            'Twitch': 'Твич',
+            'Netflix': 'Нетфликс',
+            'Politics': 'Саясат',
+            'Tea': 'Шай',
+            'Swimming': 'Жүзу',
+            'Beer': 'Сыра',
+            'Bicycling': 'Велосипед тебу',
+            'TikTok': 'ТикТок',
+            'Museum': 'Музей',
+            'Dance': 'Билеу',
+            'Cooking': 'Тамақ пісіру',
+            'Hockey': 'Хоккей',
+            'Manga': 'Манга',
+            'MartialArts': 'Жекпе-жек өнері',
+            'Marvel': 'Марвел',
+            'Running': 'Жүгіру',
+            'Gym': 'Спорт залы',
+            'IceSkating': 'Коньки тебу',
+            'Singing': 'Ән айту',
+            'Karaoke': 'Караоке',
+            'Memes': 'Мемдер',
+            'NFT': 'NFT',
+            'Fishing': 'Балық аулау',
+            'Investing': 'Инвестеулер',
+            'Cosplay': 'Косплей',
+            'Bowling': 'Боулинг',
+            'Gardening': 'Бау-бақша',
+            'Photography': 'Фотосуреттер',
+            'Yoga': 'Йога',
+            'Chess': 'Шахмат',
+            'Travel': 'Саяхат',
+            'Coding': 'Код жазу',
+            'Guitar': 'Гитара',
+            'Cats': 'Мысықтар',
+            'Dogs': 'Иттер',
+            'Hiking': 'Туризм',
+            'Snowboarding': 'Сноуборд',
+            'Fashion': 'Мода',
+            'Camping': 'Кемпинг',
+            'Writing': 'Жазу',
+            'Surfing': 'Серфинг',
+            'Skiing': 'Лыжа',
+            'Reading': 'Оқу',
+            'Piano': 'Пианино',
+            'Coffee': 'Кофе',
+            'Fitness': 'Фитнес',
+            'Gaming': 'Ойын ойнау',
+            'Nature': 'Табиғат',
+            'Sims': 'Симс',
+            'MakeUp': 'Макияж',
+        };
+
+        return russianTranslations[interest] || interest;
     }
 
     function parseJwt(token) {
@@ -275,7 +387,7 @@
                 success: function (result) {
                     console.log(result);
                     $('#rec').show();
-                    $('#rec').append("<legend>Recommended Rooms</legend>");
+                    $('#rec').append("<legend>Ұсынылатын бөлмелер</legend>");
                     result.forEach((item, i) => {
                         console.log(item.users);
                         let count = item.users.length;
@@ -290,8 +402,8 @@
                             });
 
                             html += userExists
-                                ? "<a style='text-decoration: none' href='/chats'><div class=\"room-button\">Open</div></a>"
-                                : "<div class=\"room-button\" id=\"join" + item.id + "\">Join</div>";
+                                ? "<a style='text-decoration: none' href='/chats'><div class=\"room-button\">Ашу</div></a>"
+                                : "<div class=\"room-button\" id=\"join" + item.id + "\">Қосылу</div>";
 
                             $('#rec').append(
                                 "<div class=\"room\" style=\"outline: 5px solid " + getAvatarColor(item.header) + ";\">\n" +
@@ -300,11 +412,11 @@
                                 "                            <div class=\"profile-room-info\" id=\"messages"+item.id+"\" style='color: #2a6496'>\n" +
                                 "                            </div>\n" +
                                 "                            <div class=\"profile-room-info\">\n" +
-                                "                                <p>Description: " + item.description + "</p>\n" +
+                                "                                <p>Сипаттама: " + item.description + "</p>\n" +
                                 "                            </div>\n" +
                                 "                            <div class=\"profile-room-info\">\n" +
-                                "                                <p>Age range: " + item.minAgeLimit + "-" + item.maxAgeLimit + "</p>\n" +
-                                "                                <p>City: " + item.city + "</p>\n" +
+                                "                                <p>Жас аралығы: " + item.minAgeLimit + "-" + item.maxAgeLimit + "</p>\n" +
+                                "                                <p>Қала: " + getRussianCity(item.city) + "</p>\n" +
                                 "                            </div>\n" +
                                 "                            <div class=\"room-interests\" id=\"roomInterests" + item.id + "\">\n" +
                                 "                            </div>\n" +
@@ -319,12 +431,12 @@
 
                             var userInterests = user_info.interests;
                             var roomInterests = item.interests;
-                            $('#roomInterests' + item.id).append("Interests:&nbsp;");
+                            $('#roomInterests' + item.id).append("Қызығушылықтар:&nbsp;");
                             for (var i = 0; i < roomInterests.length; i++) {
                                 var roomInterest = roomInterests[i];
                                 var matched = userInterests.includes(roomInterest);
                                 var interestClass = matched ? 'matched-interest' : '';
-                                var interestHtml = '<div class="profile-room-interest ' + interestClass + '">' + roomInterest + '</div>';
+                                var interestHtml = '<div class="profile-room-interest ' + interestClass + '">' + getRussianLanguage(roomInterest) + '</div>';
                                 $('#roomInterests' + item.id).append(interestHtml);
                             }
 
@@ -390,7 +502,7 @@
                     success: function (result) {
                         console.log(result);
                         $('#about').show();
-                        $('#about').append("<legend>Search result</legend>");
+                        $('#about').append("<legend>Результат поиска</legend>");
                         result.forEach((item, i) => {
                             console.log(item.users);
                             let count = item.users.length;
@@ -404,41 +516,41 @@
                                 });
 
                                 html += userExists
-                                    ? "<a style='text-decoration: none' href='/chats'><div class=\"room-button\">Open</div></a>"
-                                    : "<div class=\"room-button\" id=\"join" + item.id + "\">Join</div>";
+                                    ? "<a style='text-decoration: none' href='/chats'><div class=\"room-button\">Ашу</div></a>"
+                                    : "<div class=\"room-button\" id=\"join" + item.id + "\">Қосылу</div>";
 
-                                $('#about').append(
-                                    "<div class=\"room\">\n" +
+                                $('#rec').append(
+                                    "<div class=\"room\" style=\"outline: 5px solid " + getAvatarColor(item.header) + ";\">\n" +
                                     "                        <div class=\"profile-room-head\">\n" +
                                     "                            <h3 class=\"profile-room-title\">" + item.header + "</h3>\n" +
                                     "                            <div class=\"profile-room-info\" id=\"messages"+item.id+"\" style='color: #2a6496'>\n" +
                                     "                            </div>\n" +
                                     "                            <div class=\"profile-room-info\">\n" +
-                                    "                                <p>Description: " + item.description + "</p>\n" +
+                                    "                                <p>Сипаттама: " + item.description + "</p>\n" +
                                     "                            </div>\n" +
                                     "                            <div class=\"profile-room-info\">\n" +
-                                    "                                <p>Age range: " + item.minAgeLimit + "-" + item.maxAgeLimit + "</p>\n" +
-                                    "                                <p>City: " + item.city + "</p>\n" +
+                                    "                                <p>Жас аралығы: " + item.minAgeLimit + "-" + item.maxAgeLimit + "</p>\n" +
+                                    "                                <p>Қала: " + getRussianCity(item.city) + "</p>\n" +
                                     "                            </div>\n" +
                                     "                            <div class=\"room-interests\" id=\"roomInterests" + item.id + "\">\n" +
                                     "                            </div>\n" +
                                     "                        </div>\n" +
                                     "                        <div class=\"room-buttons\">\n" +
                                     "                            <div class=\"profile-room-count\">\n" +
-                                    "                                <i class=\"svg-icon fas fa-user-circle\" style=\"margin-right: 5px\"></i> " + count + '/' + item.maxMembers + "\n" +
-                                    "                            </div>\n" + html +
+                                    "                                <i class=\"svg-icon fas fa-user-circle\" style=\"margin-right: 5px\"></i> " + count + '/' + item.maxMembers + "\n" + html +
+                                    "                            </div>\n" +
                                     "                        </div>\n" +
                                     "                    </div>"
-                                    );
+                                );
 
                                 var userInterests = user_info.interests;
                                 var roomInterests = item.interests;
-                                $('#roomInterests' + item.id).append("Interests:&nbsp;");
+                                $('#roomInterests' + item.id).append("Қызығушылықтар:&nbsp;");
                                 for (var i = 0; i < roomInterests.length; i++) {
                                     var roomInterest = roomInterests[i];
                                     var matched = userInterests.includes(roomInterest);
                                     var interestClass = matched ? 'matched-interest' : '';
-                                    var interestHtml = '<div class="profile-room-interest ' + interestClass + '">' + roomInterest + '</div>';
+                                    var interestHtml = '<div class="profile-room-interest ' + interestClass + '">' + getRussianLanguage(roomInterest) + '</div>';
                                     $('#roomInterests' + item.id).append(interestHtml);
                                 }
 

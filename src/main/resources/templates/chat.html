@@ -224,19 +224,6 @@
         connectingElement.style.color = 'red';
     }
 
-    function getBase64(file) {
-        let reader = new FileReader();
-        reader.readAsDataURL(file);
-        reader.onload = function () {
-            let myCookie = getCookie("Authorization");
-            let resultC = parseJwt(myCookie);
-            let email = resultC.sub;
-        }
-        reader.onerror = function (error) {
-            console.log("Error: " + error);
-        }
-    }
-
     function sendImage(event) {
         let file = document.getElementById('picture').files[0];
         let reader = new FileReader();
@@ -292,7 +279,7 @@
             message.content = message.sender + ' joined!';
         } else if (message.type === 'LEAVE') {
             messageElement.classList.add('event-message');
-            message.content = message.sender + ' left!';PICTURE
+            message.content = message.sender + ' left!';
         } else {
             messageElement.classList.add('chat-message');
 
@@ -765,14 +752,14 @@
                                             messageElement.appendChild(menuDrop);
                                         }
                                         var textElement = document.createElement('p');
-                                        if (message.type === 'CHAT') {
-                                            var messageText = document.createTextNode(message.content);
-                                            textElement.appendChild(messageText);
-                                        } else if (message.type === 'PICTURE') {
+                                        if (message.type === 'PICTURE') {
                                             var imageElement = document.createElement('img');
                                             imageElement.src = message.content;
                                             imageElement.style.maxWidth = '90%';
                                             textElement.appendChild(imageElement);
+                                        } else {
+                                            var messageText = document.createTextNode(message.content);
+                                            textElement.appendChild(messageText);
                                         }
 
                                         messageElement.appendChild(textElement);

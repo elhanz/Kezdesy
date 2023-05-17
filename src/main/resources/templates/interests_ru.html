@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org/">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="/img/mini_logo.png" type="image/x-icon">
+    <link th:href="@{/css/login.css}" rel="stylesheet"  type="text/css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" crossorigin="anonymous">
+    <title>Интересы</title>
+</head>
+<body>
+<div class="wrapper fadeInDown">
+    <div id="formContent">
+        <h2 class="active"> Выберите интересы: </h2>
+
+        <div id="result_msg"></div>
+
+        <div class="fadeIn third">
+            <ul class="ks-cboxtags">
+                <li><input type="checkbox" id="checkboxOne" value="Football"><label for="checkboxOne">Футбол</label></li>
+                <li><input type="checkbox" id="checkboxTwo" value="Sport"><label for="checkboxTwo">Спорт</label></li>
+                <li><input type="checkbox" id="checkboxThree" value="Basketball"><label for="checkboxThree">Баскетбол</label></li>
+                <li><input type="checkbox" id="checkboxFour" value="Books"><label for="checkboxFour">Книги</label></li>
+                <li><input type="checkbox" id="checkboxFive" value="Movies"><label for="checkboxFive">Фильмы</label></li>
+                <li><input type="checkbox" id="checkboxSix" value="Painting"><label for="checkboxSix">Живопись</label></li>
+                <li><input type="checkbox" id="checkboxSeven" value="TableGames"><label for="checkboxSeven">Настольные игры</label></li>
+                <li><input type="checkbox" id="checkboxEight" value="Music"><label for="checkboxEight">Музыка</label></li>
+                <li><input type="checkbox" id="checkboxNine" value="Twitch"><label for="checkboxNine">Твич</label></li>
+                <li><input type="checkbox" id="checkboxTen" value="Netflix"><label for="checkboxTen">Нетфликс</label></li>
+                <li><input type="checkbox" id="checkboxEleven" value="Politics"><label for="checkboxEleven">Политика</label></li>
+                <li><input type="checkbox" id="checkboxTwelve" value="Tea"><label for="checkboxTwelve">Чай</label></li>
+                <li><input type="checkbox" id="checkboxThirteen" value="Swimming"><label for="checkboxThirteen">Плавание</label></li>
+                <li><input type="checkbox" id="checkboxFourteen" value="Beer"><label for="checkboxFourteen">Пиво</label></li>
+                <li><input type="checkbox" id="checkboxFifteen" value="Bicycling"><label for="checkboxFifteen">Катание на велосипеде</label></li>
+                <li><input type="checkbox" id="checkbox16" value="TikTok"><label for="checkbox16">ТикТок</label></li>
+                <li><input type="checkbox" id="checkbox17" value="Museum"><label for="checkbox17">Музей</label></li>
+                <li><input type="checkbox" id="checkbox18" value="Dance"><label for="checkbox18">Танцы</label></li>
+                <li><input type="checkbox" id="checkbox19" value="Cooking"><label for="checkbox19">Готовка</label></li>
+                <li><input type="checkbox" id="checkbox20" value="Hockey"><label for="checkbox20">Хоккей</label></li>
+                <li><input type="checkbox" id="checkbox21" value="Manga"><label for="checkbox21">Манга</label></li>
+                <li><input type="checkbox" id="checkbox22" value="MartialArts"><label for="checkbox22">Боевые исскуства</label></li>
+                <li><input type="checkbox" id="checkbox23" value="Marvel"><label for="checkbox23">Марвел</label></li>
+                <li><input type="checkbox" id="checkbox24" value="Running"><label for="checkbox24">Бег</label></li>
+                <li><input type="checkbox" id="checkbox25" value="Gym"><label for="checkbox25">Спортзал</label></li>
+                <li><input type="checkbox" id="checkbox26" value="IceSkating"><label for="checkbox26">Коньки</label></li>
+                <li><input type="checkbox" id="checkbox27" value="Singing"><label for="checkbox27">Пение</label></li>
+                <li><input type="checkbox" id="checkbox28" value="Karaoke"><label for="checkbox28">Караоке</label></li>
+                <li><input type="checkbox" id="checkbox29" value="Memes"><label for="checkbox29">Мемы</label></li>
+                <li><input type="checkbox" id="checkbox30" value="NFT"><label for="checkbox30">NFT</label></li>
+                <li><input type="checkbox" id="checkbox31" value="Fishing"><label for="checkbox31">Рыбалка</label></li>
+                <li><input type="checkbox" id="checkbox32" value="Investing"><label for="checkbox32">Инвестиции</label></li>
+                <li><input type="checkbox" id="checkbox33" value="Cosplay"><label for="checkbox33">Косплей</label></li>
+                <li><input type="checkbox" id="checkbox34" value="Bowling"><label for="checkbox34">Боулинг</label></li>
+                <li><input type="checkbox" id="checkbox35" value="Gardening"><label for="checkbox35">Садоводство</label></li>
+                <li><input type="checkbox" id="checkbox36" value="Photography"><label for="checkbox36">Фотографий</label></li>
+                <li><input type="checkbox" id="checkbox37" value="Yoga"><label for="checkbox37">Йога</label></li>
+                <li><input type="checkbox" id="checkbox38" value="Chess"><label for="checkbox38">Шахмат</label></li>
+                <li><input type="checkbox" id="checkbox39" value="Travel"><label for="checkbox39">Путешествие</label></li>
+                <li><input type="checkbox" id="checkbox40" value="Coding"><label for="checkbox40">Кодинг</label></li>
+                <li><input type="checkbox" id="checkbox41" value="Guitar"><label for="checkbox41">Гитара</label></li>
+                <li><input type="checkbox" id="checkbox42" value="Cats"><label for="checkbox42">Коты</label></li>
+                <li><input type="checkbox" id="checkbox43" value="Dogs"><label for="checkbox43">Собаки</label></li>
+                <li><input type="checkbox" id="checkbox44" value="Hiking"><label for="checkbox44">Туризм</label></li>
+                <li><input type="checkbox" id="checkbox45" value="Snowboarding"><label for="checkbox45">Сноуборд</label></li>
+                <li><input type="checkbox" id="checkbox46" value="Fashion"><label for="checkbox46">Мода</label></li>
+                <li><input type="checkbox" id="checkbox47" value="Camping"><label for="checkbox47">Кемпинг</label></li>
+                <li><input type="checkbox" id="checkbox48" value="Writing"><label for="checkbox48">Писательство</label></li>
+                <li><input type="checkbox" id="checkbox49" value="Surfing"><label for="checkbox49">Серфинг</label></li>
+                <li><input type="checkbox" id="checkbox50" value="Skiing"><label for="checkbox50">Лыжы</label></li>
+                <li><input type="checkbox" id="checkbox51" value="Reading"><label for="checkbox51">Чтение</label></li>
+                <li><input type="checkbox" id="checkbox52" value="Piano"><label for="checkbox52">Пианино</label></li>
+                <li><input type="checkbox" id="checkbox53" value="Coffee"><label for="checkbox53">Кофе</label></li>
+                <li><input type="checkbox" id="checkbox54" value="Fitness"><label for="checkbox54">Фитнес</label></li>
+                <li><input type="checkbox" id="checkbox55" value="Gaming"><label for="checkbox55">Игы</label></li>
+                <li><input type="checkbox" id="checkbox56" value="Nature"><label for="checkbox56">Природа</label></li>
+                <li><input type="checkbox" id="checkbox57" value="Sims"><label for="checkbox57">Симс</label></li>
+                <li><input type="checkbox" id="checkbox58" value="MakeUp"><label for="checkbox58">Макияж</label></li>
+            </ul>
+        </div>
+        <button type="submit" id="registrationButton" class="button fadeIn fourth">Сохранить</button>
+
+    </div>
+</div>
+</body>
+
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script type="text/javascript">
+
+    if (getCookie("Authorization") == null) {
+        window.location.replace("/loginUser");
+    }
+
+    function parseJwt(token) {
+        let base64Url = token.split('.')[1];
+        let base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+        let jsonPayload = decodeURIComponent(atob(base64).split('').map(function (c) {
+            return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+        }).join(''));
+
+        return JSON.parse(jsonPayload);
+    }
+
+    function getCookie(name) {
+        const value = `; ${document.cookie}`;
+        const parts = value.split(`; ${name}=`);
+        if (parts.length === 2) return parts.pop().split(';').shift();
+    }
+
+    $(document).ready(function () {
+            let myCookie = getCookie("Authorization");
+            let resultC = parseJwt(myCookie);
+            let email = resultC.sub;
+            var interests = [];
+
+            if (getCookie("Authorization") != null) {
+                let resultC = parseJwt(myCookie);
+                let email = resultC.sub;
+
+                $.ajax({
+                    type: "GET",
+                    headers: {'Authorization': myCookie},
+                    contentType: 'application/json',
+                    url: "getUser",
+                    data: {email: email},
+                    dataType: 'json',
+                    success: function (result) {
+                        user_info = result;
+                        if (result.interests !== null) {
+                            interests = result.interests;
+
+                            // Loop through the checkboxes and check the ones that match the interests
+                            $('.ks-cboxtags input[type=checkbox]').each(function() {
+                                if (interests.indexOf($(this).val()) !== -1) {
+                                    $(this).prop('checked', true);
+                                }
+                            });
+                        }
+
+                    },
+                    error: function (e) {
+                        console.log("ERROR: ", e);
+                        window.location.replace("/loginUser");
+                    }
+                });
+            } else {
+                window.location.replace("/loginUser");
+            }
+
+
+            $("input:checkbox").change(function() {
+                if($(this).is(":checked")) {
+                    interests.push(this.value);
+                    console.log(this.value + " added");
+                } else {
+                    let pos = interests.indexOf(this);
+                    interests.splice(pos, 1);
+                    console.log("not added");
+                }
+            });
+
+            $('#registrationButton').on('click', function () {
+                let data = JSON.stringify({email:email, interests: interests});
+                if (interests.length > 2) {
+                    $.ajax({
+                        type: "POST",
+                        contentType: 'application/json',
+                        url: "setInterests",
+                        data: data,
+                        dataType: 'json',
+                        complete: function (result) {
+                            console.log(result.responseText);
+                            if (result.responseText == "Interests were set") {
+                                //console.log(123);
+                                window.location.replace("/profile");
+                            } else {
+                                $('#result_msg').css("border", "1px solid red")
+                                $('#result_msg').html(result.responseText);
+                            }
+                        }
+                    })
+                }
+                else {
+                    $('#result_msg').css("border", "1px solid red");
+                    $('#result_msg').html("Please select at least 3 interests");
+                }
+
+            })
+
+        }
+    );
+</script>
+</html>
