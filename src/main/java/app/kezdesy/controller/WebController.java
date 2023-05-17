@@ -3,8 +3,15 @@ package app.kezdesy.controller;
 
 import app.kezdesy.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.support.RequestContextUtils;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.util.Locale;
 
 
 @Controller
@@ -13,7 +20,19 @@ public class WebController {
     @Autowired
     private UserRepository userRepository;
 
-
+//    @GetMapping("/")
+//    public String getHomePage(@RequestParam("lang") String language) {
+//
+//        if (language.equals("kz")) {
+//            return "redirect:/index_kz.html";
+//        } else if (language.equals("en")) {
+//            return "redirect:/index_en.html";
+//        } else {
+//            return "redirect:/index_ru.html";
+//        }
+//
+//    }
+//
     @GetMapping("/auth")
     public String getPage() {
         return "register";
