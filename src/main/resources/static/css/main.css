@@ -1505,6 +1505,9 @@ ul.ks-cboxtags li input[type="checkbox"]:focus + label {
         width: 90vw;
     }
 
+    .rec-fieldset legend {
+        font-size: 20px;
+    }
     .profile-interests-blocks {
         width: 75vw;
     }
