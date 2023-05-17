@@ -3,14 +3,14 @@ package app.kezdesy.controller;
 import app.kezdesy.entity.Message;
 import app.kezdesy.entity.Room;
 import app.kezdesy.entity.User;
-import app.kezdesy.model.EmailRoomId;
-import app.kezdesy.model.RoomMessage;
+import app.kezdesy.model.EmailRoomIdRequest;
+import app.kezdesy.model.RoomMessageRequest;
 import app.kezdesy.model.RoomRequest;
+import app.kezdesy.model.UpdateRoomRequest;
 import app.kezdesy.repository.RoomRepository;
 import app.kezdesy.service.implementation.RoomServiceImpl;
 import app.kezdesy.service.implementation.UserServiceImpl;
 import app.kezdesy.validation.RoomValidation;
-import app.kezdesy.validation.UserValidation;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -83,10 +83,10 @@ public class RoomController {
     }
 
     @PostMapping("/kickUser")
-    public ResponseEntity kickUser(@RequestBody EmailRoomId emailRoomId) {
-        User user = userService.getUserByEmail(emailRoomId.getEmail());
+    public ResponseEntity kickUser(@RequestBody EmailRoomIdRequest emailRoomIdRequest) {
+        User user = userService.getUserByEmail(emailRoomIdRequest.getEmail());
 
-        if (user != null || roomService.kickUser(user, emailRoomId.getRoomId())) {
+        if (user != null || roomService.kickUser(user, emailRoomIdRequest.getRoomId())) {
             return ResponseEntity.ok(user.getFirst_name() + " " + user.getLast_name() + " left!");
 
         }
@@ -108,12 +108,12 @@ public class RoomController {
 
 
     @PostMapping("/updateMessage")
-    public ResponseEntity UpdateMessage(@RequestBody RoomMessage roomMessage) {
+    public ResponseEntity UpdateMessage(@RequestBody RoomMessageRequest roomMessageRequest) {
 
-        if (roomMessage.getContent() == null) {
+        if (roomMessageRequest.getContent() == null) {
             return ResponseEntity.badRequest().body("Fill the message");
         }
-        if (roomService.updateMessage(roomMessage)) {
+        if (roomService.updateMessage(roomMessageRequest)) {
 
             return ResponseEntity.ok("Message was updated");
         }
@@ -121,11 +121,41 @@ public class RoomController {
 
     }
 
+    @PostMapping("/updateRoom")
+    public ResponseEntity updateRoom(@RequestBody UpdateRoomRequest updateRoomRequest) {
+
+        if (!roomValidation.isAgeLimitCorrect(updateRoomRequest.getMinAgeLimit(), updateRoomRequest.getMaxAgeLimit())) {
+            return ResponseEntity.badRequest().body("Incorrect age limits.");
+        }
+        if (!roomValidation.isHeaderCorrect(updateRoomRequest.getHeader().length())) {
+            return ResponseEntity.badRequest().body("Header text limit is 3 - 200 chars.");
+        }
+        if (updateRoomRequest.getDescription() != null && !roomValidation.isDescriptionCorrect(updateRoomRequest.getDescription().length())) {
+            return ResponseEntity.badRequest().body("Description text limit is 600 chars.");
+        }
+        if (!roomValidation.isMaxMembersCorrect(updateRoomRequest.getMaxMembers())) {
+            return ResponseEntity.badRequest().body("Max members of the room is 1-20.");
+        }
+        if (updateRoomRequest.getInterests().isEmpty()) {
+            return ResponseEntity.badRequest().body("Room must contain at least 1 interest.");
+        }
+
+        roomService.updateRoom(updateRoomRequest);
+
+        return ResponseEntity.ok().body("Room was updated");
+    }
+
+    @GetMapping("/deleteRoom")
+    public ResponseEntity deleteRoom(@RequestParam Long id) {
+
+        roomService.deleteRoom(id);
+        return ResponseEntity.ok("Room was deleted");
+    }
 
     @PostMapping("/join")
-    public ResponseEntity joinRoom(@RequestBody EmailRoomId emailRoomId) {
+    public ResponseEntity joinRoom(@RequestBody EmailRoomIdRequest emailRoomIdRequest) {
 
-        if (roomService.joinRoom(emailRoomId)) {
+        if (roomService.joinRoom(emailRoomIdRequest)) {
             return ResponseEntity.ok().body("User was added to room.");
         }
         return ResponseEntity.badRequest().body("User is already in room");

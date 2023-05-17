@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface IUserService {
 
-    User createUser (User user);
+    User createUser(User user);
 
     User getUserByEmail(String email);
     User findById(Long id);

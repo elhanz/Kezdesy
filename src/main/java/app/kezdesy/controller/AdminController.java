@@ -2,7 +2,6 @@ package app.kezdesy.controller;
 
 import app.kezdesy.entity.User;
 import app.kezdesy.service.implementation.AdminServiceImpl;
-import app.kezdesy.service.implementation.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,7 +16,7 @@ public class AdminController {
     private AdminServiceImpl adminService;
 
     @GetMapping("/allUsers")
-    public List<User> getAllUsers(){
+    public List<User> getAllUsers() {
         return adminService.getAllUsers();
     }
 

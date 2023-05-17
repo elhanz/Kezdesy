@@ -1,6 +1,5 @@
 package app.kezdesy.entity;
 
-import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -50,7 +49,8 @@ public class Message {
     public enum MessageType {
         CHAT,
         JOIN,
-        LEAVE
+        LEAVE,
+        PICTURE
     }
 
 }

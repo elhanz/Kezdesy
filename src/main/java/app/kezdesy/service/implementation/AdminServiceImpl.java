@@ -27,7 +27,7 @@ public class AdminServiceImpl implements IAdminService {
     @Override
     public boolean addRoleToUser(String email, String roleName) {
         User user = userRepository.findByEmail(email);
-        if (user == null || roleRepo.findByName(roleName) == null ) return false;
+        if (user == null || roleRepo.findByName(roleName) == null) return false;
         user.getRoles().add(roleRepo.findByName(roleName));
         userRepository.save(user);
         return true;

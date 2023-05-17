@@ -19,5 +19,4 @@ public interface TokenRepository extends JpaRepository<VerificationToken, Long> 
     VerificationToken findByUserId(@Param("userId") Long userId);
 
 
-
 }

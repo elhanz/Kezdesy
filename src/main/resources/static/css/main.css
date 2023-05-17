@@ -887,6 +887,7 @@ ul.ks-cboxtags li input[type="checkbox"]:focus + label {
 
 .chats-container {
     display: flex;
+    margin-left: 25vw;
 }
 
 .chats-block {
@@ -967,11 +968,23 @@ ul.ks-cboxtags li input[type="checkbox"]:focus + label {
 
 .chat-menu {
     position: fixed;
-    top: 0;
-    right: -15vw;
+    right: 0;
     height: 100%;
     background-color: #fff;
     transition: right 0.3s ease-in-out;
+}
+
+.chats-list {
+    position: fixed;
+    left: 0;
+    z-index: 3;
+    height: 100%;
+    background-color: #fff;
+    transition: left 0.3s ease-in-out;
+}
+
+.chats-list-hidden {
+    left: -100%;
 }
 
 .chat-menu-hidden {
@@ -1063,9 +1076,7 @@ ul.ks-cboxtags li input[type="checkbox"]:focus + label {
 }
 
 .chat-btn-settings {
-    display: flex;
-    background: #FFFFFF;
-    border: 1px solid #d0d0d0;
+    display: none;
     align-items: center;
     justify-content: center;
     width: fit-content;
@@ -1256,6 +1267,11 @@ ul.ks-cboxtags li input[type="checkbox"]:focus + label {
 }
 
 @media only screen and (max-width: 1000px) {
+
+    .chat-btn-settings {
+        display: flex;
+    }
+
     .container-second-right, .container-first-left {
         padding: 10vh 0;
     }
@@ -1278,6 +1294,26 @@ ul.ks-cboxtags li input[type="checkbox"]:focus + label {
 
     .container-first-left .header-login-button, .container-second-right .header-login-button {
         font-size: 12px;
+    }
+
+    .chat-messages {
+        width: 100vw;
+    }
+
+    .chat-no-select {
+        margin-left: 25vw;
+    }
+
+    .chat-info {
+        width: auto;
+    }
+
+    .chats-block {
+        width: auto;
+    }
+
+    .chats-container {
+        margin-left: 0;
     }
 
     .room {

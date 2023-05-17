@@ -17,7 +17,6 @@ public class RoomValidation {
     }
 
 
-
     public boolean isAgeLimitCorrect(int minAge, int maxAge) {
         return maxAge >= minAge || maxAge <= 110 || maxAge >= 18 || minAge <= 110 || minAge >= 18;
     }

@@ -19,19 +19,19 @@ public class RoomFindController {
     private final RoomServiceImpl roomService;
 
     @GetMapping("/getAllRooms")
-    public ResponseEntity<List<Room>> getAllRooms(){
+    public ResponseEntity<List<Room>> getAllRooms() {
         return new ResponseEntity<List<Room>>(roomService.getAllRooms(), HttpStatus.CREATED);
     }
 
     @PostMapping("/findRoom")
-    public ResponseEntity<List<Room>> findRooms(@RequestBody RoomRequest roomRequest){
+    public ResponseEntity<List<Room>> findRooms(@RequestBody RoomRequest roomRequest) {
 
         return new ResponseEntity<List<Room>>(roomService.findRoom(roomRequest), HttpStatus.OK);
     }
 
     @GetMapping("/recommend")
-    public ResponseEntity<List<Room>> recommendRooms(@RequestParam String email){
-     return new ResponseEntity<List<Room>>(roomService.recommendRooms(email), HttpStatus.OK);
+    public ResponseEntity<List<Room>> recommendRooms(@RequestParam String email) {
+        return new ResponseEntity<List<Room>>(roomService.recommendRooms(email), HttpStatus.OK);
     }
 
 

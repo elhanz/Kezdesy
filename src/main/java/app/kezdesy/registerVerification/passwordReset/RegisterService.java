@@ -2,8 +2,8 @@ package app.kezdesy.registerVerification.passwordReset;
 
 import app.kezdesy.entity.User;
 import app.kezdesy.entity.VerificationToken;
-import app.kezdesy.repository.UserRepository;
 import app.kezdesy.repository.TokenRepository;
+import app.kezdesy.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.var;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -24,20 +24,18 @@ public class RegisterService {
     private final TokenRepository tokenRepository;
 
 
-
-
     public Optional<User> findUserByPasswordToken(String passwordResetToken) {
         return Optional.ofNullable(tokenRepository.findByToken(passwordResetToken).getUser());
     }
 
     public String validateToken(String theToken) {
         VerificationToken token = tokenRepository.findByToken(theToken);
-        if(token == null){
+        if (token == null) {
             return "Invalid verification token";
         }
         User user = token.getUser();
         Calendar calendar = Calendar.getInstance();
-        if ((token.getExpirationTime().getTime() - calendar.getTime().getTime()) <= 0){
+        if ((token.getExpirationTime().getTime() - calendar.getTime().getTime()) <= 0) {
             tokenRepository.delete(token);
             return "Token already expired";
         }
