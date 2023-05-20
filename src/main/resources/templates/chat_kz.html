@@ -1,0 +1,801 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Менің чаттарым</title>
+    <meta charset="UTF-8">
+    <meta name="description" content="">
+    <meta name="author" content="templatemo">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="/img/mini_logo.png" type="image/x-icon">
+    <link th:href="@{/css/message.css}" rel="stylesheet"  type="text/css">
+    <link th:href="@{/css/main.css}" rel="stylesheet"  type="text/css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/3.2.1/css/font-awesome-ie7.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,700,900|Ubuntu:400,500,700" rel="stylesheet">
+    <link href="http://fonts.googleapis.com/css?family=Raleway:400,300,500,600,700,800,900" rel="stylesheet" type="text/css" />
+    <link href="http://fonts.googleapis.com/css?family=Roboto+Slab:400,700,300,100" rel="stylesheet" type="text/css" />
+    <link href="http://fonts.googleapis.com/css?family=Dosis:200,300,400,500,600,700,800" rel="stylesheet" type="text/css" />
+
+</head>
+<body>
+
+<body class="body">
+<div class="page-header">
+    <div class="header-logo">
+        <div class="logo">
+            <a href="/"><img src="/img/logo2.png" class="logo_png" alt=""/></a>
+        </div>
+    </div>
+    <div class="header-menu">
+        <ul class="menu-list" id="menuList">
+            <li class="list-item"><a href="/rooms">Бөлмелер</a></li>
+            <li class="list-item"><a href="/chats" style="color: #74C69D;">Чаттар</a></li>
+            <li class="list-item"><a href="/profile">Профиль</a></li>
+        </ul>
+    </div>
+    <div class="header-login">
+        <a class="header-login-link" href="/loginUser"><div class="header-login-button">КІРУ</div></a>
+    </div>
+    <div class="logo">
+        <button class="menu menu-icon" onclick="this.classList.toggle('opened');this.setAttribute('aria-expanded', this.classList.contains('opened')); togglemenu()" aria-label="Main Menu">
+            <svg width="50" height="60" viewBox="0 0 100 100">
+                <path class="line line1" d="M 20,29.000046 H 80.000231 C 80.000231,29.000046 94.498839,28.817352 94.532987,66.711331 94.543142,77.980673 90.966081,81.670246 85.259173,81.668997 79.552261,81.667751 75.000211,74.999942 75.000211,74.999942 L 25.000021,25.000058" />
+                <path class="line line2" d="M 20,50 H 80" />
+                <path class="line line3" d="M 20,70.999954 H 80.000231 C 80.000231,70.999954 94.498839,71.182648 94.532987,33.288669 94.543142,22.019327 90.966081,18.329754 85.259173,18.331003 79.552261,18.332249 75.000211,25.000058 75.000211,25.000058 L 25.000021,74.999942" />
+            </svg>
+        </button>
+    </div>
+</div>
+<div class="page_content">
+    <div class="chats-container">
+        <div class="chats-list">
+            <div class="chats-block" id="user-chats">
+            </div>
+        </div>
+
+        <div class="chat-no-select">
+            <h2 style="font-weight: 500;font-size: 30px;line-height: 45px;color: #8D8D8D;">Чатты таңдаңыз</h2>
+        </div>
+        <div class="chat-messages hidden">
+            <div id="chat-page" class="">
+                <div class="chat-container">
+                    <div id="username-page">
+                        <div class="username-page-container">
+                            <h1 class="title">Welcome!</h1>
+                            <form id="usernameForm" name="usernameForm">
+                                <div class="form-group">
+                                    <input type="hidden" id="name"/>
+                                    <input type="hidden" id="chatId"/>
+                                    <input type="hidden" id="userId"/>
+                                </div>
+                                <div class="form-group">
+                                    <button id="start" type="submit" class="accent username-submit">Start Chatting</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="chat-header">
+                        <div class="chat-btn-settings chatListBtn"><i class="fas fa-comments"></i></div>
+                        <h2 id="chat__name"></h2>
+                        <div class="chat-btn-settings chatMenuBtn"><i class="fa fa-cog fa-fw"></i></div>
+                    </div>
+                    <div class="connecting">
+                        Қосылуда...
+                    </div>
+                    <ul id="messageArea" class="message-area">
+                    </ul>
+                    <form id="messageForm" name="messageForm" nameForm="messageForm">
+                        <div class="form-group">
+                            <div class="input-group clearfix">
+                                <label for="picture" class="picture-button">
+                                    <i class="fa fa-image"></i>
+                                </label>
+                                <input type="file" id="picture" style="display: none" accept="image/png, image/gif, image/jpeg" formenctype="multipart/form-data" name="file"/>
+                                <input type="text" id="message" placeholder="Хабарлама жазу..." autocomplete="off" class="form-control"/>
+                                <button type="submit" class="primary">Жіберу</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="chat-menu">
+            <div class="chat-info">
+                <div class="chat-roommates">
+                    <div class="chat-owner-block">
+                        <div class="chat-owner-title">
+                            Бөлме иесі - <span class="chat-owner-count">1</span>
+                        </div>
+                        <div class="chat-owner">
+                            <i style="background-color: rgb(195,201,208);">.</i>
+                            <span>Жүктеуде...</span>
+                        </div>
+                    </div>
+                    <div class="chat-roommates-block">
+                        <div class="chat-roommates-title">
+                            БӨЛМЕДЕГІЛЕР - <span class="chat-roommates-count">1</span>
+                        </div>
+                        <div class="chat-owner">
+                            <i style="background-color: rgb(195,201,208);">.</i>
+                            <span>Жүктеуде...</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="chat-settings">
+                    <div class="chat-btn-settings chatMenuBtn"><i class="fas fa-arrow-right"></i></div>
+                    <div class="chat-btn-leave">Шығу</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.4/sockjs.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script type="text/javascript">
+
+    var menu_list = document.getElementById('menuList');
+    menu_list.style.maxHeight = "0px";
+
+    function togglemenu() {
+        menu_list.style.color = "white";
+        if (menu_list.style.maxHeight === "0px") {
+            menu_list.style.maxHeight = "300px"
+        }
+        else {
+            menu_list.style.maxHeight = "0px"
+        }
+    }
+    'use strict';
+
+    let rooms_info;
+    let user_info;
+
+    var usernamePage = document.querySelector('#username-page');
+    var chatPage = document.querySelector('#chat-page');
+    var usernameForm = document.querySelector('#usernameForm');
+    var messageForm = document.querySelector('#messageForm');
+    var imageForm = document.querySelector('#picture');
+    var messageInput = document.querySelector('#message');
+    var messageArea = document.querySelector('#messageArea');
+    var connectingElement = document.querySelector('.connecting');
+
+    var stompClient = null;
+    var username = null;
+    var chatId = null;
+    var profilePic = null;
+    var userId = null;
+
+    var colors = [
+        '#A4C5E9', '#32c787', '#00BCD4', '#ff5652',
+        '#ffc107', '#F2C2D4', '#FF9800', '#39bbb0',
+        '#ED4477', '#B5F2E3', '#C0F8D1', '#D4BFFF'
+    ];
+
+    if (getCookie("Authorization") == null) {
+        window.location.replace("/loginUser");
+    }
+
+    function connect(event) {
+        username = document.querySelector('#name').value.trim();
+
+        if(username) {
+            usernamePage.classList.add('hidden');
+            chatPage.classList.remove('hidden');
+
+            var socket = new SockJS('/ws');
+            stompClient = Stomp.over(socket);
+
+            stompClient.connect({}, onConnected, onError);
+        }
+        event.preventDefault();
+    }
+
+    function disconnect() {
+        if (stompClient !== null) {
+            stompClient.disconnect();
+        }
+        console.log("Disconnected");
+    }
+
+
+    function onConnected() {
+        chatId = document.querySelector('#chatId').value;
+        userId = document.querySelector('#userId').value;
+
+        // Subscribe to the Public Topic
+        stompClient.subscribe('/topic/' + chatId, onMessageReceived);
+
+        // Tell your username to the server
+        stompClient.send('/app/chat.addUser/' + chatId,
+            {},
+            JSON.stringify({sender: username, type: 'JOIN', userId: username})
+        )
+
+        connectingElement.classList.add('hidden');
+    }
+
+
+    function onError(error) {
+        connectingElement.textContent = error;
+        connectingElement.style.color = 'red';
+    }
+
+    function sendImage(event) {
+        let file = document.getElementById('picture').files[0];
+        let reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = function () {
+            if(stompClient) {
+                var message = {
+                    sender: username,
+                    content: reader.result,
+                    type: 'PICTURE',
+                    senderId: userId
+                };
+
+                stompClient.send('/app/chat.sendMessage/' + chatId,
+                    {}, JSON.stringify(message));
+                messageInput.value = '';
+            }
+            event.preventDefault();
+        }
+        reader.onerror = function (error) {
+            console.log("Error: " + error);
+        }
+    }
+
+
+    function sendMessage(event) {
+        var messageContent = messageInput.value.trim();
+
+        if(messageContent && stompClient) {
+            var message = {
+                sender: username,
+                content: messageInput.value,
+                type: 'CHAT',
+                senderId: userId
+            };
+
+            stompClient.send('/app/chat.sendMessage/' + chatId,
+                {}, JSON.stringify(message));
+            messageInput.value = '';
+        }
+        event.preventDefault();
+    }
+
+
+    function onMessageReceived(payload) {
+        var message = JSON.parse(payload.body);
+
+        var messageElement = document.createElement('li');
+        messageElement.setAttribute('id', 'message' + message.id);
+
+        if(message.type === 'JOIN') {
+            messageElement.classList.add('event-message');
+            message.content = message.sender + ' қосылды!';
+        } else if (message.type === 'LEAVE') {
+            messageElement.classList.add('event-message');
+            message.content = message.sender + ' шықты!';
+        } else {
+            messageElement.classList.add('chat-message');
+
+            var userSender = rooms_info.users.find(user => user.id === message.senderId);
+            if (userSender.profilePic != null) {
+                var avatarElement = document.createElement('img');
+                avatarElement.src = userSender.profilePic;
+                avatarElement.setAttribute('class', 'img');
+            } else {
+                var avatarElement = document.createElement('i');
+                var avatarText = document.createTextNode(message.sender[0]);
+                avatarElement.appendChild(avatarText);
+                avatarElement.style['background-color'] = getAvatarColor(message.sender);
+                avatarElement.classList.add('i');
+            }
+
+            messageElement.appendChild(avatarElement);
+
+            var usernameElement = document.createElement('span');
+            var usernameText = document.createTextNode(message.sender);
+            usernameElement.appendChild(usernameText);
+            messageElement.appendChild(usernameElement);
+
+            var timestampElement = document.createElement('span');
+            timestampElement.style.color = '#6e6e6e';
+            timestampElement.style.fontSize = '12px';
+            timestampElement.style.fontWeight = 'lighter';
+            var timestampText = document.createTextNode("  " + getHoursAndMinutes(message.createdAt));
+            timestampElement.appendChild(timestampText);
+            messageElement.appendChild(timestampElement);
+
+            // Create the parent div element
+            var menuDrop = document.createElement('div');
+            menuDrop.classList.add('menu-drop');
+            // Create the i element
+            var iconElement = document.createElement('i');
+            iconElement.classList.add('fa', 'fa-ellipsis-v');
+
+            // Create the ul element
+            var ulElement = document.createElement('ul');
+
+            // Create the second li element
+            var liElement2 = document.createElement('li');
+            var link2 = document.createElement('a');
+            link2.setAttribute('href', '#');
+            link2.setAttribute('id', 'delete' + message.id);
+            link2.textContent = 'Жою';
+            liElement2.appendChild(link2);
+
+            // Append the li elements to the ul element
+            ulElement.appendChild(liElement2);
+
+            // Append the i element and ul element to the parent div
+            menuDrop.appendChild(iconElement);
+            menuDrop.appendChild(ulElement);
+            messageElement.appendChild(menuDrop);
+
+            var textElement = document.createElement('p');
+            if (message.type === 'CHAT') {
+                var messageText = document.createTextNode(message.content);
+                textElement.appendChild(messageText);
+            } else if (message.type === 'PICTURE') {
+                var imageElement = document.createElement('img');
+                imageElement.src = message.content;
+                imageElement.style.maxWidth = '90%';
+                textElement.appendChild(imageElement);
+            }
+
+            messageElement.appendChild(textElement);
+
+            console.log(textElement);
+            console.log(messageElement);
+            messageArea.appendChild(messageElement);
+            messageArea.scrollTop = messageArea.scrollHeight;
+        }
+
+        // Attach delete event listener
+        $(document).on('click', '#delete' + message.id, function () {
+            console.log("its clicked");
+            if (message.senderId === user_info.id) {
+                deleteMessage(message.id);
+            }
+        });
+
+        // Handle deletion event
+        if (payload.headers['content-type'] === 'text/plain' && payload.headers['destination'].endsWith('/messageDeleted')) {
+            // Message deletion event
+            var deletedMessageId = parseInt(payload.body);
+            var deletedMessageElement = document.getElementById('message' + deletedMessageId);
+            if (deletedMessageElement) {
+                var deletionTextElement = document.createElement('p');
+                var deletionMessageText = document.createTextNode('Хабар жойылды');
+                deletionTextElement.appendChild(deletionMessageText);
+                deletedMessageElement.innerHTML = '';
+                deletedMessageElement.appendChild(deletionTextElement);
+            }
+        }
+    }
+
+    function deleteMessage(messageId) {
+        var messageElement = document.getElementById('message' + messageId);
+        var textElement = messageElement.getElementsByTagName('p')[0];
+        var originalContent = textElement.textContent;
+
+        $.ajax({
+            type: 'GET',
+            headers: {'Authorization': getCookie("Authorization")},
+            contentType: 'application/json',
+            url: '/room/deleteMessage',
+            data: {'id': messageId},
+            dataType: 'json',
+            complete: function (result) {
+                console.log(result.responseText);
+                if (result.responseText !== 'Message not found') {
+                    textElement.textContent = 'Хабар жойылды';
+
+                    // Send the deletion event to the server
+                    stompClient.send('/app/chat.deleteMessage/' + chatId, {}, JSON.stringify(messageId));
+                }
+            },
+            error: function (e) {
+                console.log(e);
+            }
+        });
+    }
+
+    function getAvatarColor(messageSender) {
+        var hash = 0;
+        for (var i = 0; i < messageSender.length; i++) {
+            hash = 31 * hash + messageSender.charCodeAt(i);
+        }
+
+        var index = Math.abs(hash % colors.length);
+        return colors[index];
+    }
+
+    function getHoursAndMinutes(dateString) {
+        const date = new Date(dateString);
+        const hours = date.getHours().toString().padStart(2, '0');
+        const minutes = date.getMinutes().toString().padStart(2, '0');
+        return `${hours}:${minutes}`;
+    }
+
+    usernameForm.addEventListener('submit', connect, true)
+    messageForm.addEventListener('submit', sendMessage, true)
+    imageForm.addEventListener('change', sendImage, true)
+
+    function parseJwt(token) {
+        let base64Url = token.split('.')[1];
+        let base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+        let jsonPayload = decodeURIComponent(atob(base64).split('').map(function (c) {
+            return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+        }).join(''));
+
+        return JSON.parse(jsonPayload);
+    }
+
+    function getCookie(name) {
+        const value = `; ${document.cookie}`;
+        const parts = value.split(`; ${name}=`);
+        if (parts.length === 2) return parts.pop().split(';').shift();
+    }
+
+    function eraseCookie(name) {
+        document.cookie = name + '=; Max-Age=-99999999;';
+    }
+
+    $(document).ready(function () {
+        $('#user-chats').html('');
+        $('.chat-info').hide();
+
+        let myCookie = getCookie("Authorization");
+
+        $(document).on('click', '.chatMenuBtn', function() {
+            $('.chat-menu').toggleClass('chat-menu-hidden');
+        });
+
+        $(document).on('click', '.chatListBtn', function() {
+            $('.chats-list').toggleClass('chats-list-hidden');
+        });
+
+        if (myCookie != null) {
+            let resultC = parseJwt(myCookie);
+            let email = resultC.sub;
+            $('.header-login').html("<a class=\"header-login-link\" href=\"/profile\">\n" +
+                "            <div class=\"header-login-button\">\n" +
+                "                <i class=\"svg-icon fas fa-user-circle\" style=\"margin-right: 5px\"></i>" +
+                email + "\n" +
+                "            </div>\n" +
+                "        </a>");
+
+            $.ajax({
+                type: "GET",
+                headers: {'Authorization': myCookie},
+                contentType: 'application/json',
+                url: "getUser",
+                data: {email: email},
+                dataType: 'json',
+                success: function (result) {
+                    user_info = result;
+                    if (user_info.enabled === false) {
+                        window.location.replace("/profile");
+                    }
+                    $('#userId').val(user_info.id);
+                    $('#name').val(result.first_name + " " + result.last_name);
+                }
+            });
+
+            $.ajax({
+                type: "GET",
+                headers: {'Authorization': myCookie},
+                contentType: 'application/json',
+                url: "myRooms",
+                data: {email: email},
+                dataType: 'json',
+                success: function (result) {
+                    console.log(result);
+                    $('#user-chats').append("<div class=\"chat-btn-settings chatListBtn\"><i class=\"fas fa-arrow-left\"></i></div>");
+                    result.forEach((item, i) => {
+                        $('#user-chats').append(
+                            "<div id=\"join"+item.id+"\" class=\"chat-block-nav\">\n" +
+                            "                <div class=\"chat-nav-avatar\" style=\"background: "+ getAvatarColor(item.header) + ";\"></div>\n" +
+                            "                <div class=\"chat-nav-title\" style=\"color: "+ getAvatarColor(item.header) + "\">" + item.header + "</div>\n" +
+                            "            </div>");
+
+                        $('#join' + item.id).on('click', function (event) {
+                            //disconnect from previous chat
+                            disconnect();
+
+                            //get chat by id (ajax request)
+                            $.ajax({
+                                type: "GET",
+                                headers: {'Authorization': myCookie},
+                                contentType: 'application/json',
+                                url: "room/getRoomById",
+                                data: {id: item.id},
+                                dataType: 'json',
+                                success: function (resultRoom) {
+                                    console.log(resultRoom);
+                                    rooms_info = resultRoom;
+                                    //setting chat id to new and setting other stuff
+                                    $('#chatId').val(item.id);
+                                    profilePic = user_info.profilePic;
+
+                                    //clear previous chats and setting new
+                                    messageArea.innerHTML = '';
+                                    $('.chat-messages').show();
+                                    $('.chat-messages').html();
+                                    $('.chat-info').show().css({
+                                        display: 'flex',
+                                        flexDirection: 'column',
+                                        justifyContent: 'space-between'
+                                    });
+                                    $('.chat-info').html();
+                                    $('.chat-no-select').hide();
+                                    result.forEach((j, i) => {
+                                        $('#join' + j.id).removeClass('chat-selected');
+                                    });
+                                    $('#join' + item.id).toggleClass('chat-selected');
+
+                                    //setting chat's owner
+                                    console.log(rooms_info);
+                                    var ownerIsHere = 0;
+                                    var owner = rooms_info.users.find(user => user.email === rooms_info.owner);
+                                    var html = "<div class=\"chat-roommates\">";
+                                    html += "<div class=\"chat-owner-block\">\n" +
+                                        "                    <div class=\"chat-owner-title\">\n" +
+                                        rooms_info.header + "</div>\n" +
+                                        "                    <div class=\"chat-description\">\n" +
+                                        "                        <div class=\"chat-description-i\"><i class=\"fa-solid fa-circle-info\" style=\"font-size: 25px\"></i></div>\n" +
+                                        "                        <span>" + rooms_info.description + "</span>\n" +
+                                        "                    </div>\n" +
+                                        "                </div>";
+                                    console.log(owner);
+                                    if (owner !== undefined) {
+                                        ownerIsHere++;
+                                        var avatarElement;
+                                        if (owner.profilePic == null) {
+                                            avatarElement = "<i style='background-color:" + getAvatarColor(owner.first_name + ' ' + owner.last_name) + "'>" + owner.first_name[0] + "</i>";
+                                        } else {
+                                            avatarElement = "<img src='" + owner.profilePic + "'>";
+                                        }
+                                        html += "<div class=\"chat-owner-block\">\n" +
+                                            "<div class=\"chat-owner-title\">\n" +
+                                            "            Бөлме иесі - <span class=\"chat-owner-count\">1</span>\n" +
+                                            "        </div>\n" +
+                                            "        <table class=\"profile-info-table chat-owner\"><tr><td>\n" +
+                                            avatarElement +
+                                            "</td><td>" + owner.first_name + ' ' + owner.last_name + "</td></tr>\n" +
+                                            "                    </table>\n" +
+                                            "    </div>";
+                                    }
+                                    html += "<div class=\"chat-roommates-block\">\n" +
+                                        "        <div class=\"chat-roommates-title\">\n" +
+                                        "            БӨЛМЕДЕГІЛЕР - <span class=\"chat-roommates-count\">" + (item.users.length-ownerIsHere) + "</span>\n" +
+                                        "        </div><table class=\"profile-info-table chat-owner\" \n";
+
+                                    rooms_info.users.forEach((user, i) => {
+                                        if (user.email !== rooms_info.owner) {
+                                            var avatarElement;
+                                            if (user.profilePic == null) {
+                                                avatarElement = "<i style='background-color:" + getAvatarColor(user.first_name + ' ' + user.last_name) + "'>" + user.first_name[0] + "</i>";
+                                            } else {
+                                                avatarElement = "<img src='" + user.profilePic + "'>";
+                                            }
+                                            html += "<tr><td>" + avatarElement +"</td>\n" +
+                                                "<td>" + user.first_name + ' ' + user.last_name + "</td>";
+                                            if (rooms_info.owner === email) {
+                                                html += "<td><div class='alink' id=\"kick_" + user.id + "\">\n" +
+                                                    "&nbsp;шығару</div></td>";
+                                            }
+                                            html += "</tr>";
+                                        }
+                                    });
+
+                                    $(document).on('click', '[id^="kick_"]', function () {
+                                        console.log("its clicked");
+                                        var id = $(this).attr('id').substring(5);
+                                        var user = rooms_info.users.find(u => u.id === parseInt(id));
+                                        $.ajax({
+                                            type: "POST",
+                                            headers: {'Authorization': myCookie},
+                                            contentType: 'application/json',
+                                            url: "/room/kickUser",
+                                            data: JSON.stringify({"email" : user.email, "roomId" : rooms_info.id}),
+                                            dataType: 'json',
+                                            complete: function (result) {
+                                                console.log(result.responseText);
+                                                if (result.responseText !== "Something is wrong") {
+                                                    document.location.reload();
+                                                }
+                                            },
+                                            error: function (e) {
+                                                console.log(e);
+                                            }
+                                        });
+                                    });
+                                    html += "</table></div>\n" +
+                                        "</div>";
+                                    $('.chat-info').html(html);
+                                    if (rooms_info.owner === email) {
+                                        $('.chat-info').append("<div class=\"chat-settings\">\n" +
+                                            "                <div class=\"chat-btn-settings chatMenuBtn\"><i class=\"fas fa-arrow-right\"></i></div>\n" +
+                                            "                <div class=\"chat-btn-leave\" id=\"leave" + item.id + "\">Шығу</div>\n" +
+                                            "                <div class=\"chat-btn-edit\" id=\"edit" + item.id + "\">Бөлмені өзгерту</div>\n" +
+                                            "                <div class=\"chat-btn-delete\" id=\"delete" + item.id + "\">Бөлмені жою</div>\n" +
+                                            "            </div>");
+                                    } else {
+                                        $('.chat-info').append("<div class=\"chat-settings\">\n" +
+                                            "                <div class=\"chat-btn-settings chatMenuBtn\"><i class=\"fas fa-arrow-right\"></i></div>\n" +
+                                            "                <div class=\"chat-btn-leave\" id=\"leave" + item.id + "\">Шығу</div>\n" +
+                                            "            </div>");
+                                    }
+
+                                    $('#edit' + item.id).on('click', function () {
+                                        eraseCookie("RoomId");
+                                        document.cookie = "RoomId= " + item.id;
+                                        window.location.replace("/editRoom");
+                                    });
+
+                                    $('#leave' + item.id).on('click', function () {
+                                        $.ajax({
+                                            type: "POST",
+                                            headers: {'Authorization': myCookie},
+                                            contentType: 'application/json',
+                                            url: "/room/kickUser",
+                                            data: JSON.stringify({"email" : email, "roomId" : item.id}),
+                                            dataType: 'json',
+                                            complete: function (result) {
+                                                console.log(result.responseText);
+                                                window.location.replace("/rooms");
+                                            }
+                                        });
+                                    });
+
+                                    $('#delete' + item.id).on('click', function () {
+                                        $.ajax({
+                                            type: "GET",
+                                            headers: {'Authorization': myCookie},
+                                            contentType: 'application/json',
+                                            url: "/room/deleteRoom",
+                                            data: {"id" : item.id},
+                                            dataType: 'json',
+                                            complete: function (result) {
+                                                console.log(result.responseText);
+                                                if (result.responseText === "Room was deleted") {
+                                                    window.location.replace("/chats");
+                                                }
+                                            }
+                                        });
+                                    });
+
+                                    //setting name of new chat
+                                    console.log(rooms_info);
+                                    $('#chat__name').html(rooms_info.header);
+                                    console.log(rooms_info.messages);
+
+                                    //connection
+                                    connect(event);
+
+                                    //output all messages
+                                    rooms_info.messages.forEach((messageItem, i) => {
+
+                                        var message = messageItem;
+                                        var messageElement = document.createElement('li');
+                                        messageElement.setAttribute('id', 'message' + messageItem.id);
+
+                                        if(message.type === 'JOIN') {
+                                            messageElement.classList.add('event-message');
+                                            message.content = message.sender + ' қосылды!';
+                                        } else if (message.type === 'LEAVE') {
+                                            messageElement.classList.add('event-message');
+                                            message.content = message.sender + ' шықты!';
+                                        } else {
+                                            messageElement.classList.add('chat-message');
+
+                                            var userSender = rooms_info.users.find(user => user.id === messageItem.senderId);
+                                            if (userSender.profilePic != null) {
+                                                var avatarElement = document.createElement('img');
+                                                avatarElement.src = userSender.profilePic;
+                                                avatarElement.setAttribute('class', 'img');
+                                            }
+                                            else {
+                                                var avatarElement = document.createElement('i');
+                                                var avatarText = document.createTextNode(message.sender[0]);
+                                                avatarElement.appendChild(avatarText);
+                                                avatarElement.style['background-color'] = getAvatarColor(message.sender);
+                                                avatarElement.classList.add('i');
+                                            }
+
+                                            messageElement.appendChild(avatarElement);
+
+                                            var usernameElement = document.createElement('span');
+                                            var usernameText = document.createTextNode(message.sender);
+                                            usernameElement.appendChild(usernameText);
+                                            messageElement.appendChild(usernameElement);
+
+                                            var timestampElement = document.createElement('span');
+                                            timestampElement.style.color = '#6e6e6e';
+                                            timestampElement.style.fontSize = '12px';
+                                            timestampElement.style.fontWeight = 'lighter';
+                                            var timestampText = document.createTextNode("  " + getHoursAndMinutes(messageItem.createdAt));
+                                            timestampElement.appendChild(timestampText);
+                                            messageElement.appendChild(timestampElement);
+
+                                            // Create the parent div element
+                                            var menuDrop = document.createElement('div');
+                                            menuDrop.classList.add('menu-drop');
+                                            // Create the i element
+                                            var iconElement = document.createElement('i');
+                                            iconElement.classList.add('fa', 'fa-ellipsis-v');
+
+                                            // Create the ul element
+                                            var ulElement = document.createElement('ul');
+
+                                            // Create the second li element
+                                            var liElement2 = document.createElement('li');
+                                            var link2 = document.createElement('a');
+                                            link2.setAttribute('href', '#');
+                                            link2.setAttribute('id', 'delete' + message.id);
+                                            link2.textContent = 'Жою';
+                                            liElement2.appendChild(link2);
+
+                                            // Append the li elements to the ul element
+                                            ulElement.appendChild(liElement2);
+
+                                            // Append the i element and ul element to the parent div
+                                            menuDrop.appendChild(iconElement);
+                                            menuDrop.appendChild(ulElement);
+                                            messageElement.appendChild(menuDrop);
+                                        }
+                                        var textElement = document.createElement('p');
+                                        if (message.type === 'PICTURE') {
+                                            var imageElement = document.createElement('img');
+                                            imageElement.src = message.content;
+                                            imageElement.style.maxWidth = '90%';
+                                            textElement.appendChild(imageElement);
+                                        } else {
+                                            var messageText = document.createTextNode(message.content);
+                                            textElement.appendChild(messageText);
+                                        }
+
+                                        messageElement.appendChild(textElement);
+
+                                        console.log(textElement);
+                                        console.log(messageElement);
+                                        messageArea.appendChild(messageElement);
+                                        messageArea.scrollTop = messageArea.scrollHeight;
+
+                                        // Attach delete event listener
+                                        $(document).on('click', '#delete' + message.id, function () {
+                                            console.log("its clicked");
+                                            if (message.senderId === user_info.id) {
+                                                deleteMessage(message.id);
+                                            }
+                                        });
+                                    });
+                                },
+                                error: function (e) {
+                                    console.log(e);
+                                }
+                            });
+                        });
+                    });
+
+                },
+                error: function (e) {
+                    console.log("ERROR: ", e);
+                    window.location.replace("/loginUser");
+                }
+            });
+        } else {
+            window.location.replace("/loginUser");
+        }
+    });
+
+</script>
+</body>
+</html>

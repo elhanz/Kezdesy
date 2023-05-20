@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link th:href="@{/css/login.css}" rel="stylesheet"  type="text/css">
+    <link rel="shortcut icon" href="/img/mini_logo.png" type="image/x-icon">
+    <title>Error</title>
+</head>
+<body>
+
+<div class="wrapper fadeInDown">
+    <div id="formContent">
+        <h2 class="active"> Error! </h2>
+
+        <div th:if="${error}" class="error-message">
+            <p th:text="${error}"></p>
+        </div>
+        <div id="formFooter">
+            <a id="to" class="underlineHover" href="/loginUser">Login Page</a>
+        </div>
+
+    </div>
+</div>
+
+</body>
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script type="text/javascript">
+</script>
+
+</html>

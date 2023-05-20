@@ -1,14 +1,14 @@
 package app.kezdesy.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
-import org.hibernate.annotations.LazyCollection;
-import org.hibernate.annotations.LazyCollectionOption;
+import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.Type;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Set;
@@ -47,18 +47,29 @@ public class User {
     @Column(name = "gender")
     private String gender;
 
+    private boolean isEnabled = false;
+
     @ManyToMany(fetch = FetchType.EAGER)
     private Collection<Role> roles = new ArrayList<>();
 
-    @ManyToMany
-    @LazyCollection(LazyCollectionOption.FALSE)
-    private Collection<Chat> chats = new ArrayList<>();
+
+    @JsonIgnore
+    @ManyToMany(mappedBy = "users")
+    private Collection<Room> rooms = new ArrayList<>();
 
     @ElementCollection(targetClass = Interest.class)
     @CollectionTable(name = "user_interests", joinColumns = @JoinColumn(name = "user_id"))
     @Enumerated(EnumType.STRING)
     @Column(name = "interest")
     private Set<Interest> interests;
+
+    @CreationTimestamp
+    @Column(name = "created_at")
+    private Timestamp createdAt;
+
+    @UpdateTimestamp
+    @Column(name = "updated_at")
+    private Timestamp updatedAt;
 
 
     public User(String first_name, String last_name, int age, String city, String email, String password, String profilePic, Set<Interest> interests) {
@@ -67,6 +78,7 @@ public class User {
         this.age = age;
         this.city = city;
         this.email = email;
+        this.isEnabled = false;
         this.password = password;
         this.profilePic = profilePic;
         this.interests = interests;

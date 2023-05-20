@@ -1,13 +1,19 @@
 package app.kezdesy.entity;
 
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Set;
-@Data
+
+@Getter
+@Setter
 @NoArgsConstructor
 @Entity
 @Table(name = "room")
@@ -35,8 +41,11 @@ public class Room {
     @Column(name = "maxMembers")
     private int maxMembers;
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    private Collection<User> members = new ArrayList<>();
+    @Column(name = "owner")
+    private String owner;
+
+    @ManyToMany
+    private Collection<User> users = new ArrayList<>();
 
     @ElementCollection(targetClass = Interest.class)
     @CollectionTable(name = "room_interests", joinColumns = @JoinColumn(name = "room_id"))
@@ -44,7 +53,20 @@ public class Room {
     @Column(name = "interest")
     private Set<Interest> interests;
 
-    public Room(String city, String header, String description, int minAgeLimit, int maxAgeLimit, int maxMembers, Set<Interest> interests) {
+
+    @OneToMany(fetch = FetchType.EAGER)
+    private Collection<Message> messages = new ArrayList<>();
+
+    @CreationTimestamp
+    @Column(name = "created_at")
+    private Timestamp createdAt;
+
+    @UpdateTimestamp
+    @Column(name = "updated_at")
+    private Timestamp updatedAt;
+
+
+    public Room(String city, String header, String description, int minAgeLimit, int maxAgeLimit, int maxMembers, Set<Interest> interests, String owner) {
         this.city = city;
         this.header = header;
         this.description = description;
@@ -52,6 +74,7 @@ public class Room {
         this.maxAgeLimit = maxAgeLimit;
         this.maxMembers = maxMembers;
         this.interests = interests;
+        this.owner = owner;
     }
 
 

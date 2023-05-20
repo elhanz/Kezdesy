@@ -4,7 +4,7 @@ import app.kezdesy.entity.Room;
 import app.kezdesy.entity.User;
 import app.kezdesy.model.ChangeInterestsRequest;
 import app.kezdesy.model.ChangePictureRequest;
-import app.kezdesy.model.DeleteProfileRequest;
+import app.kezdesy.model.EmailRequest;
 import app.kezdesy.model.UpdatePasswordRequest;
 import app.kezdesy.service.implementation.ProfileServiceImpl;
 import app.kezdesy.validation.UserValidation;
@@ -85,9 +85,9 @@ public class ProfileController {
     }
 
     @PostMapping("/deleteUser")
-    public ResponseEntity deleteProfile(@RequestBody DeleteProfileRequest deleteProfileRequest) {
+    public ResponseEntity deleteProfile(@RequestBody EmailRequest emailRequest) {
 
-        if (profileService.deleteUserByEmail(deleteProfileRequest.getEmail())) {
+        if (profileService.deleteUserByEmail(emailRequest.getEmail())) {
             return new ResponseEntity("User was deleted", HttpStatus.OK);
         } else return ResponseEntity.badRequest().body("User wasn't deleted");
 
@@ -97,4 +97,4 @@ public class ProfileController {
     public ResponseEntity<List<Room>> myRooms(@RequestParam String email) {
         return ResponseEntity.ok().body(profileService.getUserRooms(email));
     }
-    }
+}

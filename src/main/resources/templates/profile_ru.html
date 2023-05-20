@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+<head>
+
+    <title>Профиль</title>
+    <meta name="description" content="">
+    <meta name="author" content="templatemo">
+    <link rel="shortcut icon" href="/img/mini_logo.png" type="image/x-icon">
+    <meta charset="UTF-8">
+    <link href="http://fonts.googleapis.com/css?family=Raleway:400,300,500,600,700,800,900" rel="stylesheet" type="text/css" />
+    <link href="http://fonts.googleapis.com/css?family=Roboto+Slab:400,700,300,100" rel="stylesheet" type="text/css" />
+    <link href="http://fonts.googleapis.com/css?family=Dosis:200,300,400,500,600,700,800" rel="stylesheet" type="text/css" />
+    <link th:href="@{/css/main.css}" rel="stylesheet"  type="text/css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/3.2.1/css/font-awesome-ie7.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,700,900|Ubuntu:400,500,700" rel="stylesheet">
+</head>
+
+<body class="body">
+<div class="page-header">
+    <div class="header-logo">
+        <div class="logo">
+            <a href="/"><img src="/img/logo2.png" class="logo_png" alt=""/></a>
+        </div>
+    </div>
+    <div class="header-menu">
+        <ul class="menu-list" id="menuList">
+            <li class="list-item"><a href="/rooms">Комнаты</a></li>
+            <li class="list-item"><a href="/chats">Чаты</a></li>
+            <li class="list-item"><a href="/profile" style="color: #74C69D;">Профиль</a></li>
+        </ul>
+    </div>
+    <div class="header-login">
+        <a class="header-login-link" href="/loginUser"><div class="header-login-button">ВОЙТИ</div></a>
+    </div>
+    <div class="logo">
+        <button class="menu menu-icon" onclick="this.classList.toggle('opened');this.setAttribute('aria-expanded', this.classList.contains('opened')); togglemenu()" aria-label="Main Menu">
+            <svg width="50" height="60" viewBox="0 0 100 100">
+                <path class="line line1" d="M 20,29.000046 H 80.000231 C 80.000231,29.000046 94.498839,28.817352 94.532987,66.711331 94.543142,77.980673 90.966081,81.670246 85.259173,81.668997 79.552261,81.667751 75.000211,74.999942 75.000211,74.999942 L 25.000021,25.000058" />
+                <path class="line line2" d="M 20,50 H 80" />
+                <path class="line line3" d="M 20,70.999954 H 80.000231 C 80.000231,70.999954 94.498839,71.182648 94.532987,33.288669 94.543142,22.019327 90.966081,18.329754 85.259173,18.331003 79.552261,18.332249 75.000211,25.000058 75.000211,25.000058 L 25.000021,74.999942" />
+            </svg>
+        </button>
+    </div>
+</div>
+
+<div class="page_content">
+    <div class="profile-container">
+        <div class="content2" style="height: fit-content;">
+            <div class="profile-container-first-left">
+                <div class="profile-left-block">
+                    <div class="profile-picture-block">
+                        <div id="image">
+                            <i class="svg-icon fas fa-user-circle" style="font-size: 30vh; color: #292D32"></i>
+                        </div>
+                        <h2 style="margin-block-end: 0" id="user__name">Загрузка...</h2>
+                        <div style="font-size: 18px" id="user__email">Загрузка...</div>
+                        <div id="verifyEmail" style="display:none; font-size: 18px; color: #984040">Пожалуйста подтвердите свою почту</div>
+                    </div>
+                    <a href="" id="logout" style="text-decoration: none">
+                        <div class="profile-left-button">Выйти</div>
+                    </a>
+                </div>
+            </div>
+
+            <div class="profile-container-first-right">
+                <div class="profile-info">
+                    <table class="profile-info-table">
+                        <tr><td><strong>Возраст: </strong></td><td id="user__age"></td></tr>
+                        <tr><td><strong>Пол: </strong></td><td id="user__gender"></td></tr>
+                        <tr><td><strong>Город: </strong></td><td id="user__city"></td></tr>
+                        <tr><td><strong>Роль: </strong></td><td id="role">Обычный</td></tr>
+                    </table>
+                    <div class="profile-info-buttons">
+                        <a href="/updateUser" style="color: white; text-decoration: none;">
+                            <div class="profile-info-button">Редактировать</div>
+                        </a>
+                        <a href="" id="delete" style="color: white; text-decoration: none;">
+                            <div class="profile-info-button" style="background-color: #de6666">Удалить аккаунт</div>
+                        </a>
+                    </div>
+                </div>
+                <div class="profile-interests">
+                    <h2 style="color: #6e6e6e"> Мои интересы </h2>
+                    <div class="profile-interests-blocks">
+                    </div>
+                    <div class="profile-interests-button-block">
+                        <a href="/setInterests" style="color: white; text-decoration: none;">
+                            <div class="profile-info-button" >Редактировать</div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container-second" style="display: flex; flex-direction: column; min-height: 40vh">
+        <div class="profile-rooms-block">
+            <h2 style="margin-left: 3vw"> Мои комнаты </h2>
+            <div class="profile-no-rooms">
+                <h2 style="color: #74C69D"> Здесь нет комнат </h2>
+                <a id="createRoomLink" href="/createRoom" style="text-decoration: none"><div class="profile-no-rooms-button">+ Создать комнату</div></a>
+            </div>
+            <div class="profile-rooms" id="myRoomsList">
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="page_footer">
+    <div class="footer-box">
+        <div class="footer-col1">
+            &#169; 2023 Все права защищены
+        </div>
+        <div class="footer-col3" >
+            <a href="/termsPolicy" >Условия и положения</a>
+        </div>
+    </div>
+</div>
+
+</body>
+
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script type="text/javascript">
+
+    var menu_list = document.getElementById('menuList');
+    menu_list.style.maxHeight = "0px";
+
+    function togglemenu() {
+        menu_list.style.color = "white";
+        if (menu_list.style.maxHeight === "0px") {
+            menu_list.style.maxHeight = "300px"
+        }
+        else {
+            menu_list.style.maxHeight = "0px"
+        }
+    }
+
+    if (getCookie("Authorization") == null) {
+        window.location.replace("/loginUser");
+    }
+
+    let user_info;
+
+    function parseJwt(token) {
+        let base64Url = token.split('.')[1];
+        let base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+        let jsonPayload = decodeURIComponent(atob(base64).split('').map(function (c) {
+            return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+        }).join(''));
+
+        return JSON.parse(jsonPayload);
+    }
+
+    function getBase64(file) {
+        let reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = function () {
+            let myCookie = getCookie("Authorization");
+            let resultC = parseJwt(myCookie);
+            let email = resultC.sub;
+            $.ajax({
+                type: "POST",
+                headers: {'Authorization': myCookie},
+                contentType: 'application/json',
+                url: "setPicture",
+                data: JSON.stringify({"email" : email, "file": reader.result}),
+                dataType: 'json',
+                complete: function (result) {
+                    console.log("email: " + email);
+                    console.log(result.responseText);
+                    console.log(myCookie);
+                    if (result.responseText === "Photo was changed") {
+                        document.location.reload();
+                    }
+                }
+            });
+        };
+        reader.onerror = function (error) {
+            console.log("Error: " + error);
+        }
+    }
+
+    function getIconClass(interest) {
+        switch (interest) {
+            case 'Football':
+                return 'fas fa-futbol';
+            case 'Sport':
+                return 'fas fa-futbol';
+            case 'Basketball':
+                return 'fas fa-basketball-ball';
+            case 'Books':
+                return 'fas fa-book';
+            case 'Movies':
+                return 'fas fa-film';
+            case 'Painting':
+                return 'fas fa-paint-brush';
+            case 'TableGames':
+                return 'fas fa-dice';
+            case 'Music':
+                return 'fas fa-music';
+            case 'Twitch':
+                return 'fab fa-twitch';
+            case 'Netflix':
+                return 'fas fa-film';
+            case 'Politics':
+                return 'fas fa-landmark';
+            case 'Tea':
+                return 'fas fa-mug-hot';
+            case 'Swimming':
+                return 'fas fa-swimmer';
+            case 'Beer':
+                return 'fas fa-beer';
+            case 'Bicycling':
+                return 'fas fa-bicycle';
+            case 'TikTok':
+                return 'fab fa-tiktok';
+            case 'Museum':
+                return 'fas fa-university';
+            case 'Dance':
+                return 'fas fa-running';
+            case 'Cooking':
+                return 'fas fa-utensils';
+            case 'Hockey':
+                return 'fas fa-hockey-puck';
+            case 'Manga':
+                return 'fas fa-book-open';
+            case 'MartialArts':
+                return 'fas fa-fist-raised';
+            case 'Marvel':
+                return 'fas fa-mask';
+            case 'Running':
+                return 'fas fa-running';
+            case 'Gym':
+                return 'fas fa-dumbbell';
+            case 'IceSkating':
+                return 'fas fa-skating';
+            case 'Singing':
+                return 'fas fa-microphone';
+            case 'Karaoke':
+                return 'fas fa-microphone-alt';
+            case 'Memes':
+                return 'fas fa-grin-squint-tears';
+            case 'NFT':
+                return 'fas fa-coins';
+            case 'Fishing':
+                return 'fas fa-fish';
+            case 'Investing':
+                return 'fas fa-chart-line';
+            case 'Cosplay':
+                return 'fas fa-hat-wizard';
+            case 'Bowling':
+                return 'fas fa-bowling-ball'
+            case 'Gardening':
+                return 'fas fa-seedling';
+            case 'Photography':
+                return 'fas fa-camera';
+            case 'Yoga':
+                return 'fas fa-spa';
+            case 'Chess':
+                return 'fas fa-chess';
+            case 'Travel':
+                return 'fas fa-plane';
+            case 'Coding':
+                return 'fas fa-code';
+            case 'Guitar':
+                return 'fas fa-guitar';
+            case 'Cats':
+                return 'fas fa-cat';
+            case 'Dogs':
+                return 'fas fa-dog';
+            case 'Hiking':
+                return 'fas fa-hiking';
+            case 'Snowboarding':
+                return 'fas fa-snowboarding';
+            case 'Fashion':
+                return 'fas fa-tshirt';
+            case 'Camping':
+                return 'fas fa-campground';
+            case 'Writing':
+                return 'fas fa-pen';
+            case 'Surfing':
+                return 'fas fa-wave-square';
+            case 'Skiing':
+                return 'fas fa-skiing';
+            case 'Reading':
+                return 'fas fa-book-open';
+            case 'Piano':
+                return 'fas fa-keyboard';
+            case 'Coffee':
+                return 'fas fa-coffee';
+            case 'Fitness':
+                return 'fas fa-dumbbell';
+            case 'Gaming':
+                return 'fas fa-gamepad';
+            case 'Nature':
+                return 'fas fa-tree';
+            case 'Sims':
+                return 'fa-solid fa-rhombus';
+            case 'MakeUp':
+                return 'fa-sharp fa-solid fa-lips';
+            default:
+                return 'fas fa-lightbulb';
+        }
+    }
+
+    function getRussianCity(city) {
+        const kazakhTranslations = {
+            'Astana': 'Астана',
+            'Almaty': 'Алматы',
+            'Shymkent': 'Шымкент',
+            'Aktobe': 'Актобе',
+            'Karaganda': 'Караганда',
+            'Aktau':'Актау',
+            'Ekibastuz':'Экибастуз',
+            'Atyrau': 'Атырау',
+            'Taraz': 'Тараз',
+            'Pavlodar': 'Павлодар',
+            'Semey': 'Семей',
+            'Ust-Kamenogorsk': 'Усть-Каменогорск',
+            'Kyzylorda': 'Кызылорда',
+            'Uralsk': 'Уральск',
+            'Kostanay': 'Костанай',
+            'Petropavlsk': 'Петропавльск',
+            'Taldykorgan': 'Талдыкорган',
+            'Kokshetau': 'Кокшетау',
+            // Add more translations as needed
+        };
+
+        return kazakhTranslations[city] || city;
+    }
+
+    function getRussianGender(city) {
+        const kazakhTranslations = {
+            'Male': 'Мужчина',
+            'Female': 'Женщина'
+        };
+
+        return kazakhTranslations[city] || city;
+    }
+
+    function getRussianLanguage(interest) {
+        const russianTranslations = {
+            'Football': 'Футбол',
+            'Sport': 'Спорт',
+            'Basketball': 'Баскетбол',
+            'Books': 'Книги',
+            'Movies': 'Фильмы',
+            'Painting': 'Живопись',
+            'TableGames': 'Настольные игры',
+            'Music': 'Музыка',
+            'Twitch': 'Твич',
+            'Netflix': 'Нетфликс',
+            'Politics': 'Политика',
+            'Tea': 'Чай',
+            'Swimming': 'Плавание',
+            'Beer': 'Пиво',
+            'Bicycling': 'Катание на велосипеде',
+            'TikTok': 'ТикТок',
+            'Museum': 'Музей',
+            'Dance': 'Танцы',
+            'Cooking': 'Готовка',
+            'Hockey': 'Хоккей',
+            'Manga': 'Манга',
+            'MartialArts': 'Боевые искусства',
+            'Marvel': 'Марвел',
+            'Running': 'Бег',
+            'Gym': 'Спортзал',
+            'IceSkating': 'Коньки',
+            'Singing': 'Пение',
+            'Karaoke': 'Караоке',
+            'Memes': 'Мемы',
+            'NFT': 'NFT',
+            'Fishing': 'Рыбалка',
+            'Investing': 'Инвестиции',
+            'Cosplay': 'Косплей',
+            'Bowling': 'Боулинг',
+            'Gardening': 'Садоводство',
+            'Photography': 'Фотография',
+            'Yoga': 'Йога',
+            'Chess': 'Шахматы',
+            'Travel': 'Путешествия',
+            'Coding': 'Кодинг',
+            'Guitar': 'Гитара',
+            'Cats': 'Кошки',
+            'Dogs': 'Собаки',
+            'Hiking': 'Туризм',
+            'Snowboarding': 'Сноуборд',
+            'Fashion': 'Мода',
+            'Camping': 'Кемпинг',
+            'Writing': 'Писательство',
+            'Surfing': 'Серфинг',
+            'Skiing': 'Лыжи',
+            'Reading': 'Чтение',
+            'Piano': 'Пианино',
+            'Coffee': 'Кофе',
+            'Fitness': 'Фитнес',
+            'Gaming': 'Игры',
+            'Nature': 'Природа',
+            'Sims': 'Симс',
+            'MakeUp': 'Макияж',
+            // Add more translations as needed
+        };
+
+        return russianTranslations[interest] || interest;
+    }
+
+    function changeAvatars() {
+        let file = document.getElementById('customFile').files[0];
+        getBase64(file);
+    }
+
+    function getCookie(name) {
+        const value = `; ${document.cookie}`;
+        const parts = value.split(`; ${name}=`);
+        if (parts.length === 2) return parts.pop().split(';').shift();
+    }
+
+    function eraseCookie(name) {
+        document.cookie = name + '=; Max-Age=-99999999;';
+    }
+
+    $(document).ready(function () {
+        $('#admin').hide();
+        $('#superAdmin').hide();
+        $('#user__name').html('');
+        $('#user__email').html('');
+        $('#user__age').html('');
+        $('#user__city').html('');
+        $('#user__gender').html('');
+        $('#user__role').html('');
+        let myCookie = getCookie("Authorization");
+
+        if (getCookie("Authorization") != null) {
+            let resultC = parseJwt(myCookie);
+            let email = resultC.sub;
+            $('.header-login').html("<a class=\"header-login-link\" href=\"/profile\">\n" +
+                "            <div class=\"header-login-button\">\n" +
+                "                <i class=\"svg-icon fas fa-user-circle\" style=\"margin-right: 5px\"></i>" +
+                email + "\n" +
+                "            </div>\n" +
+                "        </a>");
+
+            $.ajax({
+                type: "GET",
+                headers: {'Authorization': myCookie},
+                contentType: 'application/json',
+                url: "getUser",
+                data: {email: email},
+                dataType: 'json',
+                success: function (result) {
+                    user_info = result;
+                    if(result.interests.length === 0) {
+                        window.location.replace("/setInterests");
+                    }
+                    if (result.enabled === false) {
+                        $('#verifyEmail').css({
+                            display: 'flex'});
+                        $('#createRoomLink').css({
+                            display: 'none'});
+                    }
+                    console.log(result);
+                    $('#user__email').html(result.email);
+                    $('#user__name').html(result.first_name + " " + result.last_name);
+                    $('#user__age').html(result.age);
+                    $('#user__city').html(getRussianCity(result.city));
+                    $('#user__gender').html(getRussianGender(result.gender));
+                    $('#user__role').html(result.role);
+                    $('#image').html('');
+                    if (result.profilePic == null) {
+                        $('#image').append("<div class=\"trick\">\n" +
+                            "                    <label form=\"custom File\" class=\"text1\" id=\"custom File Label\">\n" +
+                            "<i class=\"svg-icon fas fa-user-circle\" style=\"font-size: 30vh; color: #292D32\"></i>\n" +
+                            "                        <input type=\"file\" accept=\"image/png, image/gif, image/jpeg\" formenctype=\"multipart/form-data\" name=\"file\" id=\"customFile\" onchange=\"changeAvatars()\" >\n" +
+                            "                    </label>\n" +
+                            "</div>");
+                        console.log("work");
+                    }
+                    else {
+                        $('#image').append("<div class=\"trick\">\n" +
+                            "                    <label form=\"custom File\" class=\"text1\" id=\"custom File Label\">\n" +
+                            "<img src=" + result.profilePic + " >" +
+                            "                        <input type=\"file\" accept=\"image/png, image/gif, image/jpeg\" formenctype=\"multipart/form-data\" name=\"file\" id=\"customFile\" onchange=\"changeAvatars()\" >\n" +
+                            "                    </label>\n" +
+                            "</div>");
+                    }
+                    var interests = result.interests;
+                    var html = '';
+                    for (var i = 0; i < interests.length; i++) {
+                        html += '<div class="profile-interests-block">';
+                        html += '<i class="' + getIconClass(interests[i]) + '"></i>';
+                        html += '<p>' + getRussianLanguage(interests[i]) + '</p>';
+                        html += '</div>';
+                    }
+                    $('.profile-interests-blocks').html(html);
+
+                    //if (counter === 0) window.location.replace("/loginUser");
+                },
+                error: function (e) {
+                    console.log("ERROR: ", e);
+                    window.location.replace("/loginUser");
+                }
+            });
+
+            $.ajax({
+                type: "GET",
+                headers: {'Authorization': myCookie},
+                contentType: 'application/json',
+                url: "myRooms",
+                data: {email: email},
+                dataType: 'json',
+                success: function (result) {
+                    if (result.length > 0) {
+                        $('.profile-no-rooms').hide();
+                        result.forEach((item, i) => {
+                            let count = item.users.length;
+                            var htmlBtn = "";
+                            if (item.owner === email) {
+                                htmlBtn = "<a href='#' id='editRoom" + item.id + "' style='text-decoration: none'><div class=\"profile-room-button\">Редактировать</div></a>";
+                            }
+                            else {
+                                htmlBtn = "<a href='/chats' style='text-decoration: none'><div class=\"profile-room-button\">Открыть</div></a>";
+                            }
+                            $('#myRoomsList').append("<div class=\"profile-room\">\n" +
+                                "                    <div class=\"profile-room-head\">\n" +
+                                "                        <h3 class=\"profile-room-title\">" + item.header + "</h3>\n" +
+                                "                        <div class=\"profile-room-info\">\n" +
+                                "                            <p>Возрастной диапазон: " + item.minAgeLimit + "-" + item.maxAgeLimit + "</p>\n" +
+                                "                            <p>Город: " + getRussianCity(item.city) + "</p>\n" +
+                                "                        </div>\n" +
+                                "                        <div class=\"room-interests\" id=\"roomInterests" + item.id + "\">\n" +
+                                "                        </div>\n" +
+                                "                    </div>\n" +
+                                "                    <div class=\"profile-room-buttons\">\n" +
+                                "                        <div class=\"profile-room-count\">\n" +
+                                "                            <i class=\"svg-icon fas fa-user-circle\" style=\"margin-right: 5px\"></i>" + count + '/' + item.maxMembers + "\n" +
+                                "                        </div>" + htmlBtn + "</div></div>");
+                            var userInterests = user_info.interests;
+                            var roomInterests = item.interests;
+                            $('#roomInterests' + item.id).append("Интересы:&nbsp;");
+                            for (var i = 0; i < roomInterests.length; i++) {
+                                var roomInterest = roomInterests[i];
+                                var matched = userInterests.includes(roomInterest);
+                                var interestClass = matched ? 'matched-interest' : '';
+                                var interestHtml = '<div class="profile-room-interest ' + interestClass + '">' + getRussianLanguage(roomInterest) + '</div>';
+                                $('#roomInterests' + item.id).append(interestHtml);
+                            }
+
+                            $('#editRoom' + item.id).on('click', function () {
+                                eraseCookie("RoomId");
+                                document.cookie = "RoomId= " + item.id;
+                                window.location.replace("/editRoom");
+                            });
+                        });
+                    }
+                }
+            });
+        } else {
+            window.location.replace("/loginUser");
+        }
+
+        $('#logout').on('click', function () {
+            eraseCookie("Authorization");
+            window.location.replace("/");
+        });
+
+
+        $('#delete').on('click', function () {
+            let resultC = parseJwt(myCookie);
+            let email = resultC.sub;
+            $.ajax({
+                type: "POST",
+                headers: {'Authorization': myCookie},
+                contentType: 'application/json',
+                url: "deleteUser",
+                data: JSON.stringify({"email" : email}),
+                dataType: 'json',
+                complete: function (result) {
+                    console.log("email: " + email);
+                    console.log(result.responseText);
+                    console.log(myCookie);
+                    if (result.responseText === "User was deleted") {
+                        eraseCookie("Authorization");
+                        window.location.replace("/");
+                    }
+                }
+            });
+        });
+    });
+
+</script>
+
+</html>

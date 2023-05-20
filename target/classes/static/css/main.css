@@ -10,6 +10,10 @@ body {
     background-color: #FFFFFF;
 }
 
+.logo {
+    display: flex;
+}
+
 .header-logo {
     width: 20vw;
     display: flex;
@@ -54,7 +58,7 @@ body {
     color: #74C69D;
 }
 
-.list-item .selected_link a {
+.selected_link a {
     color: #74C69D;
 }
 
@@ -209,12 +213,11 @@ body {
     display: flex;
 }
 
-
 .container-first-left {
     width: 40vw;
     display: flex;
     flex-direction: column;
-    padding: 15vh 0;
+    padding: 10vh 0;
     position: relative;
 }
 
@@ -291,6 +294,48 @@ body {
     font-size: 14px;
     font-weight: 400;
     width: fit-content;
+}
+
+.radio-inputs {
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    border-radius: 30px;
+    background-color: #74C69D;
+    box-sizing: border-box;
+    box-shadow: 0 0 0px 1px rgba(0, 0, 0, 0.06);
+    padding: 0.25rem;
+    width: 300px;
+    font-size: 14px;
+}
+
+.radio-inputs .radio {
+    flex: 1 1 auto;
+    text-align: center;
+}
+
+.radio-inputs .radio input {
+    display: none;
+}
+
+.radio-inputs .radio .name {
+    display: flex;
+    cursor: pointer;
+    align-items: center;
+    justify-content: center;
+    border-radius: 30px;
+    border: none;
+    padding: .5rem 0;
+    color: rgb(243, 243, 243);
+    transition: all .15s ease-in-out;
+    font-family: 'Montserrat', sans-serif;
+    white-space: normal;
+}
+
+.radio-inputs .radio input:checked + .name {
+    background-color: #fff;
+    font-weight: 600;
+    color: #74C69D;
 }
 
 .profile-container {
@@ -871,7 +916,7 @@ ul.ks-cboxtags li input[type="checkbox"]:focus + label {
     background: #292929;
     border-radius: 15px;
     padding: 5px 10px;
-    width: 5vw;
+    width: fit-content;
     color: #FFFFFF;
     text-align: center;
     cursor: pointer;
@@ -884,12 +929,30 @@ ul.ks-cboxtags li input[type="checkbox"]:focus + label {
 
 .chats-container {
     display: flex;
+    margin-left: 25vw;
 }
 
 .chats-block {
     display: flex;
     width: 25vw;
+    height: 90vh;
     flex-direction: column;
+    overflow: auto;
+    overflow-y: scroll;
+}
+
+
+.chats-block::-webkit-scrollbar {
+    width: 3px;
+}
+
+.chats-block::-webkit-scrollbar-track {
+    background-color: #ffffff;
+}
+
+.chats-block::-webkit-scrollbar-thumb {
+    background-color: #d7d7d7;
+    border-radius: 3px;
 }
 
 .chat-no-select {
@@ -945,6 +1008,31 @@ ul.ks-cboxtags li input[type="checkbox"]:focus + label {
     justify-content: space-between;
 }
 
+.chat-menu {
+    position: fixed;
+    right: 0;
+    height: 100%;
+    background-color: #fff;
+    transition: right 0.5s ease-in-out;
+}
+
+.chats-list {
+    position: fixed;
+    left: 0;
+    z-index: 1;
+    height: 100%;
+    background-color: #fff;
+    transition: left 0.5s ease-in-out;
+}
+
+.chats-list-hidden {
+    left: -200%;
+}
+
+.chat-menu-hidden {
+    right: -200%;
+}
+
 .chat-roommates {
     padding: 10px 20px;
 }
@@ -968,7 +1056,49 @@ ul.ks-cboxtags li input[type="checkbox"]:focus + label {
     font-size: 14px;
 }
 
+.chat-description {
+    display: flex;
+    font-size: 14px;
+    margin: 10px 0 20px;
+}
+
+.chat-description-i {
+    display: flex;
+    min-width: 45px;
+    justify-content: center;
+    align-items: center;
+    font-size: 25px;
+}
+
+
+
+
+
+
+
+.chat-owner .alink {
+    color: #d75d5d;
+    cursor: pointer;
+}
+
 .chat-owner i {
+    width: 40px;
+    height: 40px;
+    overflow: hidden;
+    left: 10px;
+    display: inline-block;
+    vertical-align: middle;
+    font-size: 16px;
+    line-height: 40px;
+    color: #fff;
+    text-align: center;
+    border-radius: 50%;
+    font-style: normal;
+    text-transform: uppercase;
+}
+
+
+.chat-owner img {
     width: 40px;
     height: 40px;
     overflow: hidden;
@@ -1008,9 +1138,7 @@ ul.ks-cboxtags li input[type="checkbox"]:focus + label {
 }
 
 .chat-btn-settings {
-    display: flex;
-    background: #FFFFFF;
-    border: 1px solid #d0d0d0;
+    display: none;
     align-items: center;
     justify-content: center;
     width: fit-content;
@@ -1032,7 +1160,7 @@ ul.ks-cboxtags li input[type="checkbox"]:focus + label {
     border: none;
     align-items: center;
     justify-content: center;
-    width: 80px;
+    width: 100px;
     text-align: center;
     padding: 5px 20px;
     border-radius: 15px;
@@ -1044,6 +1172,64 @@ ul.ks-cboxtags li input[type="checkbox"]:focus + label {
 
 .chat-btn-leave:hover {
     background: #984040;
+}
+
+.chat-btn-edit {
+    display: flex;
+    background: #FFFFFF;
+    border: 1px solid #292D32;
+    align-items: center;
+    justify-content: center;
+    width: 100px;
+    text-align: center;
+    padding: 5px 20px;
+    border-radius: 15px;
+    color: #292D32;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 15px;
+}
+
+.chat-btn-edit:hover, .chat-btn-delete:hover {
+    transform: scale(0.9);
+}
+
+.chat-btn-delete {
+    display: flex;
+    background: #292D32;
+    border: none;
+    align-items: center;
+    justify-content: center;
+    width: 100px;
+    text-align: center;
+    padding: 5px 20px;
+    border-radius: 15px;
+    color: #FFFFFF;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 15px;
+}
+
+.picture-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 40px;
+    height: 40px;
+    background-color: #74C69D;
+    border-radius: 50%;
+    color: #FFFFFF;
+    text-align: center;
+    cursor: pointer;
+}
+
+.picture-button i {
+    font-size: 25px;
+    color: #FFFFFF;
+}
+
+.picture-button:hover {
+    background-color: #57997a;
 }
 
 .modal {
@@ -1064,6 +1250,7 @@ ul.ks-cboxtags li input[type="checkbox"]:focus + label {
     margin: 5% auto; /* 15% from the top and centered */
     padding: 20px;
     border: 1px solid #888;
+    border-radius: 30px;
     width: 80%; /* Could be more or less, depending on screen size */
 }
 
@@ -1071,6 +1258,8 @@ ul.ks-cboxtags li input[type="checkbox"]:focus + label {
 .slider {
     max-width: 100%;
     overflow: hidden;
+    font-family: 'Montserrat', sans-serif;
+    white-space: normal;
 }
 
 .slider img {
@@ -1092,8 +1281,8 @@ ul.ks-cboxtags li input[type="checkbox"]:focus + label {
 }
 
 .prev:hover, .next:hover {
-    background-color: #ddd;
-    color: black;
+    background-color: #5db48b;
+    color: white;
 }
 
 /* Close Button */
@@ -1115,6 +1304,53 @@ ul.ks-cboxtags li input[type="checkbox"]:focus + label {
     display: flex;
     padding: 5vh 5vw;
     min-height: 10vh;
+}
+
+
+.menu-drop {
+    position: relative;
+    display: inline-block;
+    margin-left: auto;
+}
+
+.menu-drop i {
+    font-size: 16px;
+    margin-left: 10px;
+    color: #333;
+    cursor: pointer;
+}
+
+.menu-drop ul {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    z-index: 1;
+    display: none;
+    padding: 8px 0;
+    margin: 0;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    list-style: none;
+}
+
+.menu-drop ul li {
+    padding: 8px 16px;
+    margin: 0 !important;
+}
+
+.menu-drop ul li a {
+    display: block;
+    text-decoration: none;
+    color: #333;
+}
+
+.menu-drop ul li:hover {
+    background-color: #f5f5f5;
+}
+
+.menu-drop:hover ul {
+    display: block;
 }
 
 .footer-box {
@@ -1144,14 +1380,18 @@ ul.ks-cboxtags li input[type="checkbox"]:focus + label {
 
 .footer-col3 a {
     text-decoration: none;
-    color: #5cba8e;
+    color: #292D32;
     font-style: normal;
-    font-weight: 700;
+    font-weight: 300;
     font-size: 14px;
-    letter-spacing: 0.28em;
 }
 
 @media only screen and (max-width: 1000px) {
+
+    .chat-btn-settings {
+        display: flex;
+    }
+
     .container-second-right, .container-first-left {
         padding: 10vh 0;
     }
@@ -1175,9 +1415,55 @@ ul.ks-cboxtags li input[type="checkbox"]:focus + label {
     .container-first-left .header-login-button, .container-second-right .header-login-button {
         font-size: 12px;
     }
+
+    .chat-messages {
+        width: 100vw;
+    }
+
+    .chat-no-select {
+        margin-left: 25vw;
+    }
+
+    .chat-info {
+        width: auto;
+    }
+
+    .chats-block {
+        width: auto;
+    }
+
+    .chats-container {
+        margin-left: 0;
+    }
+
+    .room {
+        width: 100%;
+    }
+
+    .profile-rooms {
+        flex-direction: column;
+        overflow-y: auto;
+        max-height: 480px;
+    }
+
+    .profile-room {
+        margin-bottom: 20px;
+    }
+
+    .profile-room + .profile-room {
+        margin-left: 0;
+    }
+
+    .profile-room-interests {
+        width: auto;
+    }
+
+    .profile-room .profile-room-count, .profile-room .room-button, .profile-room .profile-room-button {
+        width: fit-content;
+    }
 }
 
-@media only screen and (max-width: 600px) {
+@media only screen and (max-width: 700px) {
     .container-first-left h2, .container-second-right h2 {
         font-size: 20px;
     }
@@ -1213,6 +1499,73 @@ ul.ks-cboxtags li input[type="checkbox"]:focus + label {
 
     .container-first-left a, .container-second-right a {
         width: fit-content;
+    }
+
+    .profile-container-first-left, .profile-container-first-right {
+        width: 90vw;
+    }
+
+    .rec-fieldset legend {
+        font-size: 20px;
+    }
+    .profile-interests-blocks {
+        width: 75vw;
+    }
+
+    .profile-interests-block {
+        width: fit-content;
+    }
+
+    .profile-left-block, .profile-info, .profile-interests {
+        width: auto;
+    }
+
+    .profile-info-buttons {
+        flex-direction: column;
+    }
+
+    .profile-info-button {
+        width: auto;
+        text-align: center;
+        margin-top: 10px;
+    }
+
+    .header-login-button {
+        display: none;
+    }
+
+    ul.ks-cboxtags li label {
+        padding: 2px 4px;
+    }
+
+    .row input, .row select {
+        width: fit-content;
+    }
+
+    .row {
+        justify-content: center;
+    }
+
+    .row-buttons {
+        flex-direction: column;
+    }
+
+    .profile-room-count, .room-button, .profile-room-button {
+        width: fit-content;
+    }
+
+    .btn-search {
+        width: 50%;
+    }
+
+    .input-field {
+        flex-direction: column;
+    }
+
+    .btn-filter {
+        margin-top: 20px;
+        margin-left: 0;
+        width: 60vw;
     }
 
     .header-logo {

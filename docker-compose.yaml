@@ -1,0 +1,25 @@
+services:
+  db:
+    ports:
+      - 5432:5432
+    container_name: postgresql_container
+    image: postgres
+    environment:
+      POSTGRES_DB: kezdesy
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 1234
+    restart: on-failure
+  backend:
+    build: .
+    container_name: kezdesy_container
+    image: kezdesy
+    ports:
+      - 8089:8089
+    environment:
+      db-url: jdbc:postgresql://db:5432/kezdesy
+      db-username: postgres
+      db-password: 1234
+    depends_on:
+      - db
+    restart: on-failure
+

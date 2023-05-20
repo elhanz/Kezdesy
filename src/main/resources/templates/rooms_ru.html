@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en"> <!--<![endif]-->
+<head>
+    <link th:href="@{/css/main.css}" rel="stylesheet"  type="text/css">
+    <meta charset="UTF-8">
+    <title>Комнаты</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="/img/mini_logo.png" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/3.2.1/css/font-awesome-ie7.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,700,900|Ubuntu:400,500,700" rel="stylesheet">
+</head>
+
+<body class="body">
+<div class="page-header">
+    <div class="header-logo">
+        <div class="logo">
+            <a href="/"><img src="/img/logo2.png" class="logo_png" alt=""/></a>
+        </div>
+    </div>
+    <div class="header-menu">
+        <ul class="menu-list" id="menuList">
+            <li class="list-item"><a href="/rooms" style="color: #74C69D;">Комнаты</a></li>
+            <li class="list-item"><a href="/chats">Чаты</a></li>
+            <li class="list-item"><a href="/profile">Профиль</a></li>
+        </ul>
+    </div>
+    <div class="header-login">
+        <a class="header-login-link" href="/loginUser"><div class="header-login-button">ВОЙТИ</div></a>
+    </div>
+    <div class="logo">
+        <button class="menu menu-icon" onclick="this.classList.toggle('opened');this.setAttribute('aria-expanded', this.classList.contains('opened')); togglemenu()" aria-label="Main Menu">
+            <svg width="50" height="60" viewBox="0 0 100 100">
+                <path class="line line1" d="M 20,29.000046 H 80.000231 C 80.000231,29.000046 94.498839,28.817352 94.532987,66.711331 94.543142,77.980673 90.966081,81.670246 85.259173,81.668997 79.552261,81.667751 75.000211,74.999942 75.000211,74.999942 L 25.000021,25.000058" />
+                <path class="line line2" d="M 20,50 H 80" />
+                <path class="line line3" d="M 20,70.999954 H 80.000231 C 80.000231,70.999954 94.498839,71.182648 94.532987,33.288669 94.543142,22.019327 90.966081,18.329754 85.259173,18.331003 79.552261,18.332249 75.000211,25.000058 75.000211,25.000058 L 25.000021,74.999942" />
+            </svg>
+        </button>
+    </div>
+</div>
+
+<div class="page_content">
+    <div class="container-first">
+        <div class="content1" style="height: fit-content; flex-direction: column">
+            <div class="input-field">
+                <div class="input-inner">
+                    <input id="header" type="text" placeholder="Поиск..." />
+                    <div class="icon-wrap">
+                        <svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="35" height="35" viewBox="0 0 20 20">
+                            <path d="M18.869 19.162l-5.943-6.484c1.339-1.401 2.075-3.233 2.075-5.178 0-2.003-0.78-3.887-2.197-5.303s-3.3-2.197-5.303-2.197-3.887 0.78-5.303 2.197-2.197 3.3-2.197 5.303 0.78 3.887 2.197 5.303 3.3 2.197 5.303 2.197c1.726 0 3.362-0.579 4.688-1.645l5.943 6.483c0.099 0.108 0.233 0.162 0.369 0.162 0.121 0 0.242-0.043 0.338-0.131 0.204-0.187 0.217-0.503 0.031-0.706zM1 7.5c0-3.584 2.916-6.5 6.5-6.5s6.5 2.916 6.5 6.5-2.916 6.5-6.5 6.5-6.5-2.916-6.5-6.5z"></path>
+                        </svg>
+                    </div>
+                </div>
+                <button class="btn-filter" id="filter">Фильтр</button>
+            </div>
+
+            <div id="advance" class="advance-search">
+                <span class="desc">Расширенный поиск</span>
+                <div class="row">
+                    <input type="number" id="minAgeLimit" class="fadeIn third" placeholder="минимальный возраст" min="18">
+                    <input type="number" id="maxAgeLimit" class="fadeIn third" placeholder="максимальный возраст" min="19">
+                    <input type="number" id="maxMembers" class="fadeIn third" style="min-width: 100px" placeholder="максимальное количество участников" min="2" max="20">
+                    <select name="login" id="city" class="fadeIn third">
+                        <option value="">- город -</option>
+                        <option value="Astana">Астана</option>
+                        <option value="Almaty">Алматы</option>
+                        <option value="Shymkent">Шымкент</option>
+                        <option value="Aktobe">Актобе</option>
+                        <option value="Karaganda">Караганда</option>
+                        <option value="Aktau">Актау</option>
+                        <option value="Ekibastuz">Экибастуз</option>
+                        <option value="Atyrau">Атырау</option>
+                        <option value="Taraz">Тараз</option>
+                        <option value="Pavlodar">Павлодар</option>
+                        <option value="Semey">Семей</option>
+                        <option value="Ust-Kamenogorsk">Усть-Каменогорск</option>
+                        <option value="Kyzylorda">Кызылорда</option>
+                        <option value="Uralsk">Уральск</option>
+                        <option value="Kostanay">Костанай</option>
+                        <option value="Petropavlsk">Петропавльск</option>
+                        <option value="Taldykorgan">Талдыкорган</option>
+                        <option value="Kokshetau">Кокшетау</option>
+                    </select>
+                </div>
+
+                <div class="row-interests">
+                    <span class="desc"> Выберите интересы: </span>
+                    <ul class="ks-cboxtags">
+                        <li><input type="checkbox" id="checkboxOne" value="Football"><label for="checkboxOne">Футбол</label></li>
+                        <li><input type="checkbox" id="checkboxTwo" value="Sport"><label for="checkboxTwo">Спорт</label></li>
+                        <li><input type="checkbox" id="checkboxThree" value="Basketball"><label for="checkboxThree">Баскетбол</label></li>
+                        <li><input type="checkbox" id="checkboxFour" value="Books"><label for="checkboxFour">Книги</label></li>
+                        <li><input type="checkbox" id="checkboxFive" value="Movies"><label for="checkboxFive">Фильмы</label></li>
+                        <li><input type="checkbox" id="checkboxSix" value="Painting"><label for="checkboxSix">Живопись</label></li>
+                        <li><input type="checkbox" id="checkboxSeven" value="TableGames"><label for="checkboxSeven">Настольные игры</label></li>
+                        <li><input type="checkbox" id="checkboxEight" value="Music"><label for="checkboxEight">Музыка</label></li>
+                        <li><input type="checkbox" id="checkboxNine" value="Twitch"><label for="checkboxNine">Твич</label></li>
+                        <li><input type="checkbox" id="checkboxTen" value="Netflix"><label for="checkboxTen">Нетфликс</label></li>
+                        <li><input type="checkbox" id="checkboxEleven" value="Politics"><label for="checkboxEleven">Политика</label></li>
+                        <li><input type="checkbox" id="checkboxTwelve" value="Tea"><label for="checkboxTwelve">Чай</label></li>
+                        <li><input type="checkbox" id="checkboxThirteen" value="Swimming"><label for="checkboxThirteen">Плавание</label></li>
+                        <li><input type="checkbox" id="checkboxFourteen" value="Beer"><label for="checkboxFourteen">Пиво</label></li>
+                        <li><input type="checkbox" id="checkboxFifteen" value="Bicycling"><label for="checkboxFifteen">Катание на велосипеде</label></li>
+                        <li><input type="checkbox" id="checkbox16" value="TikTok"><label for="checkbox16">ТикТок</label></li>
+                        <li><input type="checkbox" id="checkbox17" value="Museum"><label for="checkbox17">Музей</label></li>
+                        <li><input type="checkbox" id="checkbox18" value="Dance"><label for="checkbox18">Танцы</label></li>
+                        <li><input type="checkbox" id="checkbox19" value="Cooking"><label for="checkbox19">Готовка</label></li>
+                        <li><input type="checkbox" id="checkbox20" value="Hockey"><label for="checkbox20">Хоккей</label></li>
+                        <li><input type="checkbox" id="checkbox21" value="Manga"><label for="checkbox21">Манга</label></li>
+                        <li><input type="checkbox" id="checkbox22" value="MartialArts"><label for="checkbox22">Боевые исскуства</label></li>
+                        <li><input type="checkbox" id="checkbox23" value="Marvel"><label for="checkbox23">Марвел</label></li>
+                        <li><input type="checkbox" id="checkbox24" value="Running"><label for="checkbox24">Бег</label></li>
+                        <li><input type="checkbox" id="checkbox25" value="Gym"><label for="checkbox25">Спортзал</label></li>
+                        <li><input type="checkbox" id="checkbox26" value="IceSkating"><label for="checkbox26">Коньки</label></li>
+                        <li><input type="checkbox" id="checkbox27" value="Singing"><label for="checkbox27">Пение</label></li>
+                        <li><input type="checkbox" id="checkbox28" value="Karaoke"><label for="checkbox28">Караоке</label></li>
+                        <li><input type="checkbox" id="checkbox29" value="Memes"><label for="checkbox29">Мемы</label></li>
+                        <li><input type="checkbox" id="checkbox30" value="NFT"><label for="checkbox30">NFT</label></li>
+                        <li><input type="checkbox" id="checkbox31" value="Fishing"><label for="checkbox31">Рыбалка</label></li>
+                        <li><input type="checkbox" id="checkbox32" value="Investing"><label for="checkbox32">Инвестиции</label></li>
+                        <li><input type="checkbox" id="checkbox33" value="Cosplay"><label for="checkbox33">Косплей</label></li>
+                        <li><input type="checkbox" id="checkbox34" value="Bowling"><label for="checkbox34">Боулинг</label></li>
+                        <li><input type="checkbox" id="checkbox35" value="Gardening"><label for="checkbox35">Садоводство</label></li>
+                        <li><input type="checkbox" id="checkbox36" value="Photography"><label for="checkbox36">Фотографий</label></li>
+                        <li><input type="checkbox" id="checkbox37" value="Yoga"><label for="checkbox37">Йога</label></li>
+                        <li><input type="checkbox" id="checkbox38" value="Chess"><label for="checkbox38">Шахмат</label></li>
+                        <li><input type="checkbox" id="checkbox39" value="Travel"><label for="checkbox39">Путешествие</label></li>
+                        <li><input type="checkbox" id="checkbox40" value="Coding"><label for="checkbox40">Кодинг</label></li>
+                        <li><input type="checkbox" id="checkbox41" value="Guitar"><label for="checkbox41">Гитара</label></li>
+                        <li><input type="checkbox" id="checkbox42" value="Cats"><label for="checkbox42">Коты</label></li>
+                        <li><input type="checkbox" id="checkbox43" value="Dogs"><label for="checkbox43">Собаки</label></li>
+                        <li><input type="checkbox" id="checkbox44" value="Hiking"><label for="checkbox44">Туризм</label></li>
+                        <li><input type="checkbox" id="checkbox45" value="Snowboarding"><label for="checkbox45">Сноуборд</label></li>
+                        <li><input type="checkbox" id="checkbox46" value="Fashion"><label for="checkbox46">Мода</label></li>
+                        <li><input type="checkbox" id="checkbox47" value="Camping"><label for="checkbox47">Кемпинг</label></li>
+                        <li><input type="checkbox" id="checkbox48" value="Writing"><label for="checkbox48">Писательство</label></li>
+                        <li><input type="checkbox" id="checkbox49" value="Surfing"><label for="checkbox49">Серфинг</label></li>
+                        <li><input type="checkbox" id="checkbox50" value="Skiing"><label for="checkbox50">Лыжы</label></li>
+                        <li><input type="checkbox" id="checkbox51" value="Reading"><label for="checkbox51">Чтение</label></li>
+                        <li><input type="checkbox" id="checkbox52" value="Piano"><label for="checkbox52">Пианино</label></li>
+                        <li><input type="checkbox" id="checkbox53" value="Coffee"><label for="checkbox53">Кофе</label></li>
+                        <li><input type="checkbox" id="checkbox54" value="Fitness"><label for="checkbox54">Фитнес</label></li>
+                        <li><input type="checkbox" id="checkbox55" value="Gaming"><label for="checkbox55">Игы</label></li>
+                        <li><input type="checkbox" id="checkbox56" value="Nature"><label for="checkbox56">Природа</label></li>
+                        <li><input type="checkbox" id="checkbox57" value="Sims"><label for="checkbox57">Симс</label></li>
+                        <li><input type="checkbox" id="checkbox58" value="MakeUp"><label for="checkbox58">Макияж</label></li>
+                    </ul>
+                </div>
+
+                <div class="row-buttons">
+                    <button id="search" class="btn-search">Искать</button>
+                    <a href="/createRoom" class="link-portfolio">Создать комнату</a>
+                </div>
+            </div>
+
+            <div class="rooms-block">
+                <fieldset class="rec-fieldset" id="about">
+                </fieldset>
+            </div>
+
+            <div class="rooms-block">
+                <fieldset class="rec-fieldset" id="rec">
+                </fieldset>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+<div class="page_footer">
+    <div class="footer-box">
+        <div class="footer-col1">
+            &#169; 2023 Все права защищены
+        </div>
+        <div class="footer-col3" >
+            <a href="/termsPolicy" >Условия и положения</a>
+        </div>
+    </div>
+</div>
+
+
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script type="text/javascript">
+
+    let user_info;
+
+    var colors = [
+        '#A4C5E9', '#32c787', '#00BCD4', '#ff5652',
+        '#ffc107', '#F2C2D4', '#FF9800', '#39bbb0',
+        '#ED4477', '#B5F2E3', '#C0F8D1', '#D4BFFF'
+    ];
+
+    if (getCookie("Authorization") == null) {
+        window.location.replace("/loginUser");
+    }
+
+    var menu_list = document.getElementById('menuList');
+    menu_list.style.maxHeight = "0px";
+
+    function togglemenu() {
+        menu_list.style.color = "white";
+        if (menu_list.style.maxHeight === "0px") {
+            menu_list.style.maxHeight = "300px"
+        }
+        else {
+            menu_list.style.maxHeight = "0px"
+        }
+    }
+
+    function getAvatarColor(messageSender) {
+        var hash = 0;
+        for (var i = 0; i < messageSender.length; i++) {
+            hash = 31 * hash + messageSender.charCodeAt(i);
+        }
+
+        var index = Math.abs(hash % colors.length);
+        return colors[index];
+    }
+
+    function getRussianCity(city) {
+        const kazakhTranslations = {
+            'Astana': 'Астана',
+            'Almaty': 'Алматы',
+            'Shymkent': 'Шымкент',
+            'Aktobe': 'Актобе',
+            'Karaganda': 'Караганда',
+            'Aktau':'Актау',
+            'Ekibastuz':'Экибастуз',
+            'Atyrau': 'Атырау',
+            'Taraz': 'Тараз',
+            'Pavlodar': 'Павлодар',
+            'Semey': 'Семей',
+            'Ust-Kamenogorsk': 'Усть-Каменогорск',
+            'Kyzylorda': 'Кызылорда',
+            'Uralsk': 'Уральск',
+            'Kostanay': 'Костанай',
+            'Petropavlsk': 'Петропавльск',
+            'Taldykorgan': 'Талдыкорган',
+            'Kokshetau': 'Кокшетау',
+            // Add more translations as needed
+        };
+
+        return kazakhTranslations[city] || city;
+    }
+
+    function getRussianLanguage(interest) {
+        const russianTranslations = {
+            'Football': 'Футбол',
+            'Sport': 'Спорт',
+            'Basketball': 'Баскетбол',
+            'Books': 'Книги',
+            'Movies': 'Фильмы',
+            'Painting': 'Живопись',
+            'TableGames': 'Настольные игры',
+            'Music': 'Музыка',
+            'Twitch': 'Твич',
+            'Netflix': 'Нетфликс',
+            'Politics': 'Политика',
+            'Tea': 'Чай',
+            'Swimming': 'Плавание',
+            'Beer': 'Пиво',
+            'Bicycling': 'Катание на велосипеде',
+            'TikTok': 'ТикТок',
+            'Museum': 'Музей',
+            'Dance': 'Танцы',
+            'Cooking': 'Готовка',
+            'Hockey': 'Хоккей',
+            'Manga': 'Манга',
+            'MartialArts': 'Боевые искусства',
+            'Marvel': 'Марвел',
+            'Running': 'Бег',
+            'Gym': 'Спортзал',
+            'IceSkating': 'Коньки',
+            'Singing': 'Пение',
+            'Karaoke': 'Караоке',
+            'Memes': 'Мемы',
+            'NFT': 'NFT',
+            'Fishing': 'Рыбалка',
+            'Investing': 'Инвестиции',
+            'Cosplay': 'Косплей',
+            'Bowling': 'Боулинг',
+            'Gardening': 'Садоводство',
+            'Photography': 'Фотография',
+            'Yoga': 'Йога',
+            'Chess': 'Шахматы',
+            'Travel': 'Путешествия',
+            'Coding': 'Кодинг',
+            'Guitar': 'Гитара',
+            'Cats': 'Кошки',
+            'Dogs': 'Собаки',
+            'Hiking': 'Туризм',
+            'Snowboarding': 'Сноуборд',
+            'Fashion': 'Мода',
+            'Camping': 'Кемпинг',
+            'Writing': 'Писательство',
+            'Surfing': 'Серфинг',
+            'Skiing': 'Лыжи',
+            'Reading': 'Чтение',
+            'Piano': 'Пианино',
+            'Coffee': 'Кофе',
+            'Fitness': 'Фитнес',
+            'Gaming': 'Игры',
+            'Nature': 'Природа',
+            'Sims': 'Симс',
+            'MakeUp': 'Макияж',
+            // Add more translations as needed
+        };
+
+        return russianTranslations[interest] || interest;
+    }
+
+    function parseJwt(token) {
+        let base64Url = token.split('.')[1];
+        let base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+        let jsonPayload = decodeURIComponent(atob(base64).split('').map(function (c) {
+            return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+        }).join(''));
+
+        return JSON.parse(jsonPayload);
+    }
+
+    function getCookie(name) {
+        const value = `; ${document.cookie}`;
+        const parts = value.split(`; ${name}=`);
+        if (parts.length === 2) return parts.pop().split(';').shift();
+    }
+
+    $(document).ready(function () {
+        $('#about').hide();
+        $('#rec').hide();
+        $('#advance').hide();
+        $('#user__name').html('');
+        let myCookie = getCookie("Authorization");
+        var interests = [];
+
+        $("input:checkbox").change(function() {
+            if($(this).is(":checked")) {
+                interests.push(this.value);
+                console.log(this.value + " added");
+            } else {
+                let pos = interests.indexOf(this);
+                interests.splice(pos, 1);
+                console.log(this.value + " removed");
+            }
+        });
+
+        $('#filter').click( function () {
+            console.log("opened");
+            if (!$('#advance').is(":visible")) {
+                $('#advance').show();
+                console.log("showing")
+            }
+            else {
+                $('#advance').hide();
+            }
+        });
+
+        if (getCookie("Authorization") != null) {
+            let resultC = parseJwt(myCookie);
+            let email = resultC.sub;
+            $('.header-login').html("<a class=\"header-login-link\" href=\"/profile\">\n" +
+                "            <div class=\"header-login-button\">\n" +
+                "                <i class=\"svg-icon fas fa-user-circle\" style=\"margin-right: 5px\"></i>" +
+                email + "\n" +
+                "            </div>\n" +
+                "        </a>");
+
+            $.ajax({
+                type: "GET",
+                headers: {'Authorization': myCookie},
+                contentType: 'application/json',
+                url: "getUser",
+                data: {email: email},
+                dataType: 'json',
+                success: function (result) {
+                    user_info = result;
+                    if (user_info.enabled === false) {
+                        window.location.replace("/profile");
+                    }
+                }
+            });
+
+            $.ajax({
+                type: "GET",
+                headers: {'Authorization': myCookie},
+                contentType: 'application/json',
+                url: "room/find/recommend",
+                data: {email: email},
+                dataType: 'json',
+                success: function (result) {
+                    console.log(result);
+                    $('#rec').show();
+                    $('#rec').append("<legend>Рекомендации</legend>");
+                    result.forEach((item, i) => {
+                        console.log(item.users);
+                        let count = item.users.length;
+                        console.log(count);
+
+                        if (count < item.maxMembers) {
+                            // get the user interests
+                            var html = "";
+
+                            var userExists = item.users.some(function(user) {
+                                return user.email === user_info.email;
+                            });
+
+                            html += userExists
+                                ? "<a style='text-decoration: none' href='/chats'><div class=\"room-button\">Открыть</div></a>"
+                                : "<div class=\"room-button\" id=\"join" + item.id + "\">Присоединиться</div>";
+
+                            $('#rec').append(
+                                "<div class=\"room\" style=\"outline: 5px solid " + getAvatarColor(item.header) + ";\">\n" +
+                                "                        <div class=\"profile-room-head\">\n" +
+                                "                            <h3 class=\"profile-room-title\">" + item.header + "</h3>\n" +
+                                "                            <div class=\"profile-room-info\" id=\"messages"+item.id+"\" style='color: #2a6496'>\n" +
+                                "                            </div>\n" +
+                                "                            <div class=\"profile-room-info\">\n" +
+                                "                                <p>Описание: " + item.description + "</p>\n" +
+                                "                            </div>\n" +
+                                "                            <div class=\"profile-room-info\">\n" +
+                                "                                <p>Возрастной диапазон: " + item.minAgeLimit + "-" + item.maxAgeLimit + "</p>\n" +
+                                "                                <p>Город: " + getRussianCity(item.city) + "</p>\n" +
+                                "                            </div>\n" +
+                                "                            <div class=\"room-interests\" id=\"roomInterests" + item.id + "\">\n" +
+                                "                            </div>\n" +
+                                "                        </div>\n" +
+                                "                        <div class=\"room-buttons\">\n" +
+                                "                            <div class=\"profile-room-count\">\n" +
+                                "                                <i class=\"svg-icon fas fa-user-circle\" style=\"margin-right: 5px\"></i> " + count + '/' + item.maxMembers + "\n" +
+                                "                            </div>" + html + "\n" +
+                                "                        </div>\n" +
+                                "                    </div>"
+                            );
+
+                            var userInterests = user_info.interests;
+                            var roomInterests = item.interests;
+                            $('#roomInterests' + item.id).append("Интересы:&nbsp;");
+                            for (var i = 0; i < roomInterests.length; i++) {
+                                var roomInterest = roomInterests[i];
+                                var matched = userInterests.includes(roomInterest);
+                                var interestClass = matched ? 'matched-interest' : '';
+                                var interestHtml = '<div class="profile-room-interest ' + interestClass + '">' + getRussianLanguage(roomInterest) + '</div>';
+                                $('#roomInterests' + item.id).append(interestHtml);
+                            }
+
+                            if (!userExists) {
+                                $('#join' + item.id).on('click', function () {
+                                    let resultC = parseJwt(myCookie);
+                                    let email = resultC.sub;
+                                    $.ajax({
+                                        type: "POST",
+                                        headers: {'Authorization': myCookie},
+                                        contentType: 'application/json',
+                                        url: "room/join",
+                                        data: JSON.stringify({"email": email, "roomId": item.id}),
+                                        dataType: 'json',
+                                        complete: function (result) {
+                                            console.log(item.id);
+                                            console.log(result.responseText);
+                                            if (result.responseText === "User was added to room.") {
+                                                window.location.replace("/chats");
+                                            } else {
+                                                $('#messages' + item.id).html(result.responseText);
+                                            }
+                                        }
+                                    });
+                                });
+                            }
+                        }
+                    })
+                },
+                error: function (e) {
+                    console.log("ERROR: ", e);
+                }
+            });
+
+            $('#search').on('click', function () {
+                $('#about').hide();
+                $('#about').html('');
+                let resultC = parseJwt(myCookie);
+                let email = resultC.sub;
+                let header = $('#header').val();
+                let minAgeLimit = $('#minAgeLimit').val();
+                let maxAgeLimit = $('#maxAgeLimit').val();
+                console.log($('#maxAgeLimit').val());
+                if ($('#maxAgeLimit').val().length < 1) {
+                    maxAgeLimit = 120;
+                }
+                let maxMembers = $('#maxMembers').val();
+                if ($('#maxMembers').val().length < 1) {
+                    maxMembers = 20;
+                }
+                let city = $('#city').val();
+
+                $.ajax({
+                    type: "POST",
+                    headers: {'Authorization': myCookie},
+                    contentType: 'application/json',
+                    url: "room/find/findRoom",
+                    data: JSON.stringify({
+                        email: email, city: city, header: header, minAgeLimit: minAgeLimit,
+                        maxAgeLimit: maxAgeLimit, maxMembers: maxMembers, interests: interests
+                    }),
+                    dataType: 'json',
+                    success: function (result) {
+                        console.log(result);
+                        $('#about').show();
+                        $('#about').append("<legend>Результат поиска</legend>");
+                        result.forEach((item, i) => {
+                            console.log(item.users);
+                            let count = item.users.length;
+                            console.log(count);
+
+                            if (count < item.maxMembers) {
+                                var html = "";
+
+                                var userExists = item.users.some(function(user) {
+                                    return user.email === user_info.email;
+                                });
+
+                                html += userExists
+                                    ? "<a style='text-decoration: none' href='/chats'><div class=\"room-button\">Открыть</div></a>"
+                                    : "<div class=\"room-button\" id=\"join" + item.id + "\">Присоединиться</div>";
+
+                                $('#about').append(
+                                    "<div class=\"room\" style=\"outline: 5px solid " + getAvatarColor(item.header) + ";\">\n" +
+                                    "                        <div class=\"profile-room-head\">\n" +
+                                    "                            <h3 class=\"profile-room-title\">" + item.header + "</h3>\n" +
+                                    "                            <div class=\"profile-room-info\" id=\"messages"+item.id+"\" style='color: #2a6496'>\n" +
+                                    "                            </div>\n" +
+                                    "                            <div class=\"profile-room-info\">\n" +
+                                    "                                <p>Описание: " + item.description + "</p>\n" +
+                                    "                            </div>\n" +
+                                    "                            <div class=\"profile-room-info\">\n" +
+                                    "                                <p>Возрастной диапазон: " + item.minAgeLimit + "-" + item.maxAgeLimit + "</p>\n" +
+                                    "                                <p>Город: " + getRussianCity(item.city) + "</p>\n" +
+                                    "                            </div>\n" +
+                                    "                            <div class=\"room-interests\" id=\"roomInterests" + item.id + "\">\n" +
+                                    "                            </div>\n" +
+                                    "                        </div>\n" +
+                                    "                        <div class=\"room-buttons\">\n" +
+                                    "                            <div class=\"profile-room-count\">\n" +
+                                    "                                <i class=\"svg-icon fas fa-user-circle\" style=\"margin-right: 5px\"></i> " + count + '/' + item.maxMembers + "\n" +
+                                    "                            </div>" + html + "\n" +
+                                    "                        </div>\n" +
+                                    "                    </div>"
+                                );
+
+                                var userInterests = user_info.interests;
+                                var roomInterests = item.interests;
+                                $('#roomInterests' + item.id).append("Интересы:&nbsp;");
+                                for (var i = 0; i < roomInterests.length; i++) {
+                                    var roomInterest = roomInterests[i];
+                                    var matched = userInterests.includes(roomInterest);
+                                    var interestClass = matched ? 'matched-interest' : '';
+                                    var interestHtml = '<div class="profile-room-interest ' + interestClass + '">' + getRussianLanguage(roomInterest) + '</div>';
+                                    $('#roomInterests' + item.id).append(interestHtml);
+                                }
+
+                                if (!userExists) {
+                                    $('#join' + item.id).on('click', function () {
+                                        let resultC = parseJwt(myCookie);
+                                        let email = resultC.sub;
+                                        $.ajax({
+                                            type: "POST",
+                                            headers: {'Authorization': myCookie},
+                                            contentType: 'application/json',
+                                            url: "room/join",
+                                            data: JSON.stringify({"email" : email, "roomId" : item.id}),
+                                            dataType: 'json',
+                                            complete: function (result) {
+                                                console.log(item.id);
+                                                console.log(result.responseText);
+                                                if (result.responseText === "User was added to room.") {
+                                                    window.location.replace("/chats");
+                                                }
+                                                else {
+                                                    $('#messages' + item.id).html(result.responseText);
+                                                }
+                                            }
+                                        });
+                                    });
+                                }
+
+                            }
+                        })
+                    },
+                    error: function (e) {
+                        console.log("ERROR: ", e);
+                    }
+                });
+            });
+        }
+    });
+
+</script>
+</body>
+</html>

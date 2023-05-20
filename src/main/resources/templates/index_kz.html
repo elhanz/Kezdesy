@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en"> <!--<![endif]-->
+<head>
+
+    <title>Главная</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="/img/mini_logo.png" type="image/x-icon">
+    <link th:href="@{/css/main.css}" rel="stylesheet"  type="text/css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/kute.js@2.1.2/dist/kute.min.js"></script>
+</head>
+
+<body class="body">
+<div class="page-header">
+    <div class="header-logo">
+        <div class="logo">
+            <a href="/"><img src="/img/logo2.png" class="logo_png" alt=""/></a>
+        </div>
+    </div>
+    <div class="header-menu">
+        <ul class="menu-list" id="menuList">
+            <li class="list-item"><a href="/rooms">Бөлмелер</a></li>
+            <li class="list-item"><a href="/chats">Чаттар</a></li>
+            <li class="list-item"><a href="/profile">Профиль</a></li>
+        </ul>
+    </div>
+    <div class="header-login">
+        <a class="header-login-link" href="/loginUser"><div class="header-login-button">КІРУ</div></a>
+    </div>
+    <div class="logo">
+        <button class="menu menu-icon" onclick="this.classList.toggle('opened');this.setAttribute('aria-expanded', this.classList.contains('opened')); togglemenu()" aria-label="Main Menu">
+            <svg width="50" height="60" viewBox="0 0 100 100">
+                <path class="line line1" d="M 20,29.000046 H 80.000231 C 80.000231,29.000046 94.498839,28.817352 94.532987,66.711331 94.543142,77.980673 90.966081,81.670246 85.259173,81.668997 79.552261,81.667751 75.000211,74.999942 75.000211,74.999942 L 25.000021,25.000058" />
+                <path class="line line2" d="M 20,50 H 80" />
+                <path class="line line3" d="M 20,70.999954 H 80.000231 C 80.000231,70.999954 94.498839,71.182648 94.532987,33.288669 94.543142,22.019327 90.966081,18.329754 85.259173,18.331003 79.552261,18.332249 75.000211,25.000058 75.000211,25.000058 L 25.000021,74.999942" />
+            </svg>
+        </button>
+    </div>
+</div>
+
+<!-- The Modal -->
+<div id="myModal" class="modal">
+
+    <!-- Modal content -->
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <div class="slider">
+            <div class="slide">
+                <img src="/img/Frame%2016.png" style="height: 30vw; width: auto" alt="Slider Image 1">
+                <span>Kezdesy - ортақ қызығушылары бар адамдарды біріктіруге арналған веб-бағдарлама.</span>
+            </div>
+            <div class="slide">
+                <img src="/img/frame2.png" style="width: auto; height: 30vw" alt="Slider Image 2">
+                <span style="text-align: center">Біздің компания осы веб-сайтты пайдаланатын 18 жасқа толмаған адамдар үшін жауап бермейді.</span>
+                <span style="text-align: center">Ата-аналар немесе заңды қамқоршылар кәмелетке толмағандарды қадағалауға және олардың веб-сайтты жауапкершілікпен</span>
+                <span style="text-align: center">түрде пайдалануын қамтамасыз етуге жауапты.</span>
+            </div>
+            <div class="slide">
+                <img src="/img/parent-control.png" style="width: auto; height: 30vw" alt="Slider Image 3">
+                <p style="text-align: center">Егер сіз 18 жасқа толмаған болсаңыз, жауапты ересек адамның басшылығынсыз және бақылауынсыз бұл веб-сайтты пайдаланбаңыз.</p>
+            </div>
+        </div>
+        <div style="display: flex; justify-content: flex-end; width: auto">
+            <button class="next">Келесі</button>
+        </div>
+    </div>
+
+</div>
+<div class="page_content">
+    <div class="container-first">
+        <div class="content1">
+            <div class="container-first-left">
+                <h2>Kezdesy веб сайтына қош келдіңіз!</h2>
+                <p>
+                    Kezdesy-ортақ мүдделер негізінде пайдаланушыларды біріктіруге арналған веб-бағдарлама.
+                    Сонымен қатар, мұнда сіз адамдар өзара әрекеттесе алатын, идеялармен бөлісетін және жағымды қарым-қатынас орнататын қолайлы ортаны таба аласыз. Қазір бастаңыз!</p>
+                <a href="/auth"><div class="header-login-button">Тіркелу</div></a>
+
+                <h3>Тілді таңдаңыз</h3>
+                <div class="radio-inputs">
+                    <label class="radio">
+                        <input type="radio" name="language" value="kz" onclick="setLanguageCookie('kz')" checked>
+                        <span class="name">Қазақша</span>
+                    </label>
+                    <label class="radio">
+                        <input type="radio" name="language" value="ru" onclick="setLanguageCookie('ru')">
+                        <span class="name">Орысша</span>
+                    </label>
+                    <label class="radio">
+                        <input type="radio" name="language" value="en" onclick="setLanguageCookie('en')">
+                        <span class="name">Ағылшынша</span>
+                    </label>
+                </div>
+            </div>
+
+            <div class="container-first-right">
+                <svg
+                        class="blob-motion"
+                        id="visual"
+                        width="560"
+                        height="540"
+                        xmlns="http://www.w3.org/2000/svg"
+                        style="position: absolute"
+                        version="1.1">
+                    <g transform="translate(300.7013053714876 339.5940679849689)">
+                        <path
+                                id="blob1"
+                                d="M170.2 -166.2C220.2 -120.2 260.1 -60.1 257.9 -2.2C255.6 55.6 211.3 111.3 161.3 138.3C111.3 165.3 55.6 163.6 0.5 163.2C-54.7 162.7 -109.4 163.4 -134.4 136.4C-159.4 109.4 -154.7 54.7 -155.8 -1.1C-156.8 -56.8 -163.6 -113.6 -138.6 -159.6C-113.6 -205.6 -56.8 -240.8 1.6 -242.5C60.1 -244.1 120.2 -212.2 170.2 -166.2"
+                                fill="#BFEBD5">
+                        </path>
+                    </g>
+                    <g transform="translate(300.242077129147 303.6478896629431)">
+                        <path
+                                id="blob2"
+                                d="M183.1 -175.8C224.8 -141.4 237.4 -70.7 236.2 -1.2C235 68.4 220 136.7 178.4 169C136.7 201.4 68.4 197.7 6.6 191.1C-55.2 184.5 -110.3 175 -158.8 142.6C-207.3 110.3 -249.2 55.2 -239.3 9.9C-229.4 -35.4 -167.7 -70.7 -119.2 -105C-70.7 -139.4 -35.4 -172.7 17.7 -190.4C70.7 -208 141.4 -210.1 183.1 -175.8"
+                                fill="#BFEBD5">
+                        </path>
+                    </g>
+                </svg>
+                <img src="/img/home-pic1.png" alt="">
+            </div>
+        </div>
+    </div>
+    <div class="container-second">
+        <div class="content2">
+            <div class="container-second-left">
+                <img src="/img/home-pic2.png" alt="">
+            </div>
+            <div class="container-second-right">
+                <h2>Қалай қолдануға болады?</h2>
+                <p>1) Жүйеге кіріңіз немесе тіркеліңіз</p>
+                <p>2) Қызығушылықтарыңызды таңдаңыз</p>
+                <p>3) "Бөлмелер" бөліміне өтіп, бір бөлмеге кіріңіз</p>
+                <p>Егер Сіз өзіңізге өолайлы бөлмені таба алмасаңыз, өз бөлмеңізді құрай аласыз!</p>
+                <a href="/createRoom"><div class="header-login-button">Бөлмені құру</div></a>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="page_footer">
+    <div class="footer-box">
+        <div class="footer-col1">
+            &#169; 2023 Барлық құқықтар қорғалған
+        </div>
+        <div class="footer-col3" >
+            <a href="/termsPolicy" >Шарттар мен ережелер</a>
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script type="text/javascript">
+
+    function setLanguageCookie(language) {
+        var date = new Date();
+        date.setTime(date.getTime() + (30 * 24 * 60 * 60 * 1000)); // 30 days expiration
+        var expires = "expires=" + date.toUTCString();
+        document.cookie = "lang=" + language + ";" + expires + ";path=/";
+        location.reload(); // Refresh the page to apply the language cookie
+    }
+
+    const tween = KUTE.fromTo(
+        '#blob1',
+        { path: '#blob1' },
+        { path: '#blob2' },
+        { repeat: 999, duration: 3000, yoyo: true }
+    ).start();
+
+    var menu_list = document.getElementById('menuList');
+    menu_list.style.maxHeight = "0px";
+
+    function togglemenu() {
+        menu_list.style.color = "white";
+        if (menu_list.style.maxHeight === "0px") {
+            menu_list.style.maxHeight = "300px"
+        }
+        else {
+            menu_list.style.maxHeight = "0px"
+        }
+    }
+
+    // Get the modal
+    var modal = document.getElementById("myModal");
+
+    // Get the <span> element that closes the modal
+    var span = document.getElementsByClassName("close")[0];
+
+    // Get the slider
+    var slides = document.querySelectorAll(".slide");
+
+    // Get the previous and next buttons
+    var nextBtn = document.querySelector(".next");
+
+    // Set the initial slide index to 1
+    var slideIndex = 1;
+
+
+    // Next button click event
+    nextBtn.addEventListener("click", function() {
+        showSlide(slideIndex += 1);
+    });
+
+    // Function to show the current slide
+    function showSlide(n) {
+        // Wrap around if at end of slides
+        if (n > slides.length) {
+            slideIndex = 1;
+        } else if (n < 1) {
+            slideIndex = slides.length;
+        }
+
+        // Hide all slides
+        for (var i = 0; i < slides.length; i++) {
+            slides[i].style.display = "none";
+        }
+
+        // Show the current slide
+        slides[slideIndex - 1].style.display = 'flex';
+        slides[slideIndex - 1].style.flexDirection = 'column';
+        slides[slideIndex - 1].style.alignItems = 'center';
+    }
+
+    // When the user clicks on <span> (x), close the modal
+    span.addEventListener("click", function() {
+        modal.style.display = "none";
+    });
+
+    // When the user clicks anywhere outside of the modal, close it
+    window.addEventListener("click", function(event) {
+        if (event.target === modal) {
+            modal.style.display = "none";
+        }
+    });
+
+    let user_info;
+
+    function parseJwt(token) {
+        let base64Url = token.split('.')[1];
+        let base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+        let jsonPayload = decodeURIComponent(atob(base64).split('').map(function (c) {
+            return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+        }).join(''));
+
+        return JSON.parse(jsonPayload);
+    }
+
+    function getCookie(name) {
+        const value = `; ${document.cookie}`;
+        const parts = value.split(`; ${name}=`);
+        if (parts.length === 2) return parts.pop().split(';').shift();
+    }
+
+    $(document).ready(function () {
+        if (getCookie("Authorization") != null) {
+            let myCookie = getCookie("Authorization");
+            let resultC = parseJwt(myCookie);
+            let email = resultC.sub;
+            $('.header-login').html("<a class=\"header-login-link\" href=\"/profile\">\n" +
+                "            <div class=\"header-login-button\">\n" +
+                "                <i class=\"svg-icon fas fa-user-circle\" style=\"margin-right: 5px\"></i>" +
+                email + "\n" +
+                "            </div>\n" +
+                "        </a>");
+        }
+        else {
+            modal.style.display = "block";
+            slideIndex = 1;
+            showSlide(slideIndex);
+        }
+
+    });
+
+</script>
+
+</body>
+</html>

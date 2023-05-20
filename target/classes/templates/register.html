@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link th:href="@{/css/login.css}" rel="stylesheet"  type="text/css">
+    <link rel="shortcut icon" href="/img/mini_logo.png" type="image/x-icon">
+
     <title>Register</title>
 </head>
 <body>
@@ -38,15 +40,17 @@
                 </select>
                 <select name="login" id="city" class="fadeIn third">
                     <option value="">- city -</option>
-                    <option value="Nur-Sultan">Astana</option>
+                    <option value="Astana">Astana</option>
                     <option value="Almaty">Almaty</option>
                     <option value="Shymkent">Shymkent</option>
                     <option value="Aktobe">Aktobe</option>
                     <option value="Karaganda">Karaganda</option>
+                    <option value="Aktau">Aktau</option>
+                    <option value="Ekibastuz">Ekibastuz</option>
                     <option value="Atyrau">Atyrau</option>
                     <option value="Taraz">Taraz</option>
                     <option value="Pavlodar">Pavlodar</option>
-                    <option value="Semei">Semei</option>
+                    <option value="Semey">Semey</option>
                     <option value="Ust-Kamenogorsk">Ust-Kamenogorsk</option>
                     <option value="Kyzylorda">Kyzylorda</option>
                     <option value="Uralsk">Uralsk</option>
@@ -55,6 +59,11 @@
                     <option value="Taldykorgan">Taldykorgan</option>
                     <option value="Kokshetau">Kokshetau</option>
                 </select>
+            <div style="display: flex; align-items: center; justify-content: center; margin-bottom: 30px; margin-top: 10px; padding: 0 10px; flex-wrap: wrap;">
+                <input id="terms" type="checkbox" />
+                <label for="terms">I have read and agreed to the </label>
+                <a href="/termsPolicy">Terms and Conditions</a>
+            </div>
             <button type="submit" id="registrationButton" class="button fadeIn fourth">Registration</button>
 
             <div id="formFooter">
@@ -89,14 +98,18 @@
 
 
     $(document).ready(function () {
-            $('#registrationButton').on('click', function () {
-                let email = $('#email').val();
-                let password = $('#password-field').val();
-                let fname = $('#fname').val();
-                let lname = $('#lname').val();
-                let age = $('#age').val();
-                let gender = $('#gender').val();
-                let city = $('#city').val();
+        $('#registrationButton').on('click', function () {
+            let email = $('#email').val();
+            let password = $('#password-field').val();
+            let fname = $('#fname').val();
+            let lname = $('#lname').val();
+            let age = $('#age').val();
+            let gender = $('#gender').val();
+            let city = $('#city').val();
+            $('#result_msg').css("border", "1px solid green")
+            $('#result_msg').html("Success!  Please, check your email for to complete your registration");
+
+            if($('#terms').is(":checked")) {
                 $.ajax({
                     type: "POST",
                     contentType: 'application/json',
@@ -108,38 +121,21 @@
                     dataType: 'json',
                     complete: function (result) {
                         console.log(result.responseText);
-                        if (result.responseText == "User was registered") {
-                            //console.log(123);
-                            var tokens;
-
-                            var xhr = new XMLHttpRequest();
-                            var body = 'email=' + encodeURIComponent(email) + '&password=' + encodeURIComponent(password);
-                            xhr.open("POST", 'login', true);
-                            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-                            xhr.onreadystatechange = function() {
-                                if (this.readyState != 4 && xhr.status != 200) {
-                                    $('#result_msg').html('Wrong username or password');
-                                    return;
-                                }
-                                if(xhr.readyState === 4 && xhr.status === 200) {
-                                    console.log(this.responseText);
-                                    tokens = JSON.parse(this.responseText);
-                                    console.log("access_token: ", tokens.access_token);
-                                    console.log("email: ", tokens.email);
-                                    document.cookie="Authorization=Bearer " + tokens.access_token;
-                                    window.location.replace("/setInterests");
-                                }
-                            };
-                            xhr.send(body);
-                        } else {
+                        if (result.status === 400) {
+                            console.log("Bad request: " + result.responseText);
                             $('#result_msg').css("border", "1px solid red")
                             $('#result_msg').html(result.responseText);
+                        } else {
+                            console.log("Request successful: " + result.responseText);
                         }
                     }
-                })
-            })
-
-        }
-    );
+                });
+            }
+            else {
+                $('#result_msg').css("border", "1px solid red")
+                $('#result_msg').html("Please read and agree to the Terms and Conditions");
+            }
+        })
+    });
 </script>
 </html>

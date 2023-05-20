@@ -3,6 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <link th:href="@{/css/login.css}" rel="stylesheet"  type="text/css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="/img/mini_logo.png" type="image/x-icon">
     <title>Edit</title>
 </head>
 <body>
@@ -11,25 +13,27 @@
         <h2 class="active"> Change some data </h2>
 
         <div id="result_msg"></div>
-        <input type="text" id="fname" class="fadeIn third" value="" name="login">
-        <input type="text" id="lname" class="fadeIn third" value="" name="login" placeholder="last name">
-        <input type="number" id="age" class="fadeIn third" value="" name="login" min="12">
-        <select name="login" id="gender" class="fadeIn third">
+        <input type="text" id="fname" class="fadeIn third" value="" name="login" required>
+        <input type="text" id="lname" class="fadeIn third" value="" name="login" placeholder="last name" required>
+        <input type="number" id="age" class="fadeIn third" value="" name="login" min="18" required>
+        <select name="login" id="gender" class="fadeIn third" required>
             <option value="">- gender -</option>
             <option value="Male">Male</option>
             <option value="Female">Female</option>
         </select>
-        <select name="login" id="city" class="fadeIn third">
+        <select name="login" id="city" class="fadeIn third" required>
             <option value="">- city -</option>
             <option value="Astana">Astana</option>
             <option value="Almaty">Almaty</option>
             <option value="Shymkent">Shymkent</option>
             <option value="Aktobe">Aktobe</option>
             <option value="Karaganda">Karaganda</option>
+            <option value="Aktau">Aktau</option>
+            <option value="Ekibastuz">Ekibastuz</option>
             <option value="Atyrau">Atyrau</option>
             <option value="Taraz">Taraz</option>
             <option value="Pavlodar">Pavlodar</option>
-            <option value="Semei">Semei</option>
+            <option value="Semey">Semey</option>
             <option value="Ust-Kamenogorsk">Ust-Kamenogorsk</option>
             <option value="Kyzylorda">Kyzylorda</option>
             <option value="Uralsk">Uralsk</option>

@@ -5,6 +5,7 @@
     <title>Profile</title>
     <meta name="description" content="">
     <meta name="author" content="templatemo">
+    <link rel="shortcut icon" href="/img/mini_logo.png" type="image/x-icon">
     <meta charset="UTF-8">
     <link href="http://fonts.googleapis.com/css?family=Raleway:400,300,500,600,700,800,900" rel="stylesheet" type="text/css" />
     <link href="http://fonts.googleapis.com/css?family=Roboto+Slab:400,700,300,100" rel="stylesheet" type="text/css" />
@@ -29,7 +30,7 @@
         <ul class="menu-list" id="menuList">
             <li class="list-item"><a href="/rooms">Rooms</a></li>
             <li class="list-item"><a href="/chats">Chats</a></li>
-            <li class="list-item selected-link"><a href="/profile">Profile</a></li>
+            <li class="list-item"><a href="/profile" style="color: #74C69D;">Profile</a></li>
         </ul>
     </div>
     <div class="header-login">
@@ -48,15 +49,16 @@
 
 <div class="page_content">
     <div class="profile-container">
-        <div class="content1" style="height: fit-content;">
+        <div class="content2" style="height: fit-content;">
             <div class="profile-container-first-left">
                 <div class="profile-left-block">
                     <div class="profile-picture-block">
                         <div id="image">
                             <i class="svg-icon fas fa-user-circle" style="font-size: 30vh; color: #292D32"></i>
                         </div>
-                        <h2 style="margin-block-end: 0" id="user__name">James Gordon</h2>
-                        <div style="font-size: 18px" id="user__email">jamesgg228@gmail.com</div>
+                        <h2 style="margin-block-end: 0" id="user__name">Loading...</h2>
+                        <div style="font-size: 18px" id="user__email">Loading...</div>
+                        <div id="verifyEmail" style="display:none; font-size: 18px; color: #984040">Please verify your email</div>
                     </div>
                     <a href="" id="logout" style="text-decoration: none">
                         <div class="profile-left-button">Log Out</div>
@@ -77,37 +79,13 @@
                             <div class="profile-info-button">Edit</div>
                         </a>
                         <a href="" id="delete" style="color: white; text-decoration: none;">
-                            <div class="profile-info-button" style="background-color: #b65555">Delete Account</div>
+                            <div class="profile-info-button" style="background-color: #de6666">Delete Account</div>
                         </a>
                     </div>
                 </div>
                 <div class="profile-interests">
                     <h2 style="color: #6e6e6e"> My Interests </h2>
                     <div class="profile-interests-blocks">
-                        <div class="profile-interests-block">
-                            <i class="fa fa-book"></i>
-                            <p style="margin-block-end: 0">Books</p>
-                        </div>
-                        <div class="profile-interests-block">
-                            <i class="fas fa-lightbulb"></i>
-                            <p>TikTok</p>
-                        </div>
-                        <div class="profile-interests-block">
-                            <i class="fa fa-music"></i>
-                            <p>Music</p>
-                        </div>
-                        <div class="profile-interests-block">
-                            <i class="fa fa-futbol-o"></i>
-                            <p>Football</p>
-                        </div>
-                        <div class="profile-interests-block">
-                            <i class="fa-brands fa-youtube"></i>
-                            <p>Youtube</p>
-                        </div>
-                        <div class="profile-interests-block">
-                            <i class="fa-brands fa-youtube"></i>
-                            <p>Youtube</p>
-                        </div>
                     </div>
                     <div class="profile-interests-button-block">
                         <a href="/setInterests" style="color: white; text-decoration: none;">
@@ -118,53 +96,14 @@
             </div>
         </div>
     </div>
-    <div class="container-second" style="display: flex; flex-direction: column">
+    <div class="container-second" style="display: flex; flex-direction: column; min-height: 40vh">
         <div class="profile-rooms-block">
-            <h2 style="margin-left: 3vw"> Rooms </h2>
-            <div class="profile-rooms">
-
-                <div class="profile-room">
-                    <div class="profile-room-head">
-                        <h3 class="profile-room-title">Find people for camp</h3>
-                        <div class="profile-room-info">
-                            <p>Age range: 14-16</p>
-                            <p>City: Astana</p>
-                        </div>
-                        <div class="profile-room-interests">
-                            Interests:&nbsp;
-                            <div class="profile-room-interest">Travel</div>
-                            <div class="profile-room-interest matched-interest">Music</div>
-                            <div class="profile-room-interest">Camp</div>
-                            <div class="profile-room-interest matched-interest">Books</div>
-                            <div class="profile-room-interest">Vampire</div>
-                            <div class="profile-room-interest matched-interest">Tiktok</div>
-                            <div class="profile-room-interest">Monster High</div>
-                            <div class="profile-room-interest">Sport</div>
-                            <div class="profile-room-interest">School</div>
-                        </div>
-                    </div>
-                    <div class="profile-room-buttons">
-                        <div class="profile-room-count">
-                            <i class="svg-icon fas fa-user-circle" style="margin-right: 5px"></i> 4/6
-                        </div>
-                        <div class="profile-room-button">Edit</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="profile-rooms-block">
-            <h2 style="margin-left: 3vw"> Created Rooms </h2>
-            <div class="profile-rooms">
-
-            </div>
-        </div>
-
-        <div class="profile-rooms-block">
-            <h2 style="margin-left: 3vw"> Created Rooms </h2>
+            <h2 style="margin-left: 3vw"> My Rooms </h2>
             <div class="profile-no-rooms">
                 <h2 style="color: #74C69D"> There are no rooms </h2>
-                <div class="profile-no-rooms-button">+ Create Room</div>
+                <a id="createRoomLink" href="/createRoom" style="text-decoration: none"><div class="profile-no-rooms-button">+ Create Room</div></a>
+            </div>
+            <div class="profile-rooms" id="myRoomsList">
             </div>
         </div>
     </div>
@@ -177,7 +116,7 @@
             &#169; 2023 All rights reserved
         </div>
         <div class="footer-col3" >
-            <a href="#" >KEZDESY</a>
+            <a href="/termsPolicy" >Terms and Conditions</a>
         </div>
     </div>
 </div>
@@ -298,7 +237,7 @@
                 return 'fas fa-running';
             case 'Gym':
                 return 'fas fa-dumbbell';
-            case 'Skateboarding':
+            case 'IceSkating':
                 return 'fas fa-skating';
             case 'Singing':
                 return 'fas fa-microphone';
@@ -316,6 +255,54 @@
                 return 'fas fa-hat-wizard';
             case 'Bowling':
                 return 'fas fa-bowling-ball'
+            case 'Gardening':
+                return 'fas fa-seedling';
+            case 'Photography':
+                return 'fas fa-camera';
+            case 'Yoga':
+                return 'fas fa-spa';
+            case 'Chess':
+                return 'fas fa-chess';
+            case 'Travel':
+                return 'fas fa-plane';
+            case 'Coding':
+                return 'fas fa-code';
+            case 'Guitar':
+                return 'fas fa-guitar';
+            case 'Cats':
+                return 'fas fa-cat';
+            case 'Dogs':
+                return 'fas fa-dog';
+            case 'Hiking':
+                return 'fas fa-hiking';
+            case 'Snowboarding':
+                return 'fas fa-snowboarding';
+            case 'Fashion':
+                return 'fas fa-tshirt';
+            case 'Camping':
+                return 'fas fa-campground';
+            case 'Writing':
+                return 'fas fa-pen';
+            case 'Surfing':
+                return 'fas fa-wave-square';
+            case 'Skiing':
+                return 'fas fa-skiing';
+            case 'Reading':
+                return 'fas fa-book-open';
+            case 'Piano':
+                return 'fas fa-keyboard';
+            case 'Coffee':
+                return 'fas fa-coffee';
+            case 'Fitness':
+                return 'fas fa-dumbbell';
+            case 'Gaming':
+                return 'fas fa-gamepad';
+            case 'Nature':
+                return 'fas fa-tree';
+            case 'Sims':
+                return 'fa-solid fa-rhombus';
+            case 'MakeUp':
+                return 'fa-sharp fa-solid fa-lips';
             default:
                 return 'fas fa-lightbulb';
         }
@@ -350,7 +337,7 @@
         if (getCookie("Authorization") != null) {
             let resultC = parseJwt(myCookie);
             let email = resultC.sub;
-            $('.header-login').html("<a class=\"header-login-link\" href=\"#\">\n" +
+            $('.header-login').html("<a class=\"header-login-link\" href=\"/profile\">\n" +
                 "            <div class=\"header-login-button\">\n" +
                 "                <i class=\"svg-icon fas fa-user-circle\" style=\"margin-right: 5px\"></i>" +
                 email + "\n" +
@@ -366,6 +353,15 @@
                 dataType: 'json',
                 success: function (result) {
                     user_info = result;
+                    if(result.interests.length === 0) {
+                        window.location.replace("/setInterests");
+                    }
+                    if (result.enabled === false) {
+                        $('#verifyEmail').css({
+                            display: 'flex'});
+                        $('#createRoomLink').css({
+                            display: 'none'});
+                    }
                     console.log(result);
                     $('#user__email').html(result.email);
                     $('#user__name').html(result.first_name + " " + result.last_name);
@@ -406,6 +402,60 @@
                 error: function (e) {
                     console.log("ERROR: ", e);
                     window.location.replace("/loginUser");
+                }
+            });
+
+            $.ajax({
+                type: "GET",
+                headers: {'Authorization': myCookie},
+                contentType: 'application/json',
+                url: "myRooms",
+                data: {email: email},
+                dataType: 'json',
+                success: function (result) {
+                    if (result.length > 0) {
+                        $('.profile-no-rooms').hide();
+                        result.forEach((item, i) => {
+                            let count = item.users.length;
+                            var htmlBtn = "";
+                            if (item.owner === email) {
+                                htmlBtn = "<a href='#' id='editRoom" + item.id + "' style='text-decoration: none'><div class=\"profile-room-button\">Edit</div></a>";
+                            }
+                            else {
+                                htmlBtn = "<a href='/chats' style='text-decoration: none'><div class=\"profile-room-button\">Open</div></a>";
+                            }
+                            $('#myRoomsList').append("<div class=\"profile-room\">\n" +
+                                "                    <div class=\"profile-room-head\">\n" +
+                                "                        <h3 class=\"profile-room-title\">" + item.header + "</h3>\n" +
+                                "                        <div class=\"profile-room-info\">\n" +
+                                "                            <p>Age range: " + item.minAgeLimit + "-" + item.maxAgeLimit + "</p>\n" +
+                                "                            <p>City: " + item.city + "</p>\n" +
+                                "                        </div>\n" +
+                                "                        <div class=\"room-interests\" id=\"roomInterests" + item.id + "\">\n" +
+                                "                        </div>\n" +
+                                "                    </div>\n" +
+                                "                    <div class=\"profile-room-buttons\">\n" +
+                                "                        <div class=\"profile-room-count\">\n" +
+                                "                            <i class=\"svg-icon fas fa-user-circle\" style=\"margin-right: 5px\"></i>" + count + '/' + item.maxMembers + "\n" +
+                                "                        </div>" + htmlBtn + "</div></div>");
+                            var userInterests = user_info.interests;
+                            var roomInterests = item.interests;
+                            $('#roomInterests' + item.id).append("Interests:&nbsp;");
+                            for (var i = 0; i < roomInterests.length; i++) {
+                                var roomInterest = roomInterests[i];
+                                var matched = userInterests.includes(roomInterest);
+                                var interestClass = matched ? 'matched-interest' : '';
+                                var interestHtml = '<div class="profile-room-interest ' + interestClass + '">' + roomInterest + '</div>';
+                                $('#roomInterests' + item.id).append(interestHtml);
+                            }
+
+                            $('#editRoom' + item.id).on('click', function () {
+                                eraseCookie("RoomId");
+                                document.cookie = "RoomId= " + item.id;
+                                window.location.replace("/editRoom");
+                            });
+                        });
+                    }
                 }
             });
         } else {

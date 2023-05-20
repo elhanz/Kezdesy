@@ -2,8 +2,8 @@ package app.kezdesy.service.implementation;
 
 import app.kezdesy.entity.Role;
 import app.kezdesy.entity.User;
-import app.kezdesy.repository.RoleRepo;
-import app.kezdesy.repository.UserRepo;
+import app.kezdesy.repository.RoleRepository;
+import app.kezdesy.repository.UserRepository;
 import app.kezdesy.service.interfaces.IAdminService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,9 +15,9 @@ import java.util.List;
 @RequiredArgsConstructor
 public class AdminServiceImpl implements IAdminService {
     @Autowired
-    private final UserRepo userRepo;
+    private final UserRepository userRepository;
     @Autowired
-    private final RoleRepo roleRepo;
+    private final RoleRepository roleRepo;
 
     @Override
     public Role saveRole(Role role) {
@@ -26,15 +26,15 @@ public class AdminServiceImpl implements IAdminService {
 
     @Override
     public boolean addRoleToUser(String email, String roleName) {
-        User user = userRepo.findByEmail(email);
-        if (user == null || roleRepo.findByName(roleName) == null ) return false;
+        User user = userRepository.findByEmail(email);
+        if (user == null || roleRepo.findByName(roleName) == null) return false;
         user.getRoles().add(roleRepo.findByName(roleName));
-        userRepo.save(user);
+        userRepository.save(user);
         return true;
     }
 
     @Override
     public List<User> getAllUsers() {
-        return userRepo.findAll();
+        return userRepository.findAll();
     }
 }

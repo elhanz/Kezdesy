@@ -5,6 +5,7 @@
     <title>Home</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="/img/mini_logo.png" type="image/x-icon">
     <link th:href="@{/css/main.css}" rel="stylesheet"  type="text/css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" crossorigin="anonymous">
@@ -47,19 +48,24 @@
         <span class="close">&times;</span>
         <div class="slider">
             <div class="slide">
-                <img src="/img/Frame%2016.png" style="width: 50vw; height: auto" alt="Slider Image 1">
-                <h2>Title 1</h2>
+                <img src="/img/Frame%2016.png" style="height: 30vw; width: auto" alt="Slider Image 1">
+                <span>Kezdesy is website application designed to bring together</span>
+                <span>individuals with shared interests.</span>
             </div>
             <div class="slide">
-                <img src="/img/Frame%2017.png" style="width: 50vw; height: auto" alt="Slider Image 2">
-                <h2>Title 2</h2>
+                <img src="/img/frame2.png" style="width: auto; height: 30vw" alt="Slider Image 2">
+                <span style="text-align: center">Our company does not take responsibility for individuals under the age of 18 who use this website.</span>
+                <span style="text-align: center">It is the responsibility of parents or legal guardians to supervise minors and ensure that they</span>
+                <span style="text-align: center">use the website in a responsible and appropriate manner.</span>
             </div>
             <div class="slide">
-                <img src="/img/Frame%2018.png" style="width: 50vw; height: auto" alt="Slider Image 3">
-                <h2>Title 3</h2>
+                <img src="/img/parent-control.png" style="width: auto; height: 30vw" alt="Slider Image 3">
+                <p style="text-align: center">If you are under the age of 18, please do not use this website without the guidance and supervision of a responsible adult.</p>
             </div>
         </div>
-        <button class="next">Next</button>
+        <div style="display: flex; justify-content: flex-end; width: auto">
+            <button class="next">Next</button>
+        </div>
     </div>
 
 </div>
@@ -69,10 +75,26 @@
             <div class="container-first-left">
                 <h2>Welcome to the web-site Kezdesy</h2>
                 <p>
-                    Lorem ipsum, dolor sit amet consectetur adipisicing elit. Suscipit nemo hic quos, ab, dolor aperiam nobis cum
-                    est eos error ipsum, voluptate culpa nesciunt delectus iste?
+                    Kezdesy is a website application made to connect users based on shared interests.
+                    Additionally, it offers a favorable environment where individuals can interact, share ideas, and build positive relationships. Get started now!
                 </p>
                 <a href="/auth"><div class="header-login-button">Sign Up</div></a>
+
+                <h3>Choose language</h3>
+                <div class="radio-inputs">
+                    <label class="radio">
+                        <input type="radio" name="language" value="kz" onclick="setLanguageCookie('kz')">
+                        <span class="name">Kazakh</span>
+                    </label>
+                    <label class="radio">
+                        <input type="radio" name="language" value="ru" onclick="setLanguageCookie('ru')">
+                        <span class="name">Russian</span>
+                    </label>
+                    <label class="radio">
+                        <input type="radio" name="language" value="en" onclick="setLanguageCookie('en')" checked>
+                        <span class="name">English</span>
+                    </label>
+                </div>
             </div>
 
             <div class="container-first-right">
@@ -127,7 +149,7 @@
             &#169; 2023 All rights reserved
         </div>
         <div class="footer-col3" >
-            <a href="#" >KEZDESY</a>
+            <a href="/termsPolicy" >Terms and Conditions</a>
         </div>
     </div>
 </div>
@@ -135,6 +157,14 @@
 <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script type="text/javascript">
+
+    function setLanguageCookie(language) {
+        var date = new Date();
+        date.setTime(date.getTime() + (30 * 24 * 60 * 60 * 1000)); // 30 days expiration
+        var expires = "expires=" + date.toUTCString();
+        document.cookie = "lang=" + language + ";" + expires + ";path=/";
+        location.reload(); // Refresh the page to apply the language cookie
+    }
 
     const tween = KUTE.fromTo(
         '#blob1',
@@ -192,7 +222,9 @@
         }
 
         // Show the current slide
-        slides[slideIndex - 1].style.display = "block";
+        slides[slideIndex - 1].style.display = 'flex';
+        slides[slideIndex - 1].style.flexDirection = 'column';
+        slides[slideIndex - 1].style.alignItems = 'center';
     }
 
     // When the user clicks on <span> (x), close the modal
@@ -230,7 +262,7 @@
             let myCookie = getCookie("Authorization");
             let resultC = parseJwt(myCookie);
             let email = resultC.sub;
-            $('.header-login').html("<a class=\"header-login-link\" href=\"#\">\n" +
+            $('.header-login').html("<a class=\"header-login-link\" href=\"/profile\">\n" +
                 "            <div class=\"header-login-button\">\n" +
                 "                <i class=\"svg-icon fas fa-user-circle\" style=\"margin-right: 5px\"></i>" +
                 email + "\n" +
