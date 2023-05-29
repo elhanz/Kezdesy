@@ -284,7 +284,8 @@
             messageElement.classList.add('chat-message');
 
             var userSender = rooms_info.users.find(user => user.id === message.senderId);
-            if (userSender.profilePic != null) {
+
+            if (userSender?.profilePic !== null) {
                 var avatarElement = document.createElement('img');
                 avatarElement.src = userSender.profilePic;
                 avatarElement.setAttribute('class', 'img');
@@ -608,9 +609,9 @@
                                             dataType: 'json',
                                             complete: function (result) {
                                                 console.log(result.responseText);
-                                                if (result.responseText !== "Something is wrong") {
-                                                    document.location.reload();
-                                                }
+                                                // if (result.responseText !== "Something is wrong") {
+                                                //     document.location.reload();
+                                                // }
                                             },
                                             error: function (e) {
                                                 console.log(e);
@@ -697,7 +698,7 @@
                                             messageElement.classList.add('chat-message');
 
                                             var userSender = rooms_info.users.find(user => user.id === messageItem.senderId);
-                                            if (userSender.profilePic != null) {
+                                            if (userSender?.profilePic != null) {
                                                 var avatarElement = document.createElement('img');
                                                 avatarElement.src = userSender.profilePic;
                                                 avatarElement.setAttribute('class', 'img');

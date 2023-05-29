@@ -58,5 +58,6 @@ public enum Interest {
     Gaming,
     Nature,
     Sims,
-    MakeUp
+    MakeUp,
+    Kpop
 }

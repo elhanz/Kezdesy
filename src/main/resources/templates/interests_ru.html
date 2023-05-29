@@ -71,10 +71,11 @@
                 <li><input type="checkbox" id="checkbox52" value="Piano"><label for="checkbox52">Пианино</label></li>
                 <li><input type="checkbox" id="checkbox53" value="Coffee"><label for="checkbox53">Кофе</label></li>
                 <li><input type="checkbox" id="checkbox54" value="Fitness"><label for="checkbox54">Фитнес</label></li>
-                <li><input type="checkbox" id="checkbox55" value="Gaming"><label for="checkbox55">Игы</label></li>
+                <li><input type="checkbox" id="checkbox55" value="Gaming"><label for="checkbox55">Игры</label></li>
                 <li><input type="checkbox" id="checkbox56" value="Nature"><label for="checkbox56">Природа</label></li>
                 <li><input type="checkbox" id="checkbox57" value="Sims"><label for="checkbox57">Симс</label></li>
                 <li><input type="checkbox" id="checkbox58" value="MakeUp"><label for="checkbox58">Макияж</label></li>
+                <li><input type="checkbox" id="checkbox59" value="Kpop"><label for="checkbox59">K-pop</label></li>
             </ul>
         </div>
         <button type="submit" id="registrationButton" class="button fadeIn fourth">Сохранить</button>
@@ -161,7 +162,7 @@
 
             $('#registrationButton').on('click', function () {
                 let data = JSON.stringify({email:email, interests: interests});
-                if (interests.length > 2 && interests.length < 8) {
+                if (interests.length > 2 && interests.length < 6) {
                     $.ajax({
                         type: "POST",
                         contentType: 'application/json',
@@ -182,7 +183,7 @@
                 }
                 else {
                     $('#result_msg').css("border", "1px solid red");
-                    $('#result_msg').html("Пожалуйста, выберите от 3 до 7 интересов");
+                    $('#result_msg').html("Пожалуйста, выберите от 3 до 5 интересов");
                 }
 
             })

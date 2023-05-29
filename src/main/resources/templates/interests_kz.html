@@ -75,6 +75,7 @@
                 <li><input type="checkbox" id="checkbox56" value="Nature"><label for="checkbox56">Табиғат</label></li>
                 <li><input type="checkbox" id="checkbox57" value="Sims"><label for="checkbox57">Симс</label></li>
                 <li><input type="checkbox" id="checkbox58" value="MakeUp"><label for="checkbox58">Макияж</label></li>
+                <li><input type="checkbox" id="checkbox59" value="Kpop"><label for="checkbox59">K-pop</label></li>
             </ul>
         </div>
         <button type="submit" id="registrationButton" class="button fadeIn fourth">Сақтау</button>
@@ -161,7 +162,7 @@
 
             $('#registrationButton').on('click', function () {
                 let data = JSON.stringify({email:email, interests: interests});
-                if (interests.length > 2 && interests.length < 8) {
+                if (interests.length > 2 && interests.length < 6) {
                     $.ajax({
                         type: "POST",
                         contentType: 'application/json',
@@ -182,7 +183,7 @@
                 }
                 else {
                     $('#result_msg').css("border", "1px solid red");
-                    $('#result_msg').html("3-тен 7-ге дейін қызығушылықтарды таңдаңыз");
+                    $('#result_msg').html("3-тен 5-ке дейін қызығушылықтарды таңдаңыз");
                 }
 
             })
