@@ -11,7 +11,7 @@
 </head>
 <body>
 <div class="wrapper fadeInDown">
-    <div id="formContent" style="max-width: 700px">
+    <div id="formContent" style="max-width: 900px">
         <h2 class="active">Создать комнату</h2>
 
         <div id="result_msg"></div>
@@ -174,7 +174,7 @@
                         console.log(result.responseText);
                         if (result.responseText == "Room was created") {
                             //console.log(123);
-                            window.location.replace("/");
+                            window.location.replace("/chats");
                         } else {
                             $('#result_msg').css("border", "1px solid red")
                             $('#result_msg').html(result.responseText);

@@ -86,7 +86,7 @@ public class RoomController {
     public ResponseEntity kickUser(@RequestBody EmailRoomIdRequest emailRoomIdRequest) {
         User user = userService.getUserByEmail(emailRoomIdRequest.getEmail());
 
-        if (user != null || roomService.kickUser(user, emailRoomIdRequest.getRoomId())) {
+        if (user != null && roomService.kickUser(user, emailRoomIdRequest.getRoomId())) {
             return ResponseEntity.ok(user.getFirst_name() + " " + user.getLast_name() + " left!");
 
         }

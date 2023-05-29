@@ -82,6 +82,7 @@ public class RoomServiceImpl implements IRoomService {
     }
 
 
+
     @Override
     public void createRoom(Room room) {
         roomRepository.save(room);
@@ -133,7 +134,7 @@ public class RoomServiceImpl implements IRoomService {
     public boolean kickUser(User user, Long roomId) {
         Room room = roomRepository.findRoomById(roomId);
 
-        if (room != null || roomRepository.existsByRoomIdAndUserId(room.getId(), user.getId())) {
+        if (room != null && roomRepository.existsByRoomIdAndUserId(room.getId(), user.getId())) {
 
             Message messageJoined = new Message();
             messageJoined.setType(Message.MessageType.LEAVE);
