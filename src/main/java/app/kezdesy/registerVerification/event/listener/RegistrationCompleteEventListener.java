@@ -25,15 +25,15 @@ public class RegistrationCompleteEventListener implements ApplicationListener<Re
     private final RegisterService registerService;
 
     private final JavaMailSender mailSender;
-    private User theUser;
+    private User user;
 
 
     public void onApplicationEvent(RegistrationCompleteEvent event) {
 
-        theUser = event.getUser();
+        user = event.getUser();
 
         String verificationToken = UUID.randomUUID().toString();
-        registerService.saveUserVerificationToken(theUser, verificationToken);
+        registerService.saveUserVerificationToken(user, verificationToken);
         String url = event.getApplicationUrl() + "/verifyEmail?token=" + verificationToken;
 
         try {
@@ -54,7 +54,7 @@ public class RegistrationCompleteEventListener implements ApplicationListener<Re
         MimeMessage message = mailSender.createMimeMessage();
         var messageHelper = new MimeMessageHelper(message);
         messageHelper.setFrom("kezdesy.kz@gmail.com", senderName);
-        messageHelper.setTo(theUser.getEmail());
+        messageHelper.setTo(user.getEmail());
         messageHelper.setSubject(subject);
         messageHelper.setText(mailContent, true);
         mailSender.send(message);
