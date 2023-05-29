@@ -609,9 +609,9 @@
                                             dataType: 'json',
                                             complete: function (result) {
                                                 console.log(result.responseText);
-                                                // if (result.responseText !== "Something is wrong") {
-                                                //     document.location.reload();
-                                                // }
+                                                if (result.responseText !== "Something is wrong") {
+                                                    document.location.reload();
+                                                }
                                             },
                                             error: function (e) {
                                                 console.log(e);

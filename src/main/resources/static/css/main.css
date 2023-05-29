@@ -1006,6 +1006,22 @@ ul.ks-cboxtags li input[type="checkbox"]:focus + label {
     flex-direction: column;
     width: 15vw;
     justify-content: space-between;
+    overflow: auto;
+    overflow-y: scroll;
+    max-height: 90vh;
+}
+
+.chat-info::-webkit-scrollbar {
+    width: 3px;
+}
+
+.chat-info::-webkit-scrollbar-track {
+    background-color: #ffffff;
+}
+
+.chat-info::-webkit-scrollbar-thumb {
+    background-color: #d7d7d7;
+    border-radius: 3px;
 }
 
 .chat-menu {
@@ -1026,11 +1042,11 @@ ul.ks-cboxtags li input[type="checkbox"]:focus + label {
 }
 
 .chats-list-hidden {
-    left: -200%;
+    left: -300%;
 }
 
 .chat-menu-hidden {
-    right: -200%;
+    right: -300%;
 }
 
 .chat-roommates {
