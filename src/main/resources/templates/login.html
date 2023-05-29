@@ -11,78 +11,6 @@
 
 <div class="wrapper fadeInDown">
     <div id="formContent">
-<!--        <script src="https://accounts.google.com/gsi/client" async defer></script>-->
-<!--        <script>-->
-<!--            function parseJwt(token) {-->
-<!--                let base64Url = token.split('.')[1];-->
-<!--                let base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');-->
-<!--                let jsonPayload = decodeURIComponent(atob(base64).split('').map(function (c) {-->
-<!--                    return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);-->
-<!--                }).join(''));-->
-
-<!--                return JSON.parse(jsonPayload);-->
-<!--            }-->
-<!--            function handleCredentialResponse(response) {-->
-<!--                const responsePayload = parseJwt(response.credential);-->
-
-<!--                $.ajax({-->
-<!--                    type: "POST",-->
-<!--                    contentType: 'application/json',-->
-<!--                    url: "registerGoogle",-->
-<!--                    data: JSON.stringify({-->
-<!--                        email: responsePayload.email, password: "12345678" , first_name: responsePayload.given_name,-->
-<!--                        last_name: responsePayload.family_name-->
-<!--                    }),-->
-<!--                    dataType: 'json',-->
-<!--                    complete: function (result) {-->
-<!--                        console.log(result.responseText);-->
-<!--                        var xhr = new XMLHttpRequest();-->
-<!--                        var body = 'email=' + encodeURIComponent(responsePayload.email) + '&password=' + encodeURIComponent("12345678");-->
-<!--                        xhr.open("POST", 'login', true);-->
-<!--                        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');-->
-<!--                        xhr.onreadystatechange = function() {-->
-<!--                            if (this.readyState != 4 && xhr.status != 200) {-->
-<!--                                $('#result_msg').html('Wrong username or password');-->
-<!--                                return;-->
-<!--                            }-->
-<!--                            if(xhr.readyState === 4 && xhr.status === 200) {-->
-<!--                                console.log(this.responseText);-->
-<!--                                tokens = JSON.parse(this.responseText);-->
-<!--                                console.log("access_token: ", tokens.access_token);-->
-<!--                                console.log("email: ", tokens.email);-->
-<!--                                document.cookie="Authorization=Bearer " + tokens.access_token;-->
-<!--                                if (result.responseText == "User was added") window.location.replace("/updateUser");-->
-<!--                                else {-->
-<!--                                    window.location.replace("/");-->
-<!--                                }-->
-<!--                            }-->
-<!--                        };-->
-<!--                        xhr.send(body);-->
-<!--                    }-->
-<!--                })-->
-
-<!--                console.log("ID: " + responsePayload.sub);-->
-<!--                console.log('Full Name: ' + responsePayload.name);-->
-<!--                console.log('Given Name: ' + responsePayload.given_name);-->
-<!--                console.log('Family Name: ' + responsePayload.family_name);-->
-<!--                console.log("Image URL: " + responsePayload.picture);-->
-<!--                console.log("Email: " + responsePayload.email);-->
-<!--                console.log("Encoded JWT ID token: " + response.credential);-->
-<!--            }-->
-<!--            window.onload = function () {-->
-<!--                google.accounts.id.initialize({-->
-<!--                    client_id: "708628815067-l93arogb9a0fbvk2jd7krgqnrjgqsd0k.apps.googleusercontent.com",-->
-<!--                    callback: handleCredentialResponse-->
-<!--                });-->
-<!--                google.accounts.id.renderButton(-->
-<!--                    document.getElementById("buttonDiv"),-->
-<!--                    { theme: "outline", size: "large" }  // customization attributes-->
-<!--                ); // also display the One Tap dialog-->
-<!--            }-->
-<!--        </script>-->
-
-
-
         <h2 class="active"> Sign In </h2>
 
         <div class="fadeIn first">
@@ -107,9 +35,6 @@
         </div>
 
         <button type="submit" style="width: 85%; padding-bottom: 20px" id="login" class="button fadeIn fourth" value="Log In">Login</button>
-
-<!--        <h2 class="active" style="margin-top: 15px;"> -&#45;&#45; Or -&#45;&#45; </h2>-->
-<!--        <div id="buttonDiv" style="margin-left: 25%; margin-bottom: 30px; margin-top: 15px" class="fadeIn fourth"></div>-->
 
         <div id="formFooter">
             <a id="toRegister" class="underlineHover" href="/auth">Don't have an account?</a>
