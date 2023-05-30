@@ -311,31 +311,33 @@
             timestampElement.appendChild(timestampText);
             messageElement.appendChild(timestampElement);
 
-            // Create the parent div element
-            var menuDrop = document.createElement('div');
-            menuDrop.classList.add('menu-drop');
-            // Create the i element
-            var iconElement = document.createElement('i');
-            iconElement.classList.add('fa', 'fa-ellipsis-v');
+            if (message.senderId === user_info.id || rooms_info.owner === user_info.email) {
+                // Create the parent div element
+                var menuDrop = document.createElement('div');
+                menuDrop.classList.add('menu-drop');
+                // Create the i element
+                var iconElement = document.createElement('i');
+                iconElement.classList.add('fa', 'fa-ellipsis-v');
 
-            // Create the ul element
-            var ulElement = document.createElement('ul');
+                // Create the ul element
+                var ulElement = document.createElement('ul');
 
-            // Create the second li element
-            var liElement2 = document.createElement('li');
-            var link2 = document.createElement('a');
-            link2.setAttribute('href', '#');
-            link2.setAttribute('id', 'delete' + message.id);
-            link2.textContent = 'Удалить';
-            liElement2.appendChild(link2);
+                // Create the second li element
+                var liElement2 = document.createElement('li');
+                var link2 = document.createElement('a');
+                link2.setAttribute('href', '#');
+                link2.setAttribute('id', 'delete' + message.id);
+                link2.textContent = 'Удалить';
+                liElement2.appendChild(link2);
 
-            // Append the li elements to the ul element
-            ulElement.appendChild(liElement2);
+                // Append the li elements to the ul element
+                ulElement.appendChild(liElement2);
 
-            // Append the i element and ul element to the parent div
-            menuDrop.appendChild(iconElement);
-            menuDrop.appendChild(ulElement);
-            messageElement.appendChild(menuDrop);
+                // Append the i element and ul element to the parent div
+                menuDrop.appendChild(iconElement);
+                menuDrop.appendChild(ulElement);
+                messageElement.appendChild(menuDrop);
+            }
 
             var textElement = document.createElement('p');
             if (message.type === 'CHAT') {
@@ -359,9 +361,7 @@
         // Attach delete event listener
         $(document).on('click', '#delete' + message.id, function () {
             console.log("its clicked");
-            if (message.senderId === user_info.id) {
-                deleteMessage(message.id);
-            }
+            deleteMessage(message.id);
         });
 
         // Handle deletion event
@@ -725,31 +725,33 @@
                                             timestampElement.appendChild(timestampText);
                                             messageElement.appendChild(timestampElement);
 
-                                            // Create the parent div element
-                                            var menuDrop = document.createElement('div');
-                                            menuDrop.classList.add('menu-drop');
-                                            // Create the i element
-                                            var iconElement = document.createElement('i');
-                                            iconElement.classList.add('fa', 'fa-ellipsis-v');
+                                            if (message.senderId === user_info.id || rooms_info.owner === user_info.email) {
+                                                // Create the parent div element
+                                                var menuDrop = document.createElement('div');
+                                                menuDrop.classList.add('menu-drop');
+                                                // Create the i element
+                                                var iconElement = document.createElement('i');
+                                                iconElement.classList.add('fa', 'fa-ellipsis-v');
 
-                                            // Create the ul element
-                                            var ulElement = document.createElement('ul');
+                                                // Create the ul element
+                                                var ulElement = document.createElement('ul');
 
-                                            // Create the second li element
-                                            var liElement2 = document.createElement('li');
-                                            var link2 = document.createElement('a');
-                                            link2.setAttribute('href', '#');
-                                            link2.setAttribute('id', 'delete' + message.id);
-                                            link2.textContent = 'Удалить';
-                                            liElement2.appendChild(link2);
+                                                // Create the second li element
+                                                var liElement2 = document.createElement('li');
+                                                var link2 = document.createElement('a');
+                                                link2.setAttribute('href', '#');
+                                                link2.setAttribute('id', 'delete' + message.id);
+                                                link2.textContent = 'Удалить';
+                                                liElement2.appendChild(link2);
 
-                                            // Append the li elements to the ul element
-                                            ulElement.appendChild(liElement2);
+                                                // Append the li elements to the ul element
+                                                ulElement.appendChild(liElement2);
 
-                                            // Append the i element and ul element to the parent div
-                                            menuDrop.appendChild(iconElement);
-                                            menuDrop.appendChild(ulElement);
-                                            messageElement.appendChild(menuDrop);
+                                                // Append the i element and ul element to the parent div
+                                                menuDrop.appendChild(iconElement);
+                                                menuDrop.appendChild(ulElement);
+                                                messageElement.appendChild(menuDrop);
+                                            }
                                         }
                                         var textElement = document.createElement('p');
                                         if (message.type === 'PICTURE') {
@@ -772,9 +774,7 @@
                                         // Attach delete event listener
                                         $(document).on('click', '#delete' + message.id, function () {
                                             console.log("its clicked");
-                                            if (message.senderId === user_info.id) {
-                                                deleteMessage(message.id);
-                                            }
+                                            deleteMessage(message.id);
                                         });
                                     });
                                 },

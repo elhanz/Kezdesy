@@ -137,10 +137,10 @@
     function eraseCookie(name) {
         document.cookie = name + '=; Max-Age=-99999999;';
     }
+
     $(document).ready(function () {
         let myCookie = getCookie("Authorization");
         let resultC = parseJwt(myCookie);
-        let email = resultC.sub;
         var interests = [];
 
         $("input:checkbox").change(function() {

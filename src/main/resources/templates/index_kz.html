@@ -76,7 +76,7 @@
                 <p>
                     Kezdesy-ортақ мүдделер негізінде пайдаланушыларды біріктіруге арналған веб-бағдарлама.
                     Сонымен қатар, мұнда сіз адамдар өзара әрекеттесе алатын, идеялармен бөлісетін және жағымды қарым-қатынас орнататын қолайлы ортаны таба аласыз. Қазір бастаңыз!</p>
-                <a href="/auth"><div class="header-login-button">Тіркелу</div></a>
+                <a href="/auth" id="signUpBtn"><div class="header-login-button">Тіркелу</div></a>
 
                 <h3>Тілді таңдаңыз</h3>
                 <div class="radio-inputs">
@@ -266,6 +266,7 @@
                 email + "\n" +
                 "            </div>\n" +
                 "        </a>");
+            $("#signUpBtn").css("display","none");
         }
         else {
             modal.style.display = "block";

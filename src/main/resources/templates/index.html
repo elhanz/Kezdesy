@@ -78,7 +78,7 @@
                     Kezdesy is a website application made to connect users based on shared interests.
                     Additionally, it offers a favorable environment where individuals can interact, share ideas, and build positive relationships. Get started now!
                 </p>
-                <a href="/auth"><div class="header-login-button">Sign Up</div></a>
+                <a href="/auth" id="signUpBtn"><div class="header-login-button">Sign Up</div></a>
 
                 <h3>Choose language</h3>
                 <div class="radio-inputs">
@@ -268,6 +268,7 @@
                 email + "\n" +
                 "            </div>\n" +
                 "        </a>");
+            $("#signUpBtn").css("display","none");
         }
         else {
             modal.style.display = "block";
